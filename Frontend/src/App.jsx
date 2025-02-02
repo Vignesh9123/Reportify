@@ -84,6 +84,7 @@ const MainContainer = styled.div`
   .logo {
     position: absolute;
     top: 5vh;
+    right: 0;
     width: 60vw;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;

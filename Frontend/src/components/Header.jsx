@@ -1,41 +1,75 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
   return (
     <MainContainer>
       <Link to="/" className="logo"></Link>
-      <button href="#" className="button">
-        <span className="button__icon-wrapper">
-          <svg
-            viewBox="0 0 14 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="button__icon-svg"
-            width="10"
-          >
-            <path
-              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-              fill="currentColor"
-            ></path>
-          </svg>
+      {location.pathname === "/homepage" ? (
+        <Link to="/reports" className="button">
+          <span className="button__icon-wrapper">
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg"
+              width="10"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
 
-          <svg
-            viewBox="0 0 14 15"
-            fill="none"
-            width="10"
-            xmlns="http://www.w3.org/2000/svg"
-            className="button__icon-svg button__icon-svg--copy"
-          >
-            <path
-              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-              fill="currentColor"
-            ></path>
-          </svg>
-        </span>
-        My Reports
-      </button>
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              width="10"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg button__icon-svg--copy"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </span>
+          My Reports
+        </Link>
+      ) : (
+        <Link to="/homepage" className="button">
+          <span className="button__icon-wrapper">
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg"
+              width="10"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
+
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              width="10"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg button__icon-svg--copy"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </span>
+          Back
+        </Link>
+      )}
     </MainContainer>
   );
 };
@@ -77,7 +111,7 @@ const MainContainer = styled.div`
   align-items: center;
   background-color: #000;
   animation: ${fadeIn} 0.5s ease-in-out,
-      ${gradientAnimation} 10s infinite alternate ease-in-out;
+    ${gradientAnimation} 10s infinite alternate ease-in-out;
   .logo {
     position: relative;
     background: url("Reportify-logo.png") no-repeat center/contain;
@@ -106,7 +140,6 @@ const MainContainer = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     transition: background-color 0.3s;
-    
   }
 
   .button__icon-wrapper {
@@ -121,7 +154,6 @@ const MainContainer = styled.div`
     place-items: center;
     overflow: hidden;
     color: black;
-    
   }
 
   .button:hover {
