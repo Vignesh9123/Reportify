@@ -24,18 +24,20 @@ function App() {
   });
   return (
     <MainContainer>
-      <div className="logo">
-        <img src="Reportify-logo-full.png" alt="LOGO" width={350} />
-      </div>
       <LeftContainer>
-        <h1>Welcome to REPORTIFY</h1>
-        <h3>An AI-driven Report Generator.</h3>
-        <p>
-          <span style={{ fontWeight: "bold", color: "white" }}>
-            {text}
-            <Cursor cursorColor="rgb(0, 255, 247)" />
-          </span>
-        </p>
+        <div className="logo">
+          <img src="Reportify-logo-full.png" alt="LOGO" width={350} />
+        </div>
+        <div>
+          <h1>Welcome to REPORTIFY</h1>
+          <h3>An AI-driven Report Generator.</h3>
+          <p>
+            <span style={{ fontWeight: "bold", color: "white" }}>
+              {text}
+              <Cursor cursorColor="rgb(0, 255, 247)" />
+            </span>
+          </p>
+        </div>
       </LeftContainer>
       <RightContainer>
         {display ? (
@@ -74,7 +76,8 @@ const gradientAnimation = keyframes`
 `;
 
 const MainContainer = styled.div`
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,11 +85,17 @@ const MainContainer = styled.div`
   font-family: "Poppins", sans-serif;
   color: white;
   .logo {
-    position: absolute;
+    /* position: absolute; */
     top: 5vh;
     width: 60vw;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 20px;
+    
   }
 `;
 
@@ -96,14 +105,11 @@ const LeftContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 40px;
-  padding: 40px;
   text-align: center;
-  background: linear-gradient(135deg, #1e1e1e, #333, #4f4f4f);
   background-size: 200% 200%;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  top: -15vh;
   animation: ${fadeIn} 1s ease-in-out,
     ${gradientAnimation} 10s infinite alternate ease-in-out;
 
@@ -119,18 +125,23 @@ const LeftContainer = styled.div`
   & h3 {
     font-size: 1.5rem;
     text-transform: uppercase;
-    background: linear-gradient(45deg,  #00eaff,#f9f9ff);
+    background: linear-gradient(45deg, #00eaff, #f9f9ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: ${fadeIn} 1.5s ease-in-out;
   }
 
   & p {
-    width: 60%;
     font-size: 1.2rem;
     color: #ddd;
     opacity: 0.9;
     animation: ${fadeIn} 2s ease-in-out;
+  }
+  @media (max-width: 1024px) {
+    margin-top: 20vh;
+    width: 90%;
+    margin-left: 0px;
+    height: 20vh;
   }
 `;
 
@@ -139,5 +150,5 @@ const RightContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  /* padding: 40px; */
 `;
