@@ -236,6 +236,7 @@ const MainContainer = styled.div`
     gap: 5px;
     font-weight: 600;
     margin-top: 35px;
+    color: black;
   }
 
   .enter:hover {

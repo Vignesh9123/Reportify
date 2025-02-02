@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components";
 
 const HomePage = () => {
   return (
-    <MiainContainer>
+    <MainContainer>
       <div>
         <Header />
       </div>
@@ -14,7 +14,7 @@ const HomePage = () => {
           
         </div>
       </div>
-    </MiainContainer>
+    </MainContainer>
   );
 };
 
@@ -43,7 +43,7 @@ const gradientAnimation = keyframes`
   }
 `;
 
-const MiainContainer = styled.div`
+const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,12 +1,61 @@
-import React from 'react'
-import Header from './Header'
-
+import React from "react";
+import Header from "./Header";
+import styled, { keyframes } from "styled-components";
 const Reports = () => {
   return (
-    <div>
-      <Header/>
-    </div>
-  )
-}
+    <MainContainer>
+      <Header />
+      <div className="body">
+        {/*All reports will be displayed here*/}
+        <div>
+          <h3>No Reports to display</h3>
+        </div>
+      </div>
+    </MainContainer>
+  );
+};
 
-export default Reports
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
+export default Reports;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .body {
+    position: relative;
+    height: 90vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+    border-radius: 10px 10px 0 0;
+    animation: ${fadeIn} 1s ease-in-out,
+      ${gradientAnimation} 10s infinite alternate ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

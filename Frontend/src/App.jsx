@@ -85,11 +85,12 @@ const MainContainer = styled.div`
   font-family: "Poppins", sans-serif;
   color: white;
   .logo {
-    /* position: absolute; */
     top: 5vh;
     width: 60vw;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
+      display: flex;
+      justify-content: center;
   }
 
   @media (max-width: 1024px) {
