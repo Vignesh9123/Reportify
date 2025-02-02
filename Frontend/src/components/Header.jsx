@@ -119,8 +119,6 @@ const MainContainer = styled.div`
     height: 60px;
     animation: dp 0.4s linear;
     filter: drop-shadow(1px 1px 4px purple);
-    /* animation: ${fadeIn} 1s ease-in-out,
-      ${gradientAnimation} 10s infinite alternate ease-in-out; */
   }
   .button {
     line-height: 1;
