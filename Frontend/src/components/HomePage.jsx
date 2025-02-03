@@ -4,14 +4,19 @@ import styled, { keyframes } from "styled-components";
 
 const Carousel = () => {
   const [index, setIndex] = useState(0);
-  const [students, setStudents] = useState([{ rollNo: "", name: "", usn: "" }]);
+  const [students, setStudents] = useState([{ rollNumber: "", name: "", usn: "" }]);
   const slides = [1, 2, 3];
   const [title, setTitle] = useState("");
-  const [keyPoints, setKeyPoints] = useState("");
+  const [subject, setSubject] = useState("");
+  const [subjectCode, setSubjectCode] = useState("");
+  const [branch, setBranch] = useState("");
+  const [sem, setSem] = useState("");
+  const [professorName, setprofessorName] = useState("");
+  const [designation, setDesignation] = useState("");
+
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
-
   const prevSlide = () => {
     setIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
@@ -21,7 +26,7 @@ const Carousel = () => {
       alert("Maximum 10 students allowed.");
       return;
     }
-    setStudents([...students, { rollNo: "", name: "", usn: "" }]);
+    setStudents([...students, { rollNumber: "", name: "", usn: "" }]);
   };
 
   useEffect(() => {
@@ -40,9 +45,14 @@ const Carousel = () => {
   }, [index]);
   const generateReport = () => {
     console.log("Generating Report");
-    console.log(title);
-    console.log(keyPoints);
-    console.log(students);
+    console.log("title: ", title);
+    console.log("subject: ", subject);
+    console.log("subject code: ", subjectCode);
+    console.log("branch: ", branch);
+    console.log("sem: ", sem);
+    console.log("student: ", students);
+    console.log("professor name: ", professorName);
+    console.log("designation: ", designation);
   };
   const deleteStudentField = (index) => () => {
     const updatedStudents = students.filter((_, i) => i !== index);
@@ -70,12 +80,56 @@ const Carousel = () => {
             <input
               type="text"
               required
-              value={keyPoints}
+              value={subject}
               onChange={(e) => {
-                setKeyPoints(e.target.value);
+                setSubject(e.target.value);
               }}
             />
-            <span>Key Points</span>
+            <span>Subject</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              required
+              value={subjectCode}
+              onChange={(e) => {
+                setSubjectCode(e.target.value);
+              }}
+            />
+            <span>Subject Code</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              list="branches"
+              placeholder="Branch"
+              value={branch}
+              onChange={(e) => setBranch(e.target.value)}
+            />
+            <datalist id="branches">
+              <option value="Computer Science and Engineering" />
+              <option value="Electronics and Communication Engineering" />
+              <option value="Mechanical Engineering" />
+              <option value="Civil Engineering" />
+              <option value="Electrical and Electronics Engineering" />
+              <option value="Information Science and Engineering" />
+            </datalist>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="number"
+              min={1}
+              max={8}
+              required
+              value={sem}
+              onChange={(e) => {
+                setSem(e.target.value);
+              }}
+            />
+            <span>Sem</span>
             <i></i>
           </div>
         </CarouselItem>
@@ -98,10 +152,10 @@ const Carousel = () => {
                       placeholder="Roll no."
                       type="number"
                       min={1}
-                      value={student.rollNo}
+                      value={student.rollNumber}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[index].rollNo = e.target.value;
+                        updatedStudents[index].rollNumber = e.target.value;
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
@@ -179,6 +233,33 @@ const Carousel = () => {
           </div>
         </CarouselItem>
         <CarouselItem>
+          <div>Please provide professor details</div>
+          <div className="inputbox">
+            <input
+              type="text"
+              required
+              value={professorName}
+              onChange={(e) => {
+                setprofessorName(e.target.value);
+              }}
+            />
+            <span>Professor Name</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              list="designations"
+              placeholder="Designation"
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+            />
+            <datalist id="designations">
+              <option value="Assitant Professor" />
+              <option value="Associate Professor" />
+            </datalist>
+            <i></i>
+          </div>
           <button
             onClick={generateReport}
             class="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
