@@ -3,8 +3,8 @@ import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, Ta
 import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { submissionDetails, professorDetails } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
-
-async function createDocument(topic: string, res : any) {
+import { professorDetailsType, submissionDetailsType } from "../config/types";
+async function createDocument(topic: string, res : any, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
     const mdText = await generateCompleteMDXContent(topic);
     if (!mdText) {
       console.error("Failed to generate MDX content.");
