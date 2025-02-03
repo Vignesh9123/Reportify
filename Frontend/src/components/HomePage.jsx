@@ -7,7 +7,8 @@ const Carousel = () => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([{ rollNo: "", name: "", usn: "" }]);
   const slides = [1, 2, 3];
-
+  const [title, setTitle] = useState("");
+  const [keyPoints, setKeyPoints] = useState("");
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -25,8 +26,6 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    console.log(students);
-
     if (index === 0) {
       document.querySelector(".left").style.display = "none";
     }
@@ -40,19 +39,38 @@ const Carousel = () => {
       document.querySelector(".right").style.display = "block";
     }
   }, [index]);
-
+  const generateReport = () => {
+    console.log("Generating Report");
+    console.log(title);
+    console.log(keyPoints);
+    console.log(students);
+  };
   return (
     <CarouselContainer>
       <CarouselInner index={index}>
         <CarouselItem>
           <div>Please fill up the details</div>
           <div className="inputbox">
-            <input type="text" required="required" />
+            <input
+              type="text"
+              required
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
             <span>Title</span>
             <i></i>
           </div>
           <div className="inputbox">
-            <input type="text" required="required" />
+            <input
+              type="text"
+              required
+              value={keyPoints}
+              onChange={(e) => {
+                setKeyPoints(e.target.value);
+              }}
+            />
             <span>Key Points</span>
             <i></i>
           </div>
@@ -132,7 +150,10 @@ const Carousel = () => {
           </div>
         </CarouselItem>
         <CarouselItem>
-          <button class="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]">
+          <button
+            onClick={generateReport}
+            class="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
+          >
             <svg
               class="animate-pulse absolute z-10 overflow-visible transition-all duration-300 text-[#2e2e2e] group-hover:text-white top-[calc(var(--sz-text)/7)] left-[calc(var(--sz-text)/7)] h-[var(--gen-sz)] w-[var(--gen-sz)] group-hover:h-[var(--sz-text)] group-hover:w-[var(--sz-text)] group-hover:left-[calc(var(--sz-text)/0.6)] group-hover:top-[calc(calc(var(--gen-sz))/2)]"
               stroke="none"
