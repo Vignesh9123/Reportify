@@ -9,7 +9,7 @@ const app = express()
 
 app.use(cors(
     {
-        origin: process.env.CLIENT_URL
+        origin: config.CLIENT_URL
     }
 ))
 app.use(express.json({ limit: '50mb' }))
@@ -25,7 +25,7 @@ app.get('/generate', async(req, res) => {
 
 app.listen( config.PORT || 8000, () => {
     connectDB().then(() => { 
-        console.log(`Server is running on port ${process.env.PORT}`)
+        console.log(`Server is running on port ${config.PORT || 8000}`)
     })
     .catch(err => {
         console.log(err)
