@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./Header";
+import Footer from "./Footer"
 import styled, { keyframes } from "styled-components";
 const Reports = () => {
   return (
@@ -11,6 +12,7 @@ const Reports = () => {
           <h3>No Reports to display</h3>
         </div>
       </div>
+      <Footer/>
     </MainContainer>
   );
 };
