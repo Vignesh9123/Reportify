@@ -17,7 +17,10 @@ app.use(cookieParser())
 
 
 import indexRouter from './routes/index';
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
+app.get('/', (req, res) => {
+    res.status(200).json({ message: "Server is running" });
+})
 
 app.listen( config.PORT || 8000, () => {
     connectDB().then(() => { 
