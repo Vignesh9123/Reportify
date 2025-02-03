@@ -15,7 +15,7 @@ const Carousel = () => {
   const [sem, setSem] = useState("");
   const [professorName, setprofessorName] = useState("");
   const [designation, setDesignation] = useState("");
-
+  const [finalDetails, setFinalDetails] = useState("");
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -46,15 +46,30 @@ const Carousel = () => {
     }
   }, [index]);
   const generateReport = () => {
-    console.log("Generating Report");
-    console.log("title: ", title);
-    console.log("subject: ", subject);
-    console.log("subject code: ", subjectCode);
-    console.log("branch: ", branch);
-    console.log("sem: ", sem);
-    console.log("student: ", students);
-    console.log("professor name: ", professorName);
-    console.log("designation: ", designation);
+    const report = {
+      title,
+      subject,
+      subjectCode,
+      branch,
+      sem,
+      students,
+      professorName,
+      designation,
+    };
+
+    setFinalDetails(JSON.stringify(report, null, 2));
+    console.log("Generated Report: ", finalDetails);
+    console.log("Generated Report: ", report);
+
+    // console.log("Generating Report");
+    // console.log("title: ", title);
+    // console.log("subject: ", subject);
+    // console.log("subject code: ", subjectCode);
+    // console.log("branch: ", branch);
+    // console.log("sem: ", sem);
+    // console.log("student: ", students);
+    // console.log("professor name: ", professorName);
+    // console.log("designation: ", designation);
   };
   const deleteStudentField = (index) => () => {
     const updatedStudents = students.filter((_, i) => i !== index);
@@ -353,7 +368,7 @@ const CarouselContainer = styled.div`
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-color: #ddd;
+  background-color: #e8e8e8;
 `;
 
 const CarouselInner = styled.div`
@@ -365,7 +380,6 @@ const CarouselInner = styled.div`
 const CarouselItem = styled.div`
   min-width: 100%;
   height: 450px;
-  background: #ddd;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

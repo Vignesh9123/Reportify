@@ -21,7 +21,7 @@ const Team = () => {
             </div>
           </div>
           <div className="bottom-section">
-            <p className="font-bold text-white text-2xl text-center">
+            <p className="font-bold text-blue-300 text-2xl text-center">
               VIGNESH D
             </p>
             <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
@@ -54,7 +54,7 @@ const Team = () => {
             </div>
           </div>
           <div className="bottom-section">
-            <p className="font-bold text-white text-2xl text-center">
+            <p className="font-bold text-blue-300 text-2xl text-center">
               SURAJ S G
             </p>
             <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
