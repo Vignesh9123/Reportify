@@ -8,11 +8,6 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
-const navigate = useNavigate();
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -23,18 +18,10 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-const handleGoogleSignIn = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    console.log("Signed in user: ", user);
-    navigate("/homepage");
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error("Error during Google Sign-in: ", errorCode, errorMessage);
-  }
-};
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+const auth = getAuth();
 
 function App() {
   const [display, setDisplay] = useState(true);
@@ -53,6 +40,22 @@ function App() {
     typeSpeed: 70,
     deleteSpeed: 30,
   });
+  const navigate = useNavigate(); 
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Signed in user: ", user);
+      navigate("/homepage");
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Error during Google Sign-in: ", errorCode, errorMessage);
+      // Show some error message to the user
+    }
+  };
+
   return (
     <MainContainer>
       <LeftContainer>
