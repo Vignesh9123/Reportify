@@ -52,7 +52,6 @@ function App() {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error("Error during Google Sign-in: ", errorCode, errorMessage);
-      // Show some error message to the user
     }
   };
 
