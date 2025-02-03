@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
-
+import Footer from "./Footer";
 const Carousel = () => {
   const [index, setIndex] = useState(0);
-  const [students, setStudents] = useState([{ rollNumber: "", name: "", usn: "" }]);
+  const [students, setStudents] = useState([
+    { rollNumber: "", name: "", usn: "" },
+  ]);
   const slides = [1, 2, 3];
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -299,6 +301,7 @@ const HomePage = () => {
       <div className="body">
         <Carousel />
       </div>
+      <Footer />
     </MainContainer>
   );
 };
@@ -330,11 +333,11 @@ const MainContainer = styled.div`
 
   .body {
     position: relative;
-    height: 90vh;
+    height: 83vh;
     width: 100vw;
     flex-direction: column;
     background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
     display: flex;
@@ -346,7 +349,7 @@ const MainContainer = styled.div`
 const CarouselContainer = styled.div`
   position: relative;
   width: 600px;
-  height: 600px;
+  height: 620px;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -361,7 +364,7 @@ const CarouselInner = styled.div`
 
 const CarouselItem = styled.div`
   min-width: 100%;
-  height: 400px;
+  height: 450px;
   background: #ddd;
   display: flex;
   flex-direction: column;
