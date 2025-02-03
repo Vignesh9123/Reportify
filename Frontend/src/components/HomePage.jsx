@@ -76,6 +76,7 @@ const Carousel = () => {
           </div>
         </CarouselItem>
         <CarouselItem style={{ justifyContent: "center" }}>
+        <div>Please add students details</div>
           <div
             style={{ display: "flex", flexDirection: "column", width: "98%" }}
             className="studentDetails"
