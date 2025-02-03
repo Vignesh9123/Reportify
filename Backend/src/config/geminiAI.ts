@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { config } from ".";
-const apiKey = config.GEMINI_API_KEY; // Replace with your Gemini API key
+const apiKey = config.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const reportModel = genAI.getGenerativeModel({
