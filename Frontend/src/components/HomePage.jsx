@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
 
-// Carousel Component
 const Carousel = () => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([{ rollNo: "", name: "", usn: "" }]);
@@ -212,7 +211,6 @@ const Carousel = () => {
   );
 };
 
-// Home Page Component
 const HomePage = () => {
   return (
     <MainContainer>
@@ -226,7 +224,6 @@ const HomePage = () => {
 
 export default HomePage;
 
-// Keyframes
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -244,7 +241,6 @@ const gradientAnimation = keyframes`
   100% { background-position: 0% 50%; }
 `;
 
-// Styled Components
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
