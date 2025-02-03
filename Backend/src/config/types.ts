@@ -16,3 +16,15 @@ export type UserType = {
     loginType: string
 };
 
+export type submissionDetailsType = {
+    name: string;
+    rollNumber: string;
+    USN: string;
+};
+
+export type professorDetailsType = {
+    name: string;
+    designation: string;
+    department: string;
+    college: string;
+};

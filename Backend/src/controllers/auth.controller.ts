@@ -21,6 +21,8 @@ export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const currentUser = asyncHandler(async (req: Request, res: Response) => {
-    const user = req.user as UserType;
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    if(!user) throw new ApiError(401, "Error while fetching user");
     return res.status(200).json(new ApiResponse(200, "Current user fetched successfully", user, true));
 })
