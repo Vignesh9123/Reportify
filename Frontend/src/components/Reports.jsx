@@ -23,7 +23,7 @@ const Reports = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -40,9 +40,9 @@ const Reports = () => {
 
   if (loading) {
     return (
-      <LoadingContainer>
+      <LoadingContainer className="bg-black">
         <Spinner />
-        <p>Loading...</p>
+        <p className="text-white">Loading...</p>
       </LoadingContainer>
     );
   }

@@ -7,7 +7,9 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const Carousel = () => {
   const [index, setIndex] = useState(0);
-  const [students, setStudents] = useState([{ rollNumber: "", name: "", usn: "" }]);
+  const [students, setStudents] = useState([
+    { rollNumber: "", name: "", usn: "" },
+  ]);
   const slides = [1, 2, 3];
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -101,6 +103,18 @@ const Carousel = () => {
           </div>
           <div className="inputbox">
             <input
+              type="number"
+              min={1}
+              max={8}
+              required
+              value={sem}
+              onChange={(e) => setSem(e.target.value)}
+            />
+            <span>Sem</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
               type="text"
               list="branches"
               placeholder="Branch"
@@ -115,18 +129,6 @@ const Carousel = () => {
               <option value="Electrical and Electronics Engineering" />
               <option value="Information Science and Engineering" />
             </datalist>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="number"
-              min={1}
-              max={8}
-              required
-              value={sem}
-              onChange={(e) => setSem(e.target.value)}
-            />
-            <span>Sem</span>
             <i></i>
           </div>
         </CarouselItem>
@@ -305,7 +307,7 @@ const HomePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -321,16 +323,16 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <LoadingContainer>
+      <LoadingContainer className="bg-black">
         <Spinner />
-        <p>Loading...</p>
+        <p className="text-white">Loading...</p>
       </LoadingContainer>
     );
   }
 
   return (
     <MainContainer>
-      <Header handleLogout={handleLogout}/>
+      <Header handleLogout={handleLogout} />
       <div className="body">
         <Carousel />
       </div>

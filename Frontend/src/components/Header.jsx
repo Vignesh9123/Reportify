@@ -139,12 +139,13 @@ const MainContainer = styled.div`
     cursor: pointer;
     align-items: center;
     gap: 0.75rem;
+    font-size: large;
     background-color: var(--clr);
     color: white;
     border: 2px solid #fff;
     border-radius: 10rem;
     font-weight: 600;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     padding-left: 20px;
     white-space: nowrap;
     overflow: hidden;
@@ -195,7 +196,7 @@ const MainContainer = styled.div`
     transition: all 0.3s ease-in-out;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
     padding-block: 0.5rem;
-    padding-inline: 1.25rem;
+    padding-inline: 0.75rem;
     background-color: black;
     border-radius: 9999px;
     display: flex;

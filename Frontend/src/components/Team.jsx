@@ -27,7 +27,7 @@ const Team = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -44,9 +44,9 @@ const Team = () => {
 
   if (loading) {
     return (
-      <LoadingContainer>
+      <LoadingContainer className="bg-black">
         <Spinner />
-        <p>Loading...</p>
+        <p className="text-white">Loading...</p>
       </LoadingContainer>
     );
   }

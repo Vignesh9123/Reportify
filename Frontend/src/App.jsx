@@ -25,7 +25,6 @@ const analytics = getAnalytics(app);
 const auth = getAuth();
 
 function App() {
-  const [display, setDisplay] = useState(true);
   const [text] = useTypewriter({
     words: [
       "Effortlessly generate AI-powered college reports for JSS STU students with just a title.",
@@ -41,7 +40,7 @@ function App() {
     typeSpeed: 70,
     deleteSpeed: 30,
   });
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     toast.info("Welcome! Please click 'Get Started' to log in with Google.", {
@@ -67,7 +66,7 @@ function App() {
     <MainContainer>
       <LeftContainer>
         <div className="logo">
-          <img src="Reportify-logo-full.png" alt="LOGO" width={350} />
+          <img src="Reportify-logo-full.png" alt="LOGO" width={300} />
         </div>
         <div>
           <h1>Welcome to REPORTIFY</h1>
@@ -99,7 +98,7 @@ function App() {
           <div className="dot dr"></div>
         </div>
       </LeftContainer>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </MainContainer>
   );
 }
@@ -334,9 +333,28 @@ const LeftContainer = styled.div`
   }
 
   @media (max-width: 1024px) {
-    margin-top: 20vh;
     width: 90%;
     margin-left: 0px;
     height: 20vh;
+  }
+
+  @media (max-width: 420px) {
+
+    .logo {
+      top: 3vh;
+      width: 68vw;
+      animation: ${fadeIn} 1s ease-in-out,
+        ${gradientAnimation} 10s infinite alternate ease-in-out;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 320px) {
+    h1 {
+      font-size: 35px;
+    }
+    h3 {
+      font-size: 20px;
+    }
   }
 `;
