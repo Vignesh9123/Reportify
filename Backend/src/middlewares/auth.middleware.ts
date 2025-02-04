@@ -2,7 +2,7 @@ import express from "express";
 import { verifyToken } from "../utils/auth";
 import { ApiError } from "../utils/ApiError";
 import { UserType } from "../config/types";
-import { TokenExpiredError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const authMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
@@ -22,7 +22,7 @@ const authMiddleware = (req: express.Request, res: express.Response, next: expre
         if(error instanceof ApiError){
              res.status(error.statusCode).json({ error: error.message });
         }
-        else if(error instanceof TokenExpiredError){
+        else if(error instanceof jwt.TokenExpiredError){
              res.status(401).json({ error: "Token expired" });
         }
         else{
