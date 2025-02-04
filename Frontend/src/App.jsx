@@ -44,7 +44,7 @@ function App() {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    toast.info("Welcome! Please click Generate Now to login with Google", {
+    toast.info("Welcome! Please click Get Started to login with Google", {
       position: "bottom-left",
       autoClose: 3000,
     });
@@ -85,7 +85,7 @@ function App() {
           <div className="border-line left-line"></div>
           <div className="border-line right-line"></div>
           <div className="inner1" onClick={handleGoogleSignIn}>
-            Generate Now
+            Get Started
             <div className="tl tri"></div>
             <div className="tr tri"></div>
             <div className="bl tri"></div>
