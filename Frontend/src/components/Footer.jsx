@@ -20,9 +20,7 @@ const Header = () => {
             </Link>
           </li>
           <li className="cursor-pointer">
-            <Link to="/team" className="">
-              Sample Report
-            </Link>
+            <a href="Crypto.docx">Sample Report</a>
           </li>
         </ul>
       </div>
@@ -72,7 +70,7 @@ const MainContainer = styled.div`
     ${gradientAnimation} 10s infinite alternate ease-in-out;
   color: white;
 
-  .ul li:hover{
+  .ul li:hover {
     text-decoration: underline;
   }
 `;
