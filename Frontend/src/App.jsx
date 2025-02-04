@@ -44,7 +44,7 @@ function App() {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    toast.info("Welcome! Please click Get Started to login with Google", {
+    toast.info("Welcome! Please click 'Get Started' to log in with Google.", {
       position: "bottom-left",
       autoClose: 3000,
     });
