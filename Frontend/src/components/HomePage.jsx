@@ -145,7 +145,7 @@ const Carousel = () => {
           >
             {students.map((student, idx) => (
               <React.Fragment key={idx}>
-                <div className="flex">
+                <div className="flex fields">
                   <div className="textInputWrapper" style={{ width: "100px" }}>
                     <input
                       placeholder="Roll no."
@@ -245,15 +245,12 @@ const Carousel = () => {
           <div className="inputbox">
             <input
               type="text"
-              list="designations"
-              placeholder="Designation"
+              required
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
+              placeholder="eg,. Associate/Assistant Professor"
             />
-            <datalist id="designations">
-              <option value="Assitant Professor" />
-              <option value="Associate Professor" />
-            </datalist>
+            <span>Professor Designation</span>
             <i></i>
           </div>
           <button
@@ -385,12 +382,35 @@ const MainContainer = styled.div`
 
 const CarouselContainer = styled.div`
   position: relative;
-  width: 600px;
+  max-width: 600px;
   height: 620px;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: #e8e8e8;
+  transition: all 0.5s ease-in-out;
+  @media (max-width: 590px) {
+    max-width: 400px;
+  }
+  @media (max-width: 412px) {
+    max-width: 350px;
+    height: 550px;
+  }
+  @media (max-width: 355px) {
+    max-width: 300px;
+    height: 530px;
+  }
+  @media (max-width: 298px) {
+    max-width: 250px;
+    height: 530px;
+  }
+  @media (max-height: 646px) {
+    height: 500px;
+    .right {
+      position: absolute;
+      bottom: 400px;
+    }
+  }
 `;
 
 const CarouselInner = styled.div`
@@ -616,6 +636,41 @@ const CarouselItem = styled.div`
   .Btn:active {
     transform: translate(2px, 2px);
   }
+  /* .fields{
+    display: flex;
+    gap: 30px;
+  } */
+  @media (max-width: 590px) {
+    .inputbox {
+      position: relative;
+      width: 350px;
+    }
+  }
+  @media (max-width: 412px) {
+    .inputbox {
+      position: relative;
+      width: 300px;
+    }
+  }
+  @media (max-width: 355px) {
+    .inputbox {
+      position: relative;
+      width: 250px;
+    }
+    .Btn{
+      width: 20px;
+      height: 20px;
+      & .sign{
+        font-size: 10px;
+      }
+    }
+  }
+  @media (max-width: 298px) {
+    .inputbox {
+      position: relative;
+      width: 230px;
+    }
+  }
 `;
 
 const CarouselButton = styled.button`
@@ -630,6 +685,9 @@ const CarouselButton = styled.button`
   ${(props) => (props.className === "left" ? "left: 10px;" : "right: 10px;")}
   &:hover {
     color: #000;
+  }
+  @media (max-width: 590px) {
+    font-size: 1.2rem;
   }
 `;
 

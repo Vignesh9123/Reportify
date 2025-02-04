@@ -6,7 +6,9 @@ const Header = () => {
   const location = useLocation();
   return (
     <MainContainer>
-      <div className="left">All Rights Reserved &copy; 2025 Reportify</div>
+      <div className="left text-gray-500">
+        All Rights Reserved &copy; 2025 Reportify
+      </div>
       <div className="right">
         <ul className="ul flex gap-8 ">
           <li className="cursor-pointer">
@@ -72,5 +74,32 @@ const MainContainer = styled.div`
 
   .ul li:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 610px) {
+    .ul {
+      gap: 15px;
+    }
+  }
+  @media (max-width: 550px) {
+    height: 10vh;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-evenly;
+    .ul {
+      font-size: 14px;
+      gap: 20px;
+    }
+  }
+  @media (max-width: 303px) {
+    height: 13vh;
+    position: absolute;
+    bottom: -10px;
+    .left{
+      font-size: 14px;
+    }
+    .ul {
+      gap: 15px;
+    }
   }
 `;

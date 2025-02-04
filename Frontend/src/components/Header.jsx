@@ -7,81 +7,45 @@ const Header = ({ handleLogout }) => {
   return (
     <MainContainer>
       <Link to="/homepage" className="logo"></Link>
-      {location.pathname === "/homepage" ? (
-        <div className="flex gap-2.5">
-          <button className="button2" onClick={handleLogout}>
-            Log Out
-          </button>
+      <div className="flex gap-2.5">
+        <button className="button2" onClick={handleLogout}>
+          Log Out
+        </button>
 
-          <Link to="/reports" className="button">
-            <span className="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
+        <Link
+          to={location.pathname === "/homepage" ? "/reports" : "/homepage"}
+          className="button"
+        >
+          <span className="button__icon-wrapper">
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg"
+              width="10"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
 
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                className="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
-            My Reports
-          </Link>
-        </div>
-      ) : (
-        <div className="flex gap-2.5">
-          <button className="button2" onClick={handleLogout}>
-            Log Out
-          </button>
-
-          <Link to="/homepage" className="button">
-            <span className="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                className="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
-            Home Page
-          </Link>
-        </div>
-      )}
+            <svg
+              viewBox="0 0 14 15"
+              fill="none"
+              width="10"
+              xmlns="http://www.w3.org/2000/svg"
+              className="button__icon-svg button__icon-svg--copy"
+            >
+              <path
+                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </span>
+          {location.pathname === "/homepage" ? "My Reports" : "Home Page"}
+        </Link>
+      </div>
     </MainContainer>
   );
 };
@@ -261,4 +225,24 @@ const MainContainer = styled.div`
       left: 100%;
     }
   }
+
+  @media (max-width: 514px) {
+    .button {
+      display: none;
+    }
+  }
+  @media (max-width: 330px) {
+    .logo {
+      position: relative;
+      background: url("Reportify-logo.png") no-repeat center/contain;
+      min-width: 150px;
+      height: 40px;
+      animation: dp 0.4s linear;
+      filter: drop-shadow(1px 1px 4px purple);
+    }
+    .button2 {
+      font-size: 14px;
+    }
+  }
+  
 `;
