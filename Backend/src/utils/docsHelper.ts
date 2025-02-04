@@ -429,15 +429,14 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
         ],
       });
   
-    Packer.toBuffer(doc).then((buffer) => {
-        res.set({
-            "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "Content-Disposition": "attachment; filename=generated.docx",
-          });
-          res.send(buffer);
-      fs.writeFileSync(`Document.docx`, buffer);
-      console.log(`DOCX file for "${topic}" created successfully!`);
+    const buffer = await Packer.toBuffer(doc)
+    res.set({
+      "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "Content-Disposition": "attachment; filename=generated.docx",
     });
+    res.send(buffer);    
+    fs.writeFileSync(`Document.docx`, buffer);
+    console.log(`DOCX file for "${topic}" created successfully!`);
   }
 
 export { createDocument }
