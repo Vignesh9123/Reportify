@@ -6,7 +6,7 @@ const Header = ({ handleLogout }) => {
   const location = useLocation();
   return (
     <MainContainer>
-      <Link to="/" className="logo"></Link>
+      <Link to="/homepage" className="logo"></Link>
       {location.pathname === "/homepage" ? (
         <div className="flex gap-2.5">
           <button className="button2" onClick={handleLogout}>
