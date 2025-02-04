@@ -78,7 +78,7 @@ const Header = ({ handleLogout }) => {
                 ></path>
               </svg>
             </span>
-            Back
+            Home Page
           </Link>
         </div>
       )}
