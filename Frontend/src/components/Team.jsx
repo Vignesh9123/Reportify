@@ -1,14 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Footer from "./Footer"
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { Navigate, useNavigate } from "react-router-dom";
+
 const Team = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User signed out.");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Spinner />
+        <p>Loading...</p>
+      </LoadingContainer>
+    );
+  }
   return (
     <MainContainer>
-      <Header />
+      <Header handleLogout={handleLogout} />
       <div className="body">
         {/*All reports will be displayed here*/}
         <div className="card">
@@ -271,4 +315,27 @@ const MainContainer = styled.div`
     border-left: 1px solid rgba(255, 255, 255, 0.126);
     border-right: 1px solid rgba(255, 255, 255, 0.126);
   }
+`;
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;

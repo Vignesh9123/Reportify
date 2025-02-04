@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { FaLocationArrow } from "react-icons/fa6";
@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -20,7 +22,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const auth = getAuth();
 
 function App() {
@@ -41,6 +42,13 @@ function App() {
     deleteSpeed: 30,
   });
   const navigate = useNavigate(); 
+
+  useEffect(() => {
+    toast.info("Welcome! Please click Generate Now to login with Google", {
+      position: "bottom-left",
+      autoClose: 3000,
+    });
+  }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -91,6 +99,7 @@ function App() {
           <div className="dot dr"></div>
         </div>
       </LeftContainer>
+      <ToastContainer />
     </MainContainer>
   );
 }

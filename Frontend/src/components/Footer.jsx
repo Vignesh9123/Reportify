@@ -8,8 +8,22 @@ const Header = () => {
     <MainContainer>
       <div className="left">All Rights Reserved &copy; 2025 Reportify</div>
       <div className="right">
-        <ul>
-
+        <ul className="ul flex gap-8 ">
+          <li className="cursor-pointer">
+            <Link to="/team" className="">
+              Our Team
+            </Link>
+          </li>
+          <li className="cursor-pointer">
+            <Link to="/team" className="">
+              About
+            </Link>
+          </li>
+          <li className="cursor-pointer">
+            <Link to="/team" className="">
+              Sample Report
+            </Link>
+          </li>
         </ul>
       </div>
     </MainContainer>
@@ -57,4 +71,8 @@ const MainContainer = styled.div`
   animation: ${fadeIn} 0.5s ease-in-out,
     ${gradientAnimation} 10s infinite alternate ease-in-out;
   color: white;
+
+  .ul li:hover{
+    text-decoration: underline;
+  }
 `;

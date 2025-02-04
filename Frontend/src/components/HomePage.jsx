@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
 const Carousel = () => {
   const [index, setIndex] = useState(0);
-  const [students, setStudents] = useState([
-    { rollNumber: "", name: "", usn: "" },
-  ]);
+  const [students, setStudents] = useState([{ rollNumber: "", name: "", usn: "" }]);
   const slides = [1, 2, 3];
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -16,9 +17,11 @@ const Carousel = () => {
   const [professorName, setprofessorName] = useState("");
   const [designation, setDesignation] = useState("");
   const [finalDetails, setFinalDetails] = useState("");
+
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
+
   const prevSlide = () => {
     setIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
@@ -32,19 +35,14 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    if (index === 0) {
-      document.querySelector(".left").style.display = "none";
+    const leftBtn = document.querySelector(".left");
+    const rightBtn = document.querySelector(".right");
+    if (leftBtn && rightBtn) {
+      leftBtn.style.display = index === 0 ? "none" : "block";
+      rightBtn.style.display = index === slides.length - 1 ? "none" : "block";
     }
-    if (index === 1 || index === 2) {
-      document.querySelector(".left").style.display = "block";
-    }
-    if (index === 2) {
-      document.querySelector(".right").style.display = "none";
-    }
-    if (index === 0 || index === 1) {
-      document.querySelector(".right").style.display = "block";
-    }
-  }, [index]);
+  }, [index, slides.length]);
+
   const generateReport = () => {
     const report = {
       title,
@@ -58,21 +56,11 @@ const Carousel = () => {
     };
 
     setFinalDetails(JSON.stringify(report, null, 2));
-    console.log("Generated Report: ", finalDetails);
     console.log("Generated Report: ", report);
-
-    // console.log("Generating Report");
-    // console.log("title: ", title);
-    // console.log("subject: ", subject);
-    // console.log("subject code: ", subjectCode);
-    // console.log("branch: ", branch);
-    // console.log("sem: ", sem);
-    // console.log("student: ", students);
-    // console.log("professor name: ", professorName);
-    // console.log("designation: ", designation);
   };
-  const deleteStudentField = (index) => () => {
-    const updatedStudents = students.filter((_, i) => i !== index);
+
+  const deleteStudentField = (idx) => () => {
+    const updatedStudents = students.filter((_, i) => i !== idx);
     setStudents(updatedStudents);
   };
 
@@ -86,9 +74,7 @@ const Carousel = () => {
               type="text"
               required
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <span>Title</span>
             <i></i>
@@ -98,9 +84,7 @@ const Carousel = () => {
               type="text"
               required
               value={subject}
-              onChange={(e) => {
-                setSubject(e.target.value);
-              }}
+              onChange={(e) => setSubject(e.target.value)}
             />
             <span>Subject</span>
             <i></i>
@@ -110,9 +94,7 @@ const Carousel = () => {
               type="text"
               required
               value={subjectCode}
-              onChange={(e) => {
-                setSubjectCode(e.target.value);
-              }}
+              onChange={(e) => setSubjectCode(e.target.value)}
             />
             <span>Subject Code</span>
             <i></i>
@@ -142,9 +124,7 @@ const Carousel = () => {
               max={8}
               required
               value={sem}
-              onChange={(e) => {
-                setSem(e.target.value);
-              }}
+              onChange={(e) => setSem(e.target.value)}
             />
             <span>Sem</span>
             <i></i>
@@ -161,9 +141,9 @@ const Carousel = () => {
             }}
             className="studentDetails"
           >
-            {students.map((student, index) => (
-              <React.Fragment key={index}>
-                <div className="flex ">
+            {students.map((student, idx) => (
+              <React.Fragment key={idx}>
+                <div className="flex">
                   <div className="textInputWrapper" style={{ width: "100px" }}>
                     <input
                       placeholder="Roll no."
@@ -172,7 +152,7 @@ const Carousel = () => {
                       value={student.rollNumber}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[index].rollNumber = e.target.value;
+                        updatedStudents[idx].rollNumber = e.target.value;
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
@@ -185,7 +165,7 @@ const Carousel = () => {
                       value={student.name}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[index].name = e.target.value;
+                        updatedStudents[idx].name = e.target.value;
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
@@ -198,18 +178,18 @@ const Carousel = () => {
                       value={student.usn}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[index].usn = e.target.value;
+                        updatedStudents[idx].usn = e.target.value;
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
                     />
                   </div>
                   <div className="flex justify-center items-center">
-                    <button class="Btn" onClick={deleteStudentField(index)}>
-                      <div class="sign">
+                    <button className="Btn" onClick={deleteStudentField(idx)}>
+                      <div className="sign">
                         <svg
                           viewBox="0 0 16 16"
-                          class="bi bi-trash3-fill"
+                          className="bi bi-trash3-fill"
                           fill="currentColor"
                           height="18"
                           width="18"
@@ -218,8 +198,7 @@ const Carousel = () => {
                           <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
                         </svg>
                       </div>
-
-                      <div class="text">Delete</div>
+                      <div className="text">Delete</div>
                     </button>
                   </div>
                 </div>
@@ -228,23 +207,23 @@ const Carousel = () => {
           </div>
           <div>
             <button
-              class="group cursor-pointer outline-none hover:rotate-90 duration-300"
+              className="group cursor-pointer outline-none hover:rotate-90 duration-300"
               title="Add Student"
               onClick={addStudentField}
             >
               <svg
-                class="stroke-black fill-none group-hover:fill-white group-active:stroke-white group-active:fill-white group-active:duration-0 duration-300"
+                className="stroke-black fill-none group-hover:fill-white group-active:stroke-white group-active:fill-white group-active:duration-0 duration-300"
                 viewBox="0 0 24 24"
                 height="40px"
                 width="40px"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
                 ></path>
-                <path stroke-width="1.5" d="M8 12H16"></path>
-                <path stroke-width="1.5" d="M12 16V8"></path>
+                <path strokeWidth="1.5" d="M8 12H16"></path>
+                <path strokeWidth="1.5" d="M12 16V8"></path>
               </svg>
             </button>
           </div>
@@ -256,9 +235,7 @@ const Carousel = () => {
               type="text"
               required
               value={professorName}
-              onChange={(e) => {
-                setprofessorName(e.target.value);
-              }}
+              onChange={(e) => setprofessorName(e.target.value)}
             />
             <span>Professor Name</span>
             <i></i>
@@ -279,21 +256,21 @@ const Carousel = () => {
           </div>
           <button
             onClick={generateReport}
-            class="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
+            className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
           >
             <svg
-              class="animate-pulse absolute z-10 overflow-visible transition-all duration-300 text-[#2e2e2e] group-hover:text-white top-[calc(var(--sz-text)/7)] left-[calc(var(--sz-text)/7)] h-[var(--gen-sz)] w-[var(--gen-sz)] group-hover:h-[var(--sz-text)] group-hover:w-[var(--sz-text)] group-hover:left-[calc(var(--sz-text)/0.6)] group-hover:top-[calc(calc(var(--gen-sz))/2)]"
+              className="animate-pulse absolute z-10 overflow-visible transition-all duration-300 text-[#2e2e2e] group-hover:text-white top-[calc(var(--sz-text)/7)] left-[calc(var(--sz-text)/7)] h-[var(--gen-sz)] w-[var(--gen-sz)] group-hover:h-[var(--sz-text)] group-hover:w-[var(--sz-text)] group-hover:left-[calc(var(--sz-text)/0.6)] group-hover:top-[calc(calc(var(--gen-sz))/2)]"
               stroke="none"
               viewBox="0 0 24 24"
               fill="currentColor"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
               ></path>
             </svg>
-            <span class="text-xl font-bold leading-none text-white transition-all duration-200 group-hover:opacity-0">
+            <span className="text-xl font-bold leading-none text-white transition-all duration-200 group-hover:opacity-0">
               Generate Report
             </span>
           </button>
@@ -310,9 +287,50 @@ const Carousel = () => {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User signed out.");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Spinner />
+        <p>Loading...</p>
+      </LoadingContainer>
+    );
+  }
+
   return (
     <MainContainer>
-      <Header />
+      <Header handleLogout={handleLogout}/>
       <div className="body">
         <Carousel />
       </div>
@@ -322,6 +340,8 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// Styled components and animations
 
 const fadeIn = keyframes`
   from {
@@ -411,7 +431,7 @@ const CarouselItem = styled.div`
     padding: 20px 10px 10px;
     font-size: 1em;
     color: #525252;
-    letter-spacing: 00.05em;
+    letter-spacing: 0.05em;
     transition: 0.5s;
     pointer-events: none;
   }
@@ -420,7 +440,7 @@ const CarouselItem = styled.div`
   .inputbox input:focus ~ span {
     color: black;
     transform: translateX(-10px) translateY(-34px);
-    font-size: 0, 75em;
+    font-size: 0.75em;
   }
 
   .inputbox i {
@@ -609,4 +629,27 @@ const CarouselButton = styled.button`
   &:hover {
     color: #000;
   }
+`;
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;

@@ -2,73 +2,85 @@ import React, { useState, useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ handleLogout }) => {
   const location = useLocation();
   return (
     <MainContainer>
       <Link to="/" className="logo"></Link>
       {location.pathname === "/homepage" ? (
-        <Link to="/reports" className="button">
-          <span className="button__icon-wrapper">
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg"
-              width="10"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
+        <div className="flex gap-2.5">
+          <button className="button2" onClick={handleLogout}>
+            Log Out
+          </button>
 
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg button__icon-svg--copy"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
-          </span>
-          My Reports
-        </Link>
+          <Link to="/reports" className="button">
+            <span className="button__icon-wrapper">
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg"
+                width="10"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg button__icon-svg--copy"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </span>
+            My Reports
+          </Link>
+        </div>
       ) : (
-        <Link to="/homepage" className="button">
-          <span className="button__icon-wrapper">
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg"
-              width="10"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
+        <div className="flex gap-2.5">
+          <button className="button2" onClick={handleLogout}>
+            Log Out
+          </button>
 
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg button__icon-svg--copy"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
-          </span>
-          Back
-        </Link>
+          <Link to="/homepage" className="button">
+            <span className="button__icon-wrapper">
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg"
+                width="10"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg button__icon-svg--copy"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </span>
+            Back
+          </Link>
+        </div>
       )}
     </MainContainer>
   );
@@ -177,5 +189,75 @@ const MainContainer = styled.div`
   .button:hover .button__icon-svg--copy {
     transition: transform 0.3s ease-in-out 0.1s;
     transform: translate(0);
+  }
+  .button2 {
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    background-color: black;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    gap: 10px;
+    font-weight: bold;
+    border: 3px solid #ffffff4d;
+    outline: none;
+    overflow: hidden;
+    font-size: 17px;
+    cursor: pointer;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .button2:hover {
+    transform: scale(1.05);
+    border-color: #fff9;
+  }
+
+  .button2:hover .icon {
+    transform: translate(4px);
+  }
+
+  .button2:hover::before {
+    animation: shine 1.5s ease-out infinite;
+  }
+
+  .button2::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(
+      120deg,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(239, 239, 239, 0.856),
+      rgba(0, 0, 0, 0) 70%
+    );
+
+    top: 0;
+    left: -100px;
+    opacity: 0.6;
+  }
+
+  @keyframes shine {
+    0% {
+      left: -100px;
+    }
+
+    60% {
+      left: 100%;
+    }
+
+    to {
+      left: 100%;
+    }
   }
 `;
