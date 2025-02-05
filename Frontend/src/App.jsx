@@ -98,7 +98,7 @@ function App() {
           <div className="dot dr"></div>
         </div>
       </LeftContainer>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </MainContainer>
   );
 }
