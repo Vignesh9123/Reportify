@@ -27,4 +27,19 @@ export type professorDetailsType = {
     designation: string;
     department: string;
     college: string;
+    subject:string;
+    subjectCode:string;
+    sem:number;
+};
+
+export type ReportType = {
+    topic: string;
+    submissionDetails: submissionDetailsType[];
+    professorDetails: professorDetailsType;
+    reportURL: string;
+    reportId: string;
+    key: string;
+    userId: string;
+    createdAt: Date;
+    isExpired:boolean
 };

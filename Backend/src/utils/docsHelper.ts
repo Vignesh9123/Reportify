@@ -10,7 +10,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
       console.error("Failed to generate MDX content.");
       return;
     }
-  
+    console.log("Generated content")
     const lines = mdText.split("\n").filter((line) => line.trim() !== "");
     const initialContent = [
       new Paragraph({
@@ -90,7 +90,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
         new Paragraph({
           children: [
             new TextRun({ 
-              text:  "Subject: Artificial Intelligence", 
+              text:  `Subject: ${professorDetails.subject}`, 
               bold: true, 
               size: 26, 
               font: "Times New Roman", 
@@ -103,7 +103,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
         new Paragraph({
           children: [
             new TextRun({ 
-              text:  "Subject Code: 22CS540", 
+              text:  `Subject Code: ${professorDetails.subjectCode}`, 
               bold: true, 
               size: 26, 
               font: "Times New Roman", 
@@ -428,15 +428,16 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
           },
         ],
       });
-  
+      console.log("Doc written")
     const buffer = await Packer.toBuffer(doc)
     res.set({
       "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "Content-Disposition": "attachment; filename=generated.docx",
     });
     res.send(buffer);    
-    fs.writeFileSync(`Document.docx`, buffer);
+    // fs.writeFileSync(`Document.docx`, buffer);
     console.log(`DOCX file for "${topic}" created successfully!`);
+    return buffer;
   }
 
 export { createDocument }
