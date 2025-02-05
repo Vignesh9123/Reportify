@@ -149,7 +149,7 @@ const MainContainer = styled.div`
 
   ::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
-    background-color: rgba(0, 234, 255, 0.6);
+    background-color: black;
   }
 
   @media (max-width: 1024px) {

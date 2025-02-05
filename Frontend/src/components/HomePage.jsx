@@ -352,7 +352,7 @@ const HomePage = () => {
         <Carousel />
       </div>
       <div>
-        <Footer handleLogout={handleLogout}/>
+        <Footer handleLogout={handleLogout} />
       </div>
     </MainContainer>
   );
@@ -393,6 +393,20 @@ const MainContainer = styled.div`
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.227);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background-color: black;
+  }
 `;
 
 const CarouselContainer = styled.div`
@@ -423,11 +437,18 @@ const CarouselContainer = styled.div`
     height: 530px;
   }
   @media (max-height: 646px) {
-    height: 500px;
-    .right {
+    height: 400px;
+    /* .right {
       position: absolute;
       bottom: 400px;
-    }
+    } */
+  }
+  @media (max-height: 747px) {
+    height: 500px;
+    /* .right {
+      position: absolute;
+      bottom: 400px;
+    } */
   }
 `;
 
@@ -444,6 +465,10 @@ const CarouselItem = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  overflow: auto;
+
+  
+
   .inputbox {
     position: relative;
     width: 500px;
@@ -687,6 +712,12 @@ const CarouselItem = styled.div`
       position: relative;
       width: 230px;
     }
+  }
+  @media (max-height: 646px) {
+    height: 300px;
+  }
+  @media (max-height: 747px) {
+    height: 400px;
   }
 `;
 
