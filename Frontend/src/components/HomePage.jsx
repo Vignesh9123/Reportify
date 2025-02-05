@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Carousel = () => {
   const [index, setIndex] = useState(0);
@@ -19,7 +21,6 @@ const Carousel = () => {
   const [professorName, setprofessorName] = useState("");
   const [designation, setDesignation] = useState("");
   const [finalDetails, setFinalDetails] = useState("");
-
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -35,6 +36,15 @@ const Carousel = () => {
     }
     setStudents([...students, { rollNumber: "", name: "", usn: "" }]);
   };
+
+  useEffect(() => {
+    if (index === 2) {
+      toast.info("Make sure all fields are filled before generating.", {
+        position: "bottom-center",
+        autoClose: 3000,
+      });
+    }
+  }, [index]);
 
   useEffect(() => {
     const leftBtn = document.querySelector(".left");
@@ -294,6 +304,9 @@ const Carousel = () => {
       <CarouselButton className="left" onClick={prevSlide}>
         Prev &#10094;
       </CarouselButton>
+      <div className="flex justify-center items-center">
+        Step : {index + 1} / 3
+      </div>
       <CarouselButton className="right" onClick={nextSlide}>
         Next &#10095;
       </CarouselButton>
@@ -350,6 +363,7 @@ const HomePage = () => {
       </div>
       <div className="body">
         <Carousel />
+        <ToastContainer />
       </div>
       <div>
         <Footer handleLogout={handleLogout} />
@@ -436,19 +450,11 @@ const CarouselContainer = styled.div`
     max-width: 250px;
     height: 530px;
   }
-  @media (max-height: 646px) {
-    height: 400px;
-    /* .right {
-      position: absolute;
-      bottom: 400px;
-    } */
-  }
   @media (max-height: 747px) {
     height: 500px;
-    /* .right {
-      position: absolute;
-      bottom: 400px;
-    } */
+  }
+  @media (max-height: 646px) {
+    height: 400px;
   }
 `;
 
@@ -466,8 +472,6 @@ const CarouselItem = styled.div`
   justify-content: space-around;
   align-items: center;
   overflow: auto;
-
-  
 
   .inputbox {
     position: relative;
@@ -713,11 +717,11 @@ const CarouselItem = styled.div`
       width: 230px;
     }
   }
-  @media (max-height: 646px) {
-    height: 300px;
-  }
   @media (max-height: 747px) {
     height: 400px;
+  }
+  @media (max-height: 646px) {
+    height: 350px;
   }
 `;
 
@@ -736,6 +740,9 @@ const CarouselButton = styled.button`
   }
   @media (max-width: 590px) {
     font-size: 1.2rem;
+  }
+  @media (max-height: 747px) {
+    font-size: 18px;
   }
 `;
 
