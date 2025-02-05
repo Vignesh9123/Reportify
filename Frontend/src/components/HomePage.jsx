@@ -113,11 +113,26 @@ const Carousel = () => {
             <span>Sem</span>
             <i></i>
           </div>
+          {/* <div className="inputbox">
+            <input
+              type="text"
+              required
+              list="designations"
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+            />
+            <datalist id="designations">
+              <option value="Associate Professor" />
+              <option value="Assistant Professor" />
+            </datalist>
+            <span>Professor Designation</span>
+            <i></i>
+          </div> */}
           <div className="inputbox">
             <input
               type="text"
+              required
               list="branches"
-              placeholder="Branch"
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
             />
@@ -129,6 +144,7 @@ const Carousel = () => {
               <option value="Electrical and Electronics Engineering" />
               <option value="Information Science and Engineering" />
             </datalist>
+            <span>Branch</span>
             <i></i>
           </div>
         </CarouselItem>
@@ -246,10 +262,14 @@ const Carousel = () => {
             <input
               type="text"
               required
+              list="designations"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
-              placeholder="eg,. Associate/Assistant Professor"
             />
+            <datalist id="designations">
+              <option value="Associate Professor" />
+              <option value="Assistant Professor" />
+            </datalist>
             <span>Professor Designation</span>
             <i></i>
           </div>
