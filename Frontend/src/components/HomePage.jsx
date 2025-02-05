@@ -104,30 +104,26 @@ const Carousel = () => {
           <div className="inputbox">
             <input
               type="number"
+              list="sems"
               min={1}
               max={8}
               required
               value={sem}
               onChange={(e) => setSem(e.target.value)}
             />
+            <datalist id="sems">
+              <option value="1" />
+              <option value="2" />
+              <option value="3" />
+              <option value="4" />
+              <option value="5" />
+              <option value="6" />
+              <option value="7" />
+              <option value="8" />
+            </datalist>
             <span>Sem</span>
             <i></i>
           </div>
-          {/* <div className="inputbox">
-            <input
-              type="text"
-              required
-              list="designations"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-            />
-            <datalist id="designations">
-              <option value="Associate Professor" />
-              <option value="Assistant Professor" />
-            </datalist>
-            <span>Professor Designation</span>
-            <i></i>
-          </div> */}
           <div className="inputbox">
             <input
               type="text"
@@ -390,6 +386,7 @@ const MainContainer = styled.div`
   background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
   position: relative;
   justify-content: space-between;
+  overflow: hidden;
   .body {
     height: auto;
     border-radius: 10px;

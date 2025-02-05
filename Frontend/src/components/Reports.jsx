@@ -88,7 +88,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  overflow: hidden;
   .body {
     position: relative;
     height: 90vh;

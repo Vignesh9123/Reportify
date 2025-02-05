@@ -14,7 +14,7 @@ const Header = ({ handleLogout }) => {
             <Link to="/team">Our Team</Link>
           </li>
           <li className="cursor-pointer">
-            <Link to="/team">About</Link>
+            <Link to="/about">About</Link>
           </li>
           <li className="cursor-pointer">
             <a href="Crypto.docx" download>

@@ -106,7 +106,7 @@ const Team = () => {
           </div>
           <div className="bottom-section">
             <p className="font-bold text-blue-300 text-2xl text-center">
-              SURAJ S G
+              SURAJ S G Dhanva
             </p>
             <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
             <div className="row row1">
@@ -175,6 +175,7 @@ const MainContainer = styled.div`
   background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
   position: relative;
   justify-content: space-between;
+  overflow: hidden;
   a {
     all: unset;
   }
@@ -346,7 +347,7 @@ const MainContainer = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       margin-top: 10vh;
       gap: 10vw;
     }

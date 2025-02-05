@@ -137,6 +137,7 @@ const MainContainer = styled.div`
   background: linear-gradient(135deg, #414141, #000000, #4b4b4b);
   font-family: "Poppins", sans-serif;
   color: white;
+  
   .logo {
     top: 5vh;
     width: 60vw;
@@ -172,13 +173,14 @@ const LeftContainer = styled.div`
     background: linear-gradient(45deg, #f9f9ff, #00eaff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 600;
     animation: ${fadeIn} 1.5s ease-in-out;
   }
 
   & h3 {
     font-size: 1.5rem;
     text-transform: uppercase;
-    background: linear-gradient(45deg, #00eaff, #f9f9ff);
+    background: linear-gradient(135deg, #00b7ffc1, #fcfcfc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: ${fadeIn} 1.5s ease-in-out;
