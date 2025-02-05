@@ -28,3 +28,15 @@ export type professorDetailsType = {
     department: string;
     college: string;
 };
+
+export type ReportType = {
+    topic: string;
+    submissionDetails: submissionDetailsType[];
+    professorDetails: professorDetailsType;
+    reportURL: string;
+    reportId: string;
+    key: string;
+    userId: string;
+    createdAt: Date;
+    isExpired:boolean
+};
