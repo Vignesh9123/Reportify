@@ -130,7 +130,7 @@ const MainContainer = styled.div`
     text-align: justify;
     font-size: 24px;
     font-weight: 600;
-
+    height: auto;
     & p {
       height: 90vh;
       overflow-y: auto;
@@ -164,6 +164,7 @@ const MainContainer = styled.div`
         height: 90vh;
         overflow-y: auto;
         color: white;
+        margin: 20px 0 12vh 0;
       }
     }
   }
