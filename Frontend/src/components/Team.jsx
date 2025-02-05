@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import Footer from "./Footer"
+import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -41,7 +41,6 @@ const Team = () => {
     return () => unsubscribe();
   }, [auth, navigate]);
 
-
   if (loading) {
     return (
       <LoadingContainer className="bg-black">
@@ -52,7 +51,9 @@ const Team = () => {
   }
   return (
     <MainContainer>
-      <Header handleLogout={handleLogout} />
+      <div>
+        <Header handleLogout={handleLogout} />
+      </div>
       <div className="body">
         {/*All reports will be displayed here*/}
         <div className="card">
@@ -76,12 +77,18 @@ const Team = () => {
                 </a>
               </div>
               <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://www.linkedin.com/in/vignesh-d-mys/" target="_blank">
+                <a
+                  href="https://www.linkedin.com/in/vignesh-d-mys/"
+                  target="_blank"
+                >
                   <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
                 </a>
               </div>
               <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com" target="_blank">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
+                  target="_blank"
+                >
                   <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
                 </a>
               </div>
@@ -109,12 +116,18 @@ const Team = () => {
                 </a>
               </div>
               <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/" target="_blank">
+                <a
+                  href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
+                  target="_blank"
+                >
                   <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
                 </a>
               </div>
               <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com" target="_blank">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
+                  target="_blank"
+                >
                   <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
                 </a>
               </div>
@@ -122,7 +135,9 @@ const Team = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <div>
+        <Footer />
+      </div>
     </MainContainer>
   );
 };
@@ -155,8 +170,11 @@ export default Team;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  min-height: 100vh;
+  height: auto;
+  background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+  position: relative;
+  justify-content: space-between;
   a {
     all: unset;
   }
@@ -189,7 +207,7 @@ const MainContainer = styled.div`
     transform: scale(1.05);
   }
 
-  .card:nth-child(1) .top-section{
+  .card:nth-child(1) .top-section {
     height: 200px;
     border-radius: 15px;
     display: flex;
@@ -197,7 +215,7 @@ const MainContainer = styled.div`
     background: url("vig.png") no-repeat center/cover;
     position: relative;
   }
-  .card:nth-child(2) .top-section{
+  .card:nth-child(2) .top-section {
     height: 200px;
     border-radius: 15px;
     display: flex;
@@ -314,6 +332,24 @@ const MainContainer = styled.div`
   .card .bottom-section .row .item:nth-child(2) {
     border-left: 1px solid rgba(255, 255, 255, 0.126);
     border-right: 1px solid rgba(255, 255, 255, 0.126);
+  }
+
+  @media (max-width: 556px) {
+    .body {
+      position: relative;
+      min-height: 110vh;
+      width: 100vw;
+      background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+      border-radius: 10px 10px 0 0;
+      animation: ${fadeIn} 1s ease-in-out,
+        ${gradientAnimation} 10s infinite alternate ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10vh;
+      gap: 10vw;
+    }
   }
 `;
 
