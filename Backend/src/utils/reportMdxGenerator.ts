@@ -25,7 +25,7 @@ Generate this kind of abstract for the topic "${topic}". Keep the title as "Abst
     { title: "Challenges", prompt: `Outline challenges associated with "${topic}".` },
     { title: "Future Trends", prompt: `Discuss emerging trends related to "${topic}".` },
     { title: "Conclusion", prompt: `Summarize the key points of "${topic}".` },
-    { title: "References", prompt: `List relevant references or resources for "${topic}". If providing specific URLs is beyond the scope of the response format, provide some books with author bullet list instead which are relevent to ${topic}. Dont mention that you cannot provide references or URLS ` },
+    { title: "References", prompt: `List relevant references or resources for "${topic}". If providing specific URLs is beyond the scope of the response format, provide some books with author bullet list instead which are relevent to ${topic}. Dont mention that you cannot provide references or URLS. Keep the title as "References" ` },
   ];
 
   let completeContent = "";
