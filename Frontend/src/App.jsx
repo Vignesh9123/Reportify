@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { FaLocationArrow } from "react-icons/fa6";
@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -20,11 +22,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const auth = getAuth();
 
 function App() {
-  const [display, setDisplay] = useState(true);
   const [text] = useTypewriter({
     words: [
       "Effortlessly generate AI-powered college reports for JSS STU students with just a title.",
@@ -40,7 +40,14 @@ function App() {
     typeSpeed: 70,
     deleteSpeed: 30,
   });
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    toast.info("Welcome! Please click 'Get Started' to log in with Google.", {
+      position: "bottom-left",
+      autoClose: 3000,
+    });
+  }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -59,7 +66,7 @@ function App() {
     <MainContainer>
       <LeftContainer>
         <div className="logo">
-          <img src="Reportify-logo-full.png" alt="LOGO" width={350} />
+          <img src="Reportify-logo-full.png" alt="LOGO" width={300} />
         </div>
         <div>
           <h1>Welcome to REPORTIFY</h1>
@@ -77,7 +84,7 @@ function App() {
           <div className="border-line left-line"></div>
           <div className="border-line right-line"></div>
           <div className="inner1" onClick={handleGoogleSignIn}>
-            Generate Now
+            Get Started
             <div className="tl tri"></div>
             <div className="tr tri"></div>
             <div className="bl tri"></div>
@@ -91,6 +98,7 @@ function App() {
           <div className="dot dr"></div>
         </div>
       </LeftContainer>
+      <ToastContainer />
     </MainContainer>
   );
 }
@@ -129,6 +137,7 @@ const MainContainer = styled.div`
   background: linear-gradient(135deg, #414141, #000000, #4b4b4b);
   font-family: "Poppins", sans-serif;
   color: white;
+  
   .logo {
     top: 5vh;
     width: 60vw;
@@ -164,13 +173,14 @@ const LeftContainer = styled.div`
     background: linear-gradient(45deg, #f9f9ff, #00eaff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 600;
     animation: ${fadeIn} 1.5s ease-in-out;
   }
 
   & h3 {
     font-size: 1.5rem;
     text-transform: uppercase;
-    background: linear-gradient(45deg, #00eaff, #f9f9ff);
+    background: linear-gradient(135deg, #00b7ffc1, #fcfcfc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: ${fadeIn} 1.5s ease-in-out;
@@ -325,9 +335,28 @@ const LeftContainer = styled.div`
   }
 
   @media (max-width: 1024px) {
-    margin-top: 20vh;
     width: 90%;
     margin-left: 0px;
     height: 20vh;
+  }
+
+  @media (max-width: 420px) {
+
+    .logo {
+      top: 3vh;
+      width: 68vw;
+      animation: ${fadeIn} 1s ease-in-out,
+        ${gradientAnimation} 10s infinite alternate ease-in-out;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 320px) {
+    h1 {
+      font-size: 35px;
+    }
+    h3 {
+      font-size: 20px;
+    }
   }
 `;
