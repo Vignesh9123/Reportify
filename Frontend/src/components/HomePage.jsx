@@ -336,7 +336,7 @@ const HomePage = () => {
         <Carousel />
       </div>
       <div>
-        <Footer />
+        <Footer handleLogout={handleLogout}/>
       </div>
     </MainContainer>
   );

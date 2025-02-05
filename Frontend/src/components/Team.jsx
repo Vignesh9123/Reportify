@@ -136,7 +136,7 @@ const Team = () => {
         </div>
       </div>
       <div>
-        <Footer />
+        <Footer handleLogout={handleLogout}/>
       </div>
     </MainContainer>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ handleLogout }) => {
   return (
     <MainContainer>
       <div className="left text-gray-500">
@@ -14,10 +14,17 @@ const Header = () => {
             <Link to="/team">Our Team</Link>
           </li>
           <li className="cursor-pointer">
-            <Link to="/about">About</Link>
+            <Link to="/team">About</Link>
           </li>
           <li className="cursor-pointer">
-            <a href="Crypto.docx" download>Sample Report</a>
+            <a href="Crypto.docx" download>
+              Sample Report
+            </a>
+          </li>
+          <li className="cursor-pointer logout" onClick={handleLogout}>
+            <a className="text-red-400 border-2 border-amber-400 px-1 py-0.5 rounded-2xl">
+              Logout
+            </a>
           </li>
         </ul>
       </div>
@@ -54,9 +61,12 @@ const MainContainer = styled.div`
   background-color: #000;
   animation: ${fadeIn} 0.5s ease-in-out;
   color: white;
-  border-radius: 10px 10px 0 0 ;
+  border-radius: 10px 10px 0 0;
   margin-top: auto;
   height: 10vh;
+  .logout {
+    display: none;
+  }
   .ul li:hover {
     text-decoration: underline;
   }
@@ -64,6 +74,11 @@ const MainContainer = styled.div`
   @media (max-width: 610px) {
     .ul {
       gap: 15px;
+    }
+  }
+  @media (max-width: 514px) {
+    .logout {
+      display: block;
     }
   }
   @media (max-width: 550px) {

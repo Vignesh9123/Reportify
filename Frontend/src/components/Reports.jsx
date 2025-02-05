@@ -37,7 +37,6 @@ const Reports = () => {
     return () => unsubscribe();
   }, [auth, navigate]);
 
-
   if (loading) {
     return (
       <LoadingContainer className="bg-black">
@@ -54,7 +53,7 @@ const Reports = () => {
           <h3>No Reports to display</h3>
         </div>
       </div>
-      <Footer />
+      <Footer handleLogout={handleLogout} />
     </MainContainer>
   );
 };

@@ -230,7 +230,7 @@ const MainContainer = styled.div`
   }
 
   @media (max-width: 514px) {
-    .button {
+    .button2 {
       display: none;
     }
   }
@@ -243,9 +243,18 @@ const MainContainer = styled.div`
       animation: dp 0.4s linear;
       filter: drop-shadow(1px 1px 4px purple);
     }
-    .button2 {
-      font-size: 14px;
+  }
+  @media (max-width: 423px) {
+    .logo {
+      position: relative;
+      background: url("Reportify-logo.png") no-repeat center/contain;
+      min-width: 140px;
+      height: 40px;
+      animation: dp 0.4s linear;
+      filter: drop-shadow(1px 1px 4px purple);
+    }
+    .button {
+      font-size: 12px;
     }
   }
-  
 `;
