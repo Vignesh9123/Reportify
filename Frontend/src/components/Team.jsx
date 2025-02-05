@@ -106,7 +106,7 @@ const Team = () => {
           </div>
           <div className="bottom-section">
             <p className="font-bold text-blue-300 text-2xl text-center">
-              SURAJ S G Dhanva
+              SURAJ S G DHANVA
             </p>
             <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
             <div className="row row1">
