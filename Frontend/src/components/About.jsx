@@ -123,17 +123,16 @@ const MainContainer = styled.div`
 
   .body {
     display: flex;
-    top: 10vh;
     position: relative;
     width: 60%;
     margin: 0 auto;
     text-align: justify;
     font-size: 24px;
     font-weight: 600;
-    height: auto;
+    height: 60vh;
     color: white;
     & p {
-      height: 90vh;
+      height: 73vh;
       overflow-y: auto;
     }
   }
