@@ -39,7 +39,7 @@ const Carousel = () => {
 
   useEffect(() => {
     if (index === 2) {
-      toast.info("Make sure all fields are filled before generating.", {
+      toast.info("Make sure all fields are completed before generating.", {
         position: "bottom-center",
         autoClose: 3000,
       });
@@ -149,6 +149,8 @@ const Carousel = () => {
               <option value="Civil Engineering" />
               <option value="Electrical and Electronics Engineering" />
               <option value="Information Science and Engineering" />
+              <option value="Environmental Engineering" />
+              <option value="Polymer Science and Technology" />
             </datalist>
             <span>Branch</span>
             <i></i>
@@ -374,7 +376,6 @@ const HomePage = () => {
 
 export default HomePage;
 
-// Styled components and animations
 
 const fadeIn = keyframes`
   from {
@@ -682,10 +683,7 @@ const CarouselItem = styled.div`
   .Btn:active {
     transform: translate(2px, 2px);
   }
-  /* .fields{
-    display: flex;
-    gap: 30px;
-  } */
+
   @media (max-width: 590px) {
     .inputbox {
       position: relative;
