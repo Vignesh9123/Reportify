@@ -113,7 +113,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   height: auto;
-  background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+  background: linear-gradient(135deg, #141414, #383838, #585858);
   position: relative;
   justify-content: space-between;
   overflow: hidden;
@@ -131,6 +131,7 @@ const MainContainer = styled.div`
     font-size: 24px;
     font-weight: 600;
     height: auto;
+    color: white;
     & p {
       height: 90vh;
       overflow-y: auto;
