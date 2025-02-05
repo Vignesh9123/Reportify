@@ -82,10 +82,13 @@ const MainContainer = styled.div`
   border: 1px solid black;
   border-radius: 0 0 10px 10px;
   display: flex;
+  position: absolute;
+  top: 0;
   justify-content: space-between;
   padding: 0 20px 0 15px;
   align-items: center;
   background-color: #000;
+  z-index: 9999;
   animation: ${fadeIn} 0.5s ease-in-out,
     ${gradientAnimation} 10s infinite alternate ease-in-out;
   .logo {

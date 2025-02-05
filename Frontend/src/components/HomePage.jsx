@@ -329,11 +329,15 @@ const HomePage = () => {
 
   return (
     <MainContainer>
-      <Header handleLogout={handleLogout} />
+      <div>
+        <Header handleLogout={handleLogout} />
+      </div>
       <div className="body">
         <Carousel />
       </div>
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </MainContainer>
   );
 };
@@ -362,35 +366,32 @@ const gradientAnimation = keyframes`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
+  height: 100vh;
+  background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+  position: relative;
+  justify-content: space-between;
   .body {
-    position: relative;
-    height: 83vh;
-    width: 100vw;
-    flex-direction: column;
-    background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
+    height: auto;
     border-radius: 10px;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
 const CarouselContainer = styled.div`
   position: relative;
   max-width: 600px;
-  height: 620px;
+  height: 600px;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: #e8e8e8;
   transition: all 0.5s ease-in-out;
+  margin: 0 auto;
+  top: 6vh;
   @media (max-width: 590px) {
     max-width: 400px;
+    height: 500px;
   }
   @media (max-width: 412px) {
     max-width: 350px;
@@ -426,10 +427,9 @@ const CarouselItem = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-
   .inputbox {
     position: relative;
-    width: 400px;
+    width: 500px;
   }
 
   .inputbox input {
@@ -657,10 +657,10 @@ const CarouselItem = styled.div`
       position: relative;
       width: 250px;
     }
-    .Btn{
+    .Btn {
       width: 20px;
       height: 20px;
-      & .sign{
+      & .sign {
         font-size: 10px;
       }
     }
@@ -674,8 +674,8 @@ const CarouselItem = styled.div`
 `;
 
 const CarouselButton = styled.button`
-  position: absolute;
   top: 90%;
+  position: absolute;
   transform: translateY(-50%);
   color: gray;
   border: none;
