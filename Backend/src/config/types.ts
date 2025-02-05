@@ -27,6 +27,9 @@ export type professorDetailsType = {
     designation: string;
     department: string;
     college: string;
+    subject:string;
+    subjectCode:string;
+    sem:number;
 };
 
 export type ReportType = {

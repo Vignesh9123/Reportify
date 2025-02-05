@@ -90,7 +90,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
         new Paragraph({
           children: [
             new TextRun({ 
-              text:  "Subject: Artificial Intelligence", 
+              text:  `Subject: ${professorDetails.subject}`, 
               bold: true, 
               size: 26, 
               font: "Times New Roman", 
@@ -103,7 +103,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
         new Paragraph({
           children: [
             new TextRun({ 
-              text:  "Subject Code: 22CS540", 
+              text:  `Subject Code: ${professorDetails.subjectCode}`, 
               bold: true, 
               size: 26, 
               font: "Times New Roman", 
