@@ -130,7 +130,7 @@ const MainContainer = styled.div`
     text-align: justify;
     font-size: 24px;
     font-weight: 600;
-    
+
     & p {
       height: 90vh;
       overflow-y: auto;
@@ -154,6 +154,17 @@ const MainContainer = styled.div`
   @media (max-width: 1024px) {
     .body {
       width: 90%;
+    }
+  }
+  @media (max-width: 500px) {
+    .body {
+      width: 98%;
+      & p {
+        font-weight: 700;
+        height: 90vh;
+        overflow-y: auto;
+        color: white;
+      }
     }
   }
 `;
