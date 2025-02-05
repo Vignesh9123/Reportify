@@ -149,7 +149,7 @@ const MainContainer = styled.div`
 
   ::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
-    background-color: black;
+    background-color: rgba(0, 234, 255, 0.6);
   }
 
   @media (max-width: 1024px) {
@@ -167,6 +167,11 @@ const MainContainer = styled.div`
         color: white;
         margin: 20px 0 12vh 0;
       }
+    }
+  }
+  @media (max-height:570px){
+    .body{
+      padding: 0 0 15vh 0;
     }
   }
 `;
