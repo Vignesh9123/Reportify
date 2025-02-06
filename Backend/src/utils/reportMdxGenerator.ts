@@ -1,6 +1,6 @@
 import { reportModel as model } from "../config/geminiAI";
 
-async function generateSectionContent(title: string, promptContent: string) : Promise<string> {
+export async function generateSectionContent(title: string, promptContent: string) : Promise<string> {
   try {
     console.log(`Generating content for: ${title}...`);
     const result = await model.generateContent(`${title}:\n\n${promptContent}`);

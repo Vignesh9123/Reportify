@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { getSections } from "../constants";
 
 const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
@@ -73,8 +74,23 @@ const Carousel = ({ setIndexy }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
+    let content = ""
+    const sections = getSections(title);
+    for (const section of sections) {
+      const response = await axios.post('/api/content/generate', {
+          title: section.title,
+          promptContent: section.prompt
+      }, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+      content += response.data.data;
+  }
+
     const report = {
       topic: title,
+      content: content,
       professorDetails: {
         name: professorName,
         designation: designation,
