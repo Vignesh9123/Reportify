@@ -246,7 +246,7 @@ const Carousel = ({ setIndexy }) => {
                       value={student.USN}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[idx].USN = e.target.value;
+                        updatedStudents[idx].USN = e.target.value.toUpperCase(); 
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
