@@ -55,14 +55,6 @@ const Carousel = ({ setIndexy }) => {
     setStudents([...students, { rollNumber: "", name: "", USN: "" }]);
   };
 
-  useEffect(() => {
-    if (index === 2) {
-      toast.info("Make sure all fields are completed before generating.", {
-        position: "bottom-center",
-        autoClose: 3000,
-      });
-    }
-  }, [index]);
 
   useEffect(() => {
     const leftBtn = document.querySelector(".left");
