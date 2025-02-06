@@ -5,14 +5,14 @@ import { submissionDetails, professorDetails } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { Response } from "express";
-async function createDocument(topic: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
-    const mdText = await generateCompleteMDXContent(topic);
-    if (!mdText) {
-      console.error("Failed to generate MDX content.");
-      return;
-    }
+async function createDocument(topic: string, content: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
+    // const mdText = await generateCompleteMDXContent(topic);
+    // if (!mdText) {
+    //   console.error("Failed to generate MDX content.");
+    //   return;
+    // }
     console.log("Generated content")
-    const lines = mdText.split("\n").filter((line) => line.trim() !== "");
+    const lines = content.split("\n").filter((line) => line.trim() !== "");
     const initialContent = [
       new Paragraph({
         heading: HeadingLevel.HEADING_1,
@@ -440,6 +440,6 @@ async function createDocument(topic: string, res : Response, submissionDetails: 
     // fs.writeFileSync(`Document.docx`, buffer);
     console.log(`DOCX file for "${topic}" created successfully!`);
     return buffer;
-  }
+}
 
 export { createDocument }

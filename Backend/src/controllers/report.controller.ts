@@ -9,9 +9,13 @@ import { Report } from "../models/report.model";
 import { utapi } from "../config/uploadThing";
 
 export const generateReport = asyncHandler(async (req: Request, res: Response) => {
-    const {topic, submissionDetails, professorDetails}:{topic: string, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType} = req.body;
+    const {topic,content, submissionDetails, professorDetails}:{topic: string, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType, content: string} = req.body;
     if(!topic) throw new ApiError(400, "Topic is required");
-    const fileBuffer = await createDocument(topic, res, submissionDetails, professorDetails);
+    if(!content) throw new ApiError(400, "Content is required");
+    if(!submissionDetails) throw new ApiError(400, "Submission details are required");
+    if(!professorDetails) throw new ApiError(400, "Professor details are required");
+    console.log("Generating report");
+    const fileBuffer = await createDocument(topic,content, res, submissionDetails, professorDetails);
     if(!fileBuffer) throw new ApiError(500, "Error while generating report");
     console.log("Uploading buffer to uploadThing")
     const key = await uploadBuffer(fileBuffer, `${req.user._id+Date.now()}.docx`);
