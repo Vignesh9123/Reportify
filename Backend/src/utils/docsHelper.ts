@@ -4,7 +4,8 @@ import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { submissionDetails, professorDetails } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
-async function createDocument(topic: string, res : any, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
+import { Response } from "express";
+async function createDocument(topic: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
     const mdText = await generateCompleteMDXContent(topic);
     if (!mdText) {
       console.error("Failed to generate MDX content.");
@@ -131,18 +132,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
           rows: [
             new TableRow({
               children: [
-                new TableCell({
-                  children: [
-                    new Paragraph({
-                      children: [
-                        new TextRun({ text: "Name", bold: true, size: 26, font: "Times New Roman", color: "000000" })
-                      ],
-                      alignment: "center",
-                      spacing: {line: 360 }
-                    })
-                  ],
-                  width: { size: 5000, type: "auto" },
-                }),
+                
                 new TableCell({
                   children: [
                     new Paragraph({
@@ -166,23 +156,23 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
                     })
                   ],
                   width: { size: 5000, type: "auto" },
-                })
-              ],
-            }),
-            ...submissionDetails.map((detail) => new TableRow({
-              children: [
+                }),
                 new TableCell({
                   children: [
                     new Paragraph({
                       children: [
-                        new TextRun({ text: detail.name, size: 26, font: "Times New Roman", color: "000000" })
+                        new TextRun({ text: "Name", bold: true, size: 26, font: "Times New Roman", color: "000000" })
                       ],
                       alignment: "center",
                       spacing: {line: 360 }
                     })
                   ],
                   width: { size: 5000, type: "auto" },
-                }),
+                })
+              ],
+            }),
+            ...submissionDetails.map((detail) => new TableRow({
+              children: [
                 new TableCell({
                   children: [
                     new Paragraph({
@@ -200,6 +190,18 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
                     new Paragraph({
                       children: [
                         new TextRun({ text: detail.USN, size: 26, font: "Times New Roman", color: "000000" })
+                      ],
+                      alignment: "center",
+                      spacing: {line: 360 }
+                    })
+                  ],
+                  width: { size: 5000, type: "auto" },
+                }),
+                new TableCell({
+                  children: [
+                    new Paragraph({
+                      children: [
+                        new TextRun({ text: detail.name, size: 26, font: "Times New Roman", color: "000000" })
                       ],
                       alignment: "center",
                       spacing: {line: 360 }
@@ -434,7 +436,7 @@ async function createDocument(topic: string, res : any, submissionDetails: submi
       "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "Content-Disposition": "attachment; filename=generated.docx",
     });
-    res.send(buffer);    
+    res.end(buffer);    
     // fs.writeFileSync(`Document.docx`, buffer);
     console.log(`DOCX file for "${topic}" created successfully!`);
     return buffer;

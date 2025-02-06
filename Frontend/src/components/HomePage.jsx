@@ -71,18 +71,32 @@ const Carousel = () => {
       submissionDetails: students,
     };
     console.log(report);
-    // try {
-    //   const response = await axios.post('/api/report/generate', report, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
-
-    //   console.log("Report Generated Successfully:", response.data);
-    //   setFinalDetails(JSON.stringify(response.data, null, 2));
-    // } catch (error) {
-    //   console.error("Error generating report:", error);
-    // }
+    try {
+      const response = await axios.post('/api/report/generate', report, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        responseType: 'arraybuffer', // Important for handling binary data
+      });
+      
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      
+      // Create a temporary link to trigger the download
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${title}.docx`; // Suggested filename
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+      setFinalDetails(JSON.stringify(response.data, null, 2));
+    } catch (error) {
+      console.error("Error generating report:", error);
+    }
   };
 
   const deleteStudentField = (idx) => () => {
@@ -336,23 +350,23 @@ const HomePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // const fetchCurrentUser = async () => {
-  //   try {
-  //     const response = await axios.get("/api/auth/current-user", {
-  //       withCredentials: true,
-  //     });
-  //     setCurrentUser(response.data.data);
-  //     console.log("Current User:", response.data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // };
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axios.get("/api/auth/current-user", {
+        withCredentials: true, 
+      });
+      setCurrentUser(response.data.data); 
+      console.log("Current User:", response.data.data);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchCurrentUser();
-  // }, []);
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   const handleLogout = () => {
     signOut(auth)

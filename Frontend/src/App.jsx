@@ -56,18 +56,18 @@ function App() {
       const user = result.user;
       console.log("Signed in user: ", user);
 
-      // const userData = {
-      //   name: user.displayName,
-      //   email: user.email,
-      // };
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+      };
 
-      // const response = await axios.post("/api/auth/google-login", userData, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
+      const response = await axios.post("/api/auth/google-login", userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      // console.log("Login Response:", response.data);
+      console.log("Login Response:", response.data);
       
       navigate("/homepage");
     } catch (error) {
