@@ -4,7 +4,7 @@ const apiKey = config.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const reportModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: config["GEMINI2.0"],
   systemInstruction: `
 Generate a well-structured MDX document about the given topic with the following sections:
 1. Title (H1)
@@ -16,7 +16,8 @@ Format everything in Markdown. Use - for bullets.
 Also use the same for indentation in bullets.
 Never use * for bullets.
 Please don't use the section titles given here, use your own
-Make sure that the content is relevant  to the topic and as detailed as possible and is plagiary free
+Make sure that the content is relevant to the topic and as detailed as possible and is plagiary free
+Dont wrap it inside code blocks
 `,
 });
 

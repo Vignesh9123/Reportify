@@ -4,6 +4,7 @@ async function generateSectionContent(title: string, promptContent: string) : Pr
   try {
     console.log(`Generating content for: ${title}...`);
     const result = await model.generateContent(`${title}:\n\n${promptContent}`);
+    console.log(`Generated content for "${title}":`, result);
     const text = result.response.text();
     return `${text}\n---\n`;
   } catch (error) {
