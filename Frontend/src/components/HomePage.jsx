@@ -74,19 +74,44 @@ const Carousel = ({ setIndexy }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
-    let content = ""
+    if (
+      !title ||
+      !professorName ||
+      !designation ||
+      !branch ||
+      !subject ||
+      !subjectCode ||
+      !sem ||
+      students.length === 0
+    ) {
+      toast.info(
+        "Some fields are missing. Please ensure everything is completed.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
+      return;
+    }
+
+    let content = "";
     const sections = getSections(title);
+
     for (const section of sections) {
-      const response = await axios.post('/api/content/generate', {
+      const response = await axios.post(
+        "/api/content/generate",
+        {
           title: section.title,
-          promptContent: section.prompt
-      }, {
+          promptContent: section.prompt,
+        },
+        {
           headers: {
-              'Content-Type': 'application/json'
-          }
-      });
+            "Content-Type": "application/json",
+          },
+        }
+      );
       content += response.data.data;
-  }
+    }
 
     const report = {
       topic: title,
@@ -102,12 +127,12 @@ const Carousel = ({ setIndexy }) => {
       },
       submissionDetails: students,
     };
+
     console.log(report);
+
     try {
       const response = await axios.post("/api/report/generate", report, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         responseType: "arraybuffer",
       });
 
@@ -120,9 +145,9 @@ const Carousel = ({ setIndexy }) => {
       link.download = `${title}.docx`;
       document.body.appendChild(link);
       link.click();
-
       document.body.removeChild(link);
       URL.revokeObjectURL(link.href);
+
       setFinalDetails(JSON.stringify(response.data, null, 2));
     } catch (error) {
       console.error("Error generating report:", error);
@@ -262,7 +287,7 @@ const Carousel = ({ setIndexy }) => {
                       value={student.USN}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[idx].USN = e.target.value.toUpperCase(); 
+                        updatedStudents[idx].USN = e.target.value.toUpperCase();
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
@@ -418,12 +443,6 @@ const HomePage = () => {
       });
   };
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
