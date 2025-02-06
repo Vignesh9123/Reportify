@@ -11,7 +11,7 @@ import axios from "axios";
 const Carousel = () => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([
-    { rollNumber: "", name: "", usn: "" },
+    { rollNumber: "", name: "", USN: "" },
   ]);
   const slides = [1, 2, 3];
   const [title, setTitle] = useState("");
@@ -35,7 +35,7 @@ const Carousel = () => {
       alert("Maximum 10 students allowed.");
       return;
     }
-    setStudents([...students, { rollNumber: "", name: "", usn: "" }]);
+    setStudents([...students, { rollNumber: "", name: "", USN: "" }]);
   };
 
   useEffect(() => {
@@ -215,10 +215,10 @@ const Carousel = () => {
                     <input
                       placeholder="USN"
                       type="text"
-                      value={student.usn}
+                      value={student.USN}
                       onChange={(e) => {
                         const updatedStudents = [...students];
-                        updatedStudents[idx].usn = e.target.value;
+                        updatedStudents[idx].USN = e.target.value;
                         setStudents(updatedStudents);
                       }}
                       className="textInput"
@@ -341,9 +341,9 @@ const HomePage = () => {
   // const fetchCurrentUser = async () => {
   //   try {
   //     const response = await axios.get("/api/auth/current-user", {
-  //       withCredentials: true, 
+  //       withCredentials: true,
   //     });
-  //     setCurrentUser(response.data.data); 
+  //     setCurrentUser(response.data.data);
   //     console.log("Current User:", response.data.data);
   //   } catch (error) {
   //     console.error("Error fetching user:", error);
