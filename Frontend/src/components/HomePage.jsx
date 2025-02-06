@@ -434,7 +434,7 @@ const HomePage = () => {
       </div>
       <div className="body">
         <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
-          <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4">
+          <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4 text-white">
             Hello, {currentUser.name} !
           </h1>
           <p className="text-2xl italic text-gray-400">
