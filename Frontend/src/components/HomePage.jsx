@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Carousel = () => {
   const [index, setIndex] = useState(0);
@@ -55,20 +56,33 @@ const Carousel = () => {
     }
   }, [index, slides.length]);
 
-  const generateReport = () => {
+  const generateReport = async () => {
     const report = {
-      title,
-      subject,
-      subjectCode,
-      branch,
-      sem,
-      students,
-      professorName,
-      designation,
+      topic: title,
+      professorDetails: {
+        name: professorName,
+        designation: designation,
+        department: branch,
+        college: "JSS Science and Technology University",
+        subject: subject,
+        subjectCode: subjectCode,
+        sem: sem,
+      },
+      submissionDetails: students,
     };
+    console.log(report);
+    // try {
+    //   const response = await axios.post('/api/report/generate', report, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   });
 
-    setFinalDetails(JSON.stringify(report, null, 2));
-    console.log("Generated Report: ", report);
+    //   console.log("Report Generated Successfully:", response.data);
+    //   setFinalDetails(JSON.stringify(response.data, null, 2));
+    // } catch (error) {
+    //   console.error("Error generating report:", error);
+    // }
   };
 
   const deleteStudentField = (idx) => () => {
@@ -322,6 +336,24 @@ const HomePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // const [currentUser, setCurrentUser] = useState(null);
+
+  // const fetchCurrentUser = async () => {
+  //   try {
+  //     const response = await axios.get("/api/auth/current-user", {
+  //       withCredentials: true, 
+  //     });
+  //     setCurrentUser(response.data.data); 
+  //     console.log("Current User:", response.data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching user:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCurrentUser();
+  // }, []);
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -375,7 +407,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
 
 const fadeIn = keyframes`
   from {

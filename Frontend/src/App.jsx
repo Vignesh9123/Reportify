@@ -8,6 +8,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -54,14 +55,25 @@ function App() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Signed in user: ", user);
+
+      // const userData = {
+      //   name: user.displayName,
+      //   email: user.email,
+      // };
+
+      // const response = await axios.post("/api/auth/google-login", userData, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+
+      // console.log("Login Response:", response.data);
+      
       navigate("/homepage");
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Error during Google Sign-in: ", errorCode, errorMessage);
+      console.error("Error during Google Sign-in: ", error);
     }
   };
-
   return (
     <MainContainer>
       <LeftContainer>
@@ -137,7 +149,7 @@ const MainContainer = styled.div`
   background: linear-gradient(135deg, #414141, #000000, #4b4b4b);
   font-family: "Poppins", sans-serif;
   color: white;
-  
+
   .logo {
     top: 5vh;
     width: 60vw;
@@ -341,7 +353,6 @@ const LeftContainer = styled.div`
   }
 
   @media (max-width: 420px) {
-
     .logo {
       top: 3vh;
       width: 68vw;
