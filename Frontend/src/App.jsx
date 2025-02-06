@@ -55,7 +55,7 @@ function App() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Signed in user: ", user);
-
+      navigate("/homepage");
       const userData = {
         name: user.displayName,
         email: user.email,
@@ -69,7 +69,6 @@ function App() {
 
       console.log("Login Response:", response.data);
       
-      navigate("/homepage");
     } catch (error) {
       console.error("Error during Google Sign-in: ", error);
     }

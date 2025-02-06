@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-const Carousel = () => {
+const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([
     { rollNumber: "", name: "", USN: "" },
@@ -22,12 +22,28 @@ const Carousel = () => {
   const [professorName, setprofessorName] = useState("");
   const [designation, setDesignation] = useState("");
   const [finalDetails, setFinalDetails] = useState("");
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const nextSlide = () => {
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    setIndexy((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
   const prevSlide = () => {
     setIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setIndexy((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
 
   const addStudentField = () => {
@@ -72,25 +88,23 @@ const Carousel = () => {
     };
     console.log(report);
     try {
-      const response = await axios.post('/api/report/generate', report, {
+      const response = await axios.post("/api/report/generate", report, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        responseType: 'arraybuffer', // Important for handling binary data
+        responseType: "arraybuffer",
       });
-      
+
       const blob = new Blob([response.data], {
-        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       });
-      
-      // Create a temporary link to trigger the download
-      const link = document.createElement('a');
+
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = `${title}.docx`; // Suggested filename
+      link.download = `${title}.docx`;
       document.body.appendChild(link);
       link.click();
-      
-      // Clean up
+
       document.body.removeChild(link);
       URL.revokeObjectURL(link.href);
       setFinalDetails(JSON.stringify(response.data, null, 2));
@@ -108,7 +122,7 @@ const Carousel = () => {
     <CarouselContainer>
       <CarouselInner index={index}>
         <CarouselItem>
-          <div>Please fill up the details</div>
+          {width <= 1169 ? <div>Please fill up the details</div> : ""}
           <div className="inputbox">
             <input
               type="text"
@@ -185,7 +199,7 @@ const Carousel = () => {
           </div>
         </CarouselItem>
         <CarouselItem style={{ justifyContent: "center" }}>
-          <div>Please add students details</div>
+          {width <= 1169 ? <div>Please add students details</div> : ""}
           <div
             style={{
               display: "flex",
@@ -283,7 +297,7 @@ const Carousel = () => {
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div>Please provide professor details</div>
+          {width <= 1169 ? <div>Please provide professor details</div> : ""}
           <div className="inputbox">
             <input
               type="text"
@@ -334,9 +348,14 @@ const Carousel = () => {
       <CarouselButton className="left" onClick={prevSlide}>
         Prev &#10094;
       </CarouselButton>
-      <div className="flex justify-center items-center">
-        Step : {index + 1} / 3
-      </div>
+      {width <= 1169 ? (
+        <div className="flex justify-center items-center">
+          Step : {index + 1} / 3
+        </div>
+      ) : (
+        ""
+      )}
+
       <CarouselButton className="right" onClick={nextSlide}>
         Next &#10095;
       </CarouselButton>
@@ -350,15 +369,17 @@ const HomePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
 
   const fetchCurrentUser = async () => {
     try {
       const response = await axios.get("/api/auth/current-user", {
-        withCredentials: true, 
+        withCredentials: true,
       });
-      setCurrentUser(response.data.data); 
+      setCurrentUser(response.data.data);
       console.log("Current User:", response.data.data);
+      console.log("Current User Name:", response.data.data.name);
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -399,18 +420,48 @@ const HomePage = () => {
     return (
       <LoadingContainer className="bg-black">
         <Spinner />
-        <p className="text-white">Loading...</p>
+        <p className="text-white">Loading Homepage...</p>
       </LoadingContainer>
     );
   }
-
   return (
     <MainContainer>
       <div>
         <Header handleLogout={handleLogout} />
       </div>
       <div className="body">
-        <Carousel />
+        <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
+          <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4">
+            Welcome, {currentUser.name} !
+          </h1>
+          <p className="text-2xl italic text-gray-400">
+            Generate your report effortlessly in{" "}
+            <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-400 to-amber-600">
+              3 simple steps
+            </span>
+          </p>
+
+          <div className="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            {indexy === 0 ? (
+              <span className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-black">
+                🚀 Step 1: Enter Project Title & Course Details
+              </span>
+            ) : indexy === 1 ? (
+              <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-blue-500">
+                📄 Step 2: Provide Student Information
+              </span>
+            ) : (
+              <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
+                🎓 Step 3: Add Professor Details &{" "}
+                <span className="text-xl font-bold text-white">
+                  Generate Report
+                </span>
+              </span>
+            )}
+          </div>
+        </div>
+
+        <Carousel setIndexy={setIndexy} />
         <ToastContainer />
       </div>
       <div>
@@ -452,6 +503,32 @@ const MainContainer = styled.div`
     border-radius: 10px;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
+    display: flex;
+    & .hello {
+      width: 50vw;
+      height: 70vh;
+      position: absolute;
+      top: 15vh;
+      left: 5vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (max-width: 1295px) {
+      .hello {
+        left: 2vw;
+      }
+    }
+    @media (max-width: 1202px) {
+      .hello {
+        left: 0vw;
+      }
+    }
+    @media (max-width: 1169px) {
+      .hello {
+        display: none;
+      }
+    }
   }
   ::-webkit-scrollbar {
     width: 10px;
@@ -480,6 +557,7 @@ const CarouselContainer = styled.div`
   transition: all 0.5s ease-in-out;
   margin: 0 auto;
   top: 6vh;
+  left: 25vw;
   @media (max-width: 590px) {
     max-width: 400px;
     height: 500px;
@@ -501,6 +579,9 @@ const CarouselContainer = styled.div`
   }
   @media (max-height: 646px) {
     height: 400px;
+  }
+  @media (max-width: 1169px) {
+    left: 0;
   }
 `;
 
