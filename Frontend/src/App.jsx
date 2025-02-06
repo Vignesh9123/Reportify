@@ -59,13 +59,21 @@ function App() {
         name: user.displayName,
         email: user.email,
       };
-
-      const response = await axios.post("/api/auth/google-login", userData, {
+      const signInPromise = axios.post("/api/auth/google-login", userData, {
         headers: {
           "Content-Type": "application/json",
         },
-      });
+      })
+      .then(()=>{
+        navigate("/homepage");
+        console.log("Login Response:", response.data);
+      })
 
+      toast.promise(signInPromise, {
+        pending: "Signing in...",
+        success: "Signed in successfully!",
+        error: "Failed to sign in. Please try again.",
+      })
       console.log("Login Response:", response.data);
       navigate("/homepage");
     } catch (error) {
