@@ -373,14 +373,17 @@ const HomePage = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const fetchCurrentUser = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("/api/auth/current-user", {
         withCredentials: true,
       });
       setCurrentUser(response.data.data);
+      setLoading(false);
       console.log("Current User:", response.data.data);
       console.log("Current User Name:", response.data.data.name);
     } catch (error) {
+      toast.error("Failed to login - please try again");
       console.error("Error fetching user:", error);
     }
   };
@@ -399,12 +402,12 @@ const HomePage = () => {
       });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
