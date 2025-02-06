@@ -436,7 +436,7 @@ const HomePage = () => {
           </h1>
           <p className="text-2xl italic text-gray-400">
             Generate your report effortlessly in{" "}
-            <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-400 to-amber-600">
+            <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-200 to-amber-400">
               3 simple steps
             </span>
           </p>
@@ -501,8 +501,6 @@ const MainContainer = styled.div`
   .body {
     height: auto;
     border-radius: 10px;
-    animation: ${fadeIn} 1s ease-in-out,
-      ${gradientAnimation} 10s infinite alternate ease-in-out;
     display: flex;
     & .hello {
       width: 50vw;
@@ -513,6 +511,7 @@ const MainContainer = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      animation: none;
     }
     @media (max-width: 1295px) {
       .hello {
