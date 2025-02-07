@@ -74,7 +74,8 @@ const Reports = () => {
     }
   };
 
-  const downloadReport = async (reportId) => {
+  const downloadReport = async (reportId,topic) => {
+    console.log()
     try {
       const response = await axios.get(
         `/api/report/get-report?id=${reportId}`,
@@ -86,7 +87,7 @@ const Reports = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `report-${reportId}.docx`);
+      link.setAttribute("download", `${topic}.docx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -127,7 +128,7 @@ const Reports = () => {
                     Subject Code: <b>{report.professorDetails.subjectCode}</b>
                   </p>
                   <ButtonGroup>
-                    <DownloadButton onClick={() => downloadReport(report._id)}>
+                    <DownloadButton onClick={() => downloadReport(report._id,report.topic)}>
                       Download
                     </DownloadButton>
                     <DeleteButton onClick={() => deleteReport(report._id)}>
