@@ -24,7 +24,9 @@ const Carousel = ({ setIndexy }) => {
   const [designation, setDesignation] = useState("");
   const [finalDetails, setFinalDetails] = useState("");
   const [width, setWidth] = useState(window.innerWidth);
-
+  const [flag, setFlag] = useState(false);
+  const [currentSection, setCurrentSection] = useState("");
+  const [num,setNum] = useState(0);
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -121,10 +123,15 @@ const Carousel = ({ setIndexy }) => {
       return;
     }
 
+    setFlag(true);
     let content = "";
     const sections = getSections(title);
-
+    
     for (const section of sections) {
+      
+      setNum((prevNum) => prevNum + 1)
+
+      setCurrentSection(section.title);
       const response = await axios.post(
         "/api/content/generate",
         {
@@ -138,7 +145,10 @@ const Carousel = ({ setIndexy }) => {
         }
       );
       content += response.data.data;
+      console.log("Generating", section.title);
     }
+
+    setFlag(false);
 
     const report = {
       topic: title,
@@ -154,8 +164,6 @@ const Carousel = ({ setIndexy }) => {
       },
       submissionDetails: students,
     };
-
-    console.log(report);
 
     try {
       const response = await axios.post("/api/report/generate", report, {
@@ -185,6 +193,22 @@ const Carousel = ({ setIndexy }) => {
     const updatedStudents = students.filter((_, i) => i !== idx);
     setStudents(updatedStudents);
   };
+
+  if (flag) {
+    return (
+      <div className="absolute w-[100vw] h-[100vh] inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md z-9999">
+        <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
+          <Spinner className="w-10 h-10 text-blue-400 animate-spin" />
+          <p className="mt-4 text-lg font-medium text-gray-300 text-center">
+            Your report is being generated. Please wait.
+          </p>
+          <span className="mt-2 text-xl font-semibold text-blue-400 animate-pulse">
+            Generating {currentSection}... ( {num} / 9 )
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <CarouselContainer>
@@ -216,7 +240,7 @@ const Carousel = ({ setIndexy }) => {
               type="text"
               required
               value={subjectCode}
-              onChange={(e) => setSubjectCode(e.target.value)}
+              onChange={(e) => setSubjectCode(e.target.value.toUpperCase())}
             />
             <span>Subject Code</span>
             <i></i>
@@ -449,7 +473,6 @@ const HomePage = () => {
       setCurrentUser(response.data.data);
       setLoading(false);
       console.log("Current User:", response.data.data);
-      console.log("Current User Name:", response.data.data.name);
     } catch (error) {
       toast.error("Failed to login - please try again");
       console.error("Error fetching user:", error);
