@@ -8,7 +8,7 @@ const app = express()
 
 app.use(cors(
     {
-       origin:"*",
+       origin:"https://reportify-ai.vercel.app",
        credentials: true
     }
 ))
