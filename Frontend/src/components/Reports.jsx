@@ -13,6 +13,17 @@ const Reports = () => {
   const [loading, setLoading] = useState(true);
   const [reports, setReports] = useState([]);
   const [event, setEvent] = useState(false);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User signed out.");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -31,7 +42,7 @@ const Reports = () => {
     try {
       const response = await axios.get("/api/report/get-all-reports");
       setReports(response.data.data || []);
-      console.log(reports)
+      console.log(reports);
     } catch (error) {
       console.error("Error fetching reports:", error);
     } finally {
@@ -98,17 +109,23 @@ const Reports = () => {
 
   return (
     <MainContainer>
-      <Header />
+      <Header handleLogout={handleLogout} />
       <div className="body">
         {reports.length > 0 ? (
           <>
             <ReportList>
               {reports.map((report) => (
                 <ReportCard key={report._id}>
-                  <h3  className="font-bold text-md text-emerald-800">{report.topic}</h3>
-                  <p>Professor: <b>{report.professorDetails.name}</b> </p>
+                  <h3 className="font-bold text-md text-emerald-800">
+                    {report.topic}
+                  </h3>
+                  <p>
+                    Professor: <b>{report.professorDetails.name}</b>{" "}
+                  </p>
                   <p>Subject: {report.professorDetails.subject}</p>
-                  <p>Subject Code: <b>{report.professorDetails.subjectCode}</b></p>
+                  <p>
+                    Subject Code: <b>{report.professorDetails.subjectCode}</b>
+                  </p>
                   <ButtonGroup>
                     <DownloadButton onClick={() => downloadReport(report._id)}>
                       Download
@@ -125,31 +142,31 @@ const Reports = () => {
             </DeleteAllButton>
             {event ? (
               <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
-              <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
-                <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
-                <p className="text-gray-300 text-center mb-6">
-                  This action will permanently delete <br /> all reports and cannot be undone.
-                </p>
-                <div className="flex justify-center items-center space-x-4">
-                  <button
-                    className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                    onClick={() => setEvent(!event)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                    onClick={() => {
-                      deleteAllReports();
-                      setEvent(!event);
-                    }}
-                  >
-                    Delete
-                  </button>
+                <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
+                  <p className="text-gray-300 text-center mb-6">
+                    This action will permanently delete <br /> all reports and
+                    cannot be undone.
+                  </p>
+                  <div className="flex justify-center items-center space-x-4">
+                    <button
+                      className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                      onClick={() => setEvent(!event)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                      onClick={() => {
+                        deleteAllReports();
+                        setEvent(!event);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            
             ) : (
               ""
             )}
@@ -158,7 +175,7 @@ const Reports = () => {
           <NoReports>No Reports to Display</NoReports>
         )}
       </div>
-      <Footer />
+      <Footer handleLogout={handleLogout} />
     </MainContainer>
   );
 };
