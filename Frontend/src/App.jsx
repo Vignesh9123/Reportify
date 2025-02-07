@@ -60,21 +60,27 @@ function App() {
         name: user.displayName,
         email: user.email,
       };
-      const signInPromise = axios.post("https://reportify-backend.vercel.app/api/auth/google-login", userData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then(()=>{
-        navigate("/homepage");
-        console.log("Login Response:", response.data);
-      })
+      const signInPromise = axios
+        .post(
+          "https://reportify-backend.vercel.app/api/auth/google-login",
+          userData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        )
+        .then(() => {
+          navigate("/homepage");
+          console.log("Login Response:", response.data);
+        });
 
       toast.promise(signInPromise, {
         pending: "Signing in...",
         success: "Signed in successfully!",
         error: "Failed to sign in. Please try again.",
-      })
+      });
       console.log("Login Response:", response.data);
       navigate("/homepage");
     } catch (error) {
