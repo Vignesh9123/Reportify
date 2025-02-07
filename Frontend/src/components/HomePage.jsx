@@ -199,7 +199,7 @@ const Carousel = ({ setIndexy }) => {
 
   if (flag) {
     return (
-      <div className="absolute w-[100vw] h-[100vh] inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md z-9999">
+      <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md z-9999">
         <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
           <Spinner className="w-10 h-10 text-blue-400 animate-spin" />
           <p className="mt-4 text-lg font-medium text-gray-300 text-center">

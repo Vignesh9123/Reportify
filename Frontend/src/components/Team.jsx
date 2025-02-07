@@ -55,7 +55,6 @@ const Team = () => {
         <Header handleLogout={handleLogout} />
       </div>
       <div className="body">
-        {/*All reports will be displayed here*/}
         <div className="card">
           <div className="top-section">
             <div className="border"></div>
