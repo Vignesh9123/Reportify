@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber } from "docx";
 import { generateCompleteMDXContent } from "./reportMdxGenerator";
-import { submissionDetails, professorDetails } from "../data/sampleData";
+import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { Response } from "express";
@@ -11,6 +11,7 @@ async function createDocument(topic: string, content: string, res : Response, su
     //   console.error("Failed to generate MDX content.");
     //   return;
     // }
+  
    try {
      console.log("Generated content")
      const lines = content.split("\n").filter((line) => line.trim() !== "");
@@ -47,7 +48,7 @@ async function createDocument(topic: string, content: string, res : Response, su
            children: [
                new ImageRun({
                    type: "jpg",
-                   data: fs.readFileSync("./src/data/Picture1.jpg"),
+                   data: Buffer.from(JSSSTULogoBase64, 'base64'),
                    transformation: {
                        width: 220,
                        height: 100,
