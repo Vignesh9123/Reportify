@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { getSections } from "../constants";
+import { apiClient } from "..";
 
 const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
@@ -132,7 +133,7 @@ const Carousel = ({ setIndexy }) => {
       setNum((prevNum) => prevNum + 1)
 
       setCurrentSection(section.title);
-      const response = await axios.post(
+      const response = await apiClient.post(
         "/api/content/generate",
         {
           title: section.title,
@@ -166,7 +167,7 @@ const Carousel = ({ setIndexy }) => {
     };
 
     try {
-      const response = await axios.post("/api/report/generate", report, {
+      const response = await apiClient.post("/api/report/generate", report, {
         headers: { "Content-Type": "application/json" },
         responseType: "arraybuffer",
       });
@@ -470,7 +471,7 @@ const HomePage = () => {
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/auth/current-user", {
+      const response = await apiClient.get("/api/auth/current-user", {
         withCredentials: true,
       });
       setCurrentUser(response.data.data);

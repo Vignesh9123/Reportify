@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiClient } from "..";
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Reports = () => {
 
   const fetchAllReports = async () => {
     try {
-      const response = await axios.get("/api/report/get-all-reports");
+      const response = await apiClient.get("/api/report/get-all-reports");
       setReports(response.data.data || []);
       console.log(reports);
     } catch (error) {
@@ -52,7 +53,7 @@ const Reports = () => {
 
   const deleteReport = async (reportId) => {
     try {
-      const response = await axios.delete(`/api/report/delete?id=${reportId}`);
+      const response = await apiClient.delete(`/api/report/delete?id=${reportId}`);
       if (response.data.success) {
         setReports(reports.filter((report) => report._id !== reportId));
         console.log("Report deleted successfully!");
@@ -64,7 +65,7 @@ const Reports = () => {
 
   const deleteAllReports = async () => {
     try {
-      const response = await axios.delete("/api/report/delete-all-reports");
+      const response = await apiClient.delete("/api/report/delete-all-reports");
       if (response.data.success) {
         setReports([]);
         console.log("All reports deleted successfully!");
@@ -77,7 +78,7 @@ const Reports = () => {
   const downloadReport = async (reportId,topic) => {
     console.log()
     try {
-      const response = await axios.get(
+      const response = await apiClient.get(
         `/api/report/get-report?id=${reportId}`,
         {
           responseType: "blob",

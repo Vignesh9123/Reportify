@@ -9,6 +9,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { apiClient } from ".";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -59,7 +60,7 @@ function App() {
         name: user.displayName,
         email: user.email,
       };
-      const signInPromise = axios.post("https://reportify-backend.vercel.app/api/auth/google-login", userData, {
+      const signInPromise = apiClient.post("/api/auth/google-login", userData, {
         headers: {
           "Content-Type": "application/json",
         },
