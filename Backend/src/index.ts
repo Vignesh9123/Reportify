@@ -8,7 +8,7 @@ const app = express()
 
 app.use(cors(
     {
-        origin: config.CLIENT_URL
+        origin: ["https://reportify-ai.vercel.app"],
     }
 ))
 app.use(express.json({ limit: '50mb' }))
