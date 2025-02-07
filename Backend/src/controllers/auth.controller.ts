@@ -10,13 +10,13 @@ export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
         let user = await User.findOne({ email, loginType: "google" });
         if(user) {
             const token = generateToken(user._id);
-            res.cookie("token", token, { httpOnly: true , sameSite: "none" ,secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
+            res.cookie("token", token, { httpOnly: true  ,secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
             return res.status(200).json(new ApiResponse(200, "Login successful", user, true));
         }
         user = await User.create({ name, email , loginType: "google"});
         if(!user) throw new ApiError(500, "Error while signing up");
         const token = generateToken(user._id);
-        res.cookie("token", token, { httpOnly: true , sameSite: "none", secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
+        res.cookie("token", token, { httpOnly: true , secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
         return res.status(200).json(new ApiResponse(200, "Login successful", user, true));  
 })
 
