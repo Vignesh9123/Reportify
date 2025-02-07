@@ -133,8 +133,8 @@ const Carousel = ({ setIndexy }) => {
       setNum((prevNum) => prevNum + 1)
 
       setCurrentSection(section.title);
-      const response = await apiClient.post(
-        "/api/content/generate",
+      const response = await axios.post(
+        "https://reportify-backend.vercel.app/api/content/generate",
         {
           title: section.title,
           promptContent: section.prompt,
@@ -167,7 +167,7 @@ const Carousel = ({ setIndexy }) => {
     };
 
     try {
-      const response = await apiClient.post("/api/report/generate", report, {
+      const response = await axios.post("https://reportify-backend.vercel.app/api/report/generate", report, {
         headers: { "Content-Type": "application/json" },
         responseType: "arraybuffer",
       });
@@ -471,7 +471,7 @@ const HomePage = () => {
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.get("/api/auth/current-user", {
+      const response = await axios.get("https://reportify-backend.vercel.app/api/auth/current-user", {
         withCredentials: true,
       });
       setCurrentUser(response.data.data);

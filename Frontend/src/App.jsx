@@ -60,7 +60,7 @@ function App() {
         name: user.displayName,
         email: user.email,
       };
-      const signInPromise = apiClient.post("/api/auth/google-login", userData, {
+      const signInPromise = axios.post("https://reportify-backend.vercel.app/api/auth/google-login", userData, {
         headers: {
           "Content-Type": "application/json",
         },
