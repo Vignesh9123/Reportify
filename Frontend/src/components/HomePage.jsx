@@ -147,7 +147,7 @@ const Carousel = ({ setIndexy }) => {
       content += response.data.data;
       console.log("Generating", section.title);
     }
-
+    setNum(0);
     setFlag(false);
 
     const report = {
