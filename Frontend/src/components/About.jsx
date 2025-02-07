@@ -109,7 +109,7 @@ const About = () => {
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -140,6 +140,7 @@ const MainContainer = styled.div`
   position: relative;
   justify-content: space-between;
   overflow: hidden;
+  
   a {
     all: unset;
   }
@@ -150,6 +151,8 @@ const MainContainer = styled.div`
     position: absolute;
     top: 10vh;
     display: flex;
+    animation: ${fadeIn} 0.5s ease-in-out,
+    ${gradientAnimation} 10s infinite alternate ease-in-out;
     @media (max-width: 1024px) {
       flex-direction: column-reverse;
     }
