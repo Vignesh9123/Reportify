@@ -38,6 +38,42 @@ const Carousel = ({ setIndexy }) => {
   }, []);
 
   const nextSlide = () => {
+    if (
+      (!title || !subject || !subjectCode || !branch || !sem) &&
+      index === 0
+    ) {
+      toast.info(
+        "Some fields are missing. Please ensure everything is completed.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
+      return;
+    }
+    if (index === 1) {
+      let flag = false;
+      for (let i = 0; i < students.length; i++) {
+        if (
+          students[i].rollNumber === "" ||
+          students[i].name === "" ||
+          students[i].USN === ""
+        ) {
+          flag = true;
+          break;
+        }
+      }
+      if (flag || students.length === 0) {
+        toast.info(
+          "Some fields are missing. Please ensure everything is completed.",
+          {
+            position: "top-center",
+            autoClose: 3000,
+          }
+        );
+        return;
+      }
+    }
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setIndexy((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -54,7 +90,6 @@ const Carousel = ({ setIndexy }) => {
     }
     setStudents([...students, { rollNumber: "", name: "", USN: "" }]);
   };
-
 
   useEffect(() => {
     const leftBtn = document.querySelector(".left");
@@ -434,7 +469,6 @@ const HomePage = () => {
         console.error("Error signing out: ", error);
       });
   };
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
