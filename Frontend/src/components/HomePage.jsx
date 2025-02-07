@@ -143,6 +143,7 @@ const Carousel = ({ setIndexy }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       content += response.data.data;
@@ -169,6 +170,7 @@ const Carousel = ({ setIndexy }) => {
     try {
       const response = await axios.post("https://reportify-backend.vercel.app/api/report/generate", report, {
         headers: { "Content-Type": "application/json" },
+        withCredentials: true,
         responseType: "arraybuffer",
       });
 

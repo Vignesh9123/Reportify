@@ -41,7 +41,12 @@ const Reports = () => {
 
   const fetchAllReports = async () => {
     try {
-      const response = await axios.get("https://reportify-backend.vercel.app/api/report/get-all-reports");
+      const response = await axios.get(
+        "https://reportify-backend.vercel.app/api/report/get-all-reports",
+        {
+          withCredentials: true,
+        }
+      );
       setReports(response.data.data || []);
       console.log(reports);
     } catch (error) {
@@ -53,7 +58,12 @@ const Reports = () => {
 
   const deleteReport = async (reportId) => {
     try {
-      const response = await axios.delete(`https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`);
+      const response = await axios.delete(
+        `https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`,
+        {
+          withCredentials: true,
+        }
+      );
       if (response.data.success) {
         setReports(reports.filter((report) => report._id !== reportId));
         console.log("Report deleted successfully!");
@@ -65,7 +75,12 @@ const Reports = () => {
 
   const deleteAllReports = async () => {
     try {
-      const response = await axios.delete("https://reportify-backend.vercel.app/api/report/delete-all-reports");
+      const response = await axios.delete(
+        "https://reportify-backend.vercel.app/api/report/delete-all-reports",
+        {
+          withCredentials: true,
+        }
+      );
       if (response.data.success) {
         setReports([]);
         console.log("All reports deleted successfully!");
@@ -75,13 +90,14 @@ const Reports = () => {
     }
   };
 
-  const downloadReport = async (reportId,topic) => {
-    console.log()
+  const downloadReport = async (reportId, topic) => {
+    console.log();
     try {
       const response = await axios.get(
         `https://reportify-backend.vercel.app/api/report/get-report?id=${reportId}`,
         {
           responseType: "blob",
+          withCredentials: true,
         }
       );
 
@@ -129,7 +145,9 @@ const Reports = () => {
                     Subject Code: <b>{report.professorDetails.subjectCode}</b>
                   </p>
                   <ButtonGroup>
-                    <DownloadButton onClick={() => downloadReport(report._id,report.topic)}>
+                    <DownloadButton
+                      onClick={() => downloadReport(report._id, report.topic)}
+                    >
                       Download
                     </DownloadButton>
                     <DeleteButton onClick={() => deleteReport(report._id)}>
