@@ -22,12 +22,8 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: "Server is running" });
 })
 
-app.listen( config.PORT || 8000, () => {
-    connectDB().then(() => { 
-        console.log(`Server is running on port ${config.PORT || 8000}`)
-    })
-    .catch(err => {
-        console.log(err)
-        process.abort()
+connectDB().then(() => {
+    app.listen(config.PORT ||8000, () => {
+        console.log(`Server is running on port ${config.PORT || 8000}`);
     })
 })
