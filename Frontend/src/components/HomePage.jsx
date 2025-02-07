@@ -187,6 +187,9 @@ const Carousel = ({ setIndexy }) => {
     } catch (error) {
       console.error("Error generating report:", error);
     }
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
   };
 
   const deleteStudentField = (idx) => () => {
