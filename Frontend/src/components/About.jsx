@@ -55,26 +55,49 @@ const About = () => {
         <Header handleLogout={handleLogout} />
       </div>
       <div className="body">
-        <p>
-          ▶️<b>Reportify </b>is a modern web-based reporting platform that
-          simplifies the creation, management, and sharing of reports. Designed
-          for efficiency, it enables users to generate professional reports with
-          ease while ensuring data security and accessibility. <br />
-          ▶️With a clean and intuitive UI, Reportify enhances user experience by
-          allowing seamless navigation and quick access to reports. The platform
-          features role-based access control, ensuring that only authorized
-          users can view or edit specific reports. <br />
-          ▶️Reportify is fully responsive, meaning it adapts to different screen
-          sizes, including mobile, tablet, and desktop. Whether you're on the go
-          or at your workstation, accessing reports is always convenient. <br />
-          ▶️The platform also supports real-time updates, ensuring that users
-          always work with the latest information. With the ability to export
-          reports, share documents, and track progress, Reportify serves as a
-          valuable tool for individuals and organizations alike. <br />
-          ▶️By integrating cutting-edge technology and a focus on usability,
-          Reportify aims to revolutionize the way reports are handled, making
-          reporting faster, smarter, and more efficient.
-        </p>
+        <div className="left flex flex-col text-white text-center justify-center items-center space-y-6 p-8">
+          <h2 className="text-4xl font-bold text-cyan-400">About Us</h2>
+          <p className="text-lg text-gray-300 max-w-2xl">
+            Welcome to{" "}
+            <span className="text-cyan-300 font-semibold">REPORTIFY</span>, your
+            AI-powered solution for effortless and professional report
+            generation. Designed specifically for JSS STU students, our platform
+            simplifies documentation for students and educators, ensuring time
+            efficiency, accuracy, and structured formatting. Transform your
+            ideas into well-organized reports instantly and focus on what truly
+            matters.
+          </p>
+          <div className="boxes flex space-x-6">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
+              <h3 className="text-xl font-semibold text-cyan-300">
+                AI-Powered
+              </h3>
+              <p className="text-gray-400">
+                Generate structured reports with AI in seconds.
+              </p>
+            </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
+              <h3 className="text-xl font-semibold text-cyan-300">
+                Accuracy & Clarity
+              </h3>
+              <p className="text-gray-400">
+                Ensure professional & polished reports every time.
+              </p>
+            </div>
+
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
+              <h3 className="text-xl font-semibold text-cyan-300">
+                Effortless Workflow
+              </h3>
+              <p className="text-gray-400">
+                Streamline your reporting process with automation.
+              </p>
+            </div>
+            <div className="bg-gray-800 p-0 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer"></div>
+          </div>
+        </div>
+
+        <div className="right"></div>
       </div>
       <div>
         <Footer handleLogout={handleLogout} />
@@ -122,55 +145,72 @@ const MainContainer = styled.div`
   }
 
   .body {
+    width: 100vw;
+    height: 80vh;
+    position: absolute;
+    top: 10vh;
     display: flex;
+    @media (max-width: 1024px) {
+      flex-direction: column-reverse;
+    }
+  }
+  .body .left {
+    width: 60vw;
+    height: 79vh;
+    .boxes {
+      position: relative;
+      left: 15px;
+    }
     position: relative;
-    width: 60%;
-    margin: 0 auto;
-    text-align: justify;
-    font-size: 24px;
-    font-weight: 600;
-    height: 60vh;
-    color: white;
-    & p {
-      height: 73vh;
-      overflow-y: auto;
+    @media (max-width: 1024px) {
+      width: 100vw;
     }
-  }
-  ::-webkit-scrollbar {
-    width: 4px;
-    background-color: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.227);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    cursor: pointer;
-    background-color: rgba(0, 234, 255, 0.6);
-  }
-
-  @media (max-width: 1024px) {
-    .body {
-      width: 90%;
-    }
-  }
-  @media (max-width: 500px) {
-    .body {
-      width: 98%;
-      & p {
-        font-weight: 700;
-        height: 90vh;
-        overflow-y: auto;
-        color: white;
-        margin: 20px 0 12vh 0;
+    @media (max-width: 665px) {
+      overflow: auto;
+      height: 100vh;
+      padding-top: 10vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .boxes {
+        flex-direction: column;
+        gap: 20px;
       }
     }
+    @media (max-width: 390px) {
+      padding-top: 16vh;
+      .boxes {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+    @media (max-height: 910px) and (max-width: 665px) {
+      padding-top: 20vh;
+    }
+    @media (max-height: 852px) and (max-width: 665px) {
+      padding-top: 27vh;
+    }
+    @media (max-height: 796px) and (max-width: 665px) {
+      padding-top: 40vh;
+    }
+    @media (max-height: 700px) and (max-width: 665px) {
+      padding-top: 48vh;
+    }
   }
-  @media (max-height:570px){
-    .body{
-      padding: 0 0 15vh 0;
+  .body .right {
+    width: 40vw;
+    height: 79vh;
+    position: relative;
+    right: 0;
+    background: url("AI.png") no-repeat bottom right/contain;
+    @media (max-width: 1024px) {
+      width: 100vw;
+      height: 0;
+      background: none;
+    }
+    @media (max-width: 665px) {
+      height: 0;
+      background: none;
     }
   }
 `;
