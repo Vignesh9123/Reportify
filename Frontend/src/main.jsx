@@ -10,7 +10,6 @@ import Team from "./components/Team";
 import About from "./components/About";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -20,5 +19,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
 );
