@@ -8,7 +8,8 @@ const app = express()
 
 app.use(cors(
     {
-        origin: config.CLIENT_URL
+       origin:config.CLIENT_URL,
+       credentials: true
     }
 ))
 app.use(express.json({ limit: '50mb' }))

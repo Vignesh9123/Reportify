@@ -1,6 +1,6 @@
 import fs from "fs";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber } from "docx";
-import { generateCompleteMDXContent } from "./reportMdxGenerator";
+// import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
@@ -434,11 +434,7 @@ async function createDocument(topic: string, content: string, res : Response, su
        });
        console.log("Doc written")
      const buffer = await Packer.toBuffer(doc)
-     res.set({
-       "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-       "Content-Disposition": "attachment; filename=generated.docx",
-     });
-     res.end(buffer);    
+     
      // fs.writeFileSync(`Document.docx`, buffer);
      console.log(`DOCX file for "${topic}" created successfully!`);
      return buffer;

@@ -25,6 +25,11 @@ export const generateReport = asyncHandler(async (req: Request, res: Response) =
     const report = await Report.create({topic, submissionDetails, professorDetails, key, userId: req.user._id});
     if(!report) throw new ApiError(500, "Error while creating report");  
     console.log("Stored report in DB");
+    res.set({
+        "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "Content-Disposition": "attachment; filename=generated.docx",
+      });
+    return res.status(200).end(fileBuffer);    
 })
 
 export const getReports = asyncHandler(async (req: Request, res: Response) => {
