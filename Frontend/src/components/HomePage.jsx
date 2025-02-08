@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { getSections } from "../constants";
 import { apiClient } from "..";
+import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowCircleDown } from "react-icons/fa";
 
 const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
@@ -27,7 +29,26 @@ const Carousel = ({ setIndexy }) => {
   const [width, setWidth] = useState(window.innerWidth);
   const [flag, setFlag] = useState(false);
   const [currentSection, setCurrentSection] = useState("");
-  const [num,setNum] = useState(0);
+  const [num, setNum] = useState(0);
+  const [sections, setSections] = useState([
+    "Abstarct",
+    "Introduction",
+    "Importance",
+    "Implementation",
+    "Challenges",
+    "Future Trends",
+    "Conclusion",
+    "References",
+  ]);
+  const [newSection, setNewSection] = useState("");
+
+  const addSection = () => {
+    if (newSection.trim() !== "") {
+      setSections([...sections, newSection]);
+      setNewSection("");
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -42,7 +63,13 @@ const Carousel = ({ setIndexy }) => {
 
   const nextSlide = () => {
     if (
-      (!title || !subject || !subjectCode || !branch || !sem) &&
+      (!title ||
+        !subject ||
+        !subjectCode ||
+        !branch ||
+        !sem ||
+        !professorName ||
+        !designation) &&
       index === 0
     ) {
       toast.info(
@@ -104,6 +131,7 @@ const Carousel = ({ setIndexy }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
+    console.log(sections.length)
     if (
       !title ||
       !professorName ||
@@ -112,10 +140,11 @@ const Carousel = ({ setIndexy }) => {
       !subject ||
       !subjectCode ||
       !sem ||
-      students.length === 0
+      students.length === 0 ||
+      sections.length <= 5
     ) {
       toast.info(
-        "Some fields are missing. Please ensure everything is completed.",
+        "Add atleast five sections",
         {
           position: "top-center",
           autoClose: 3000,
@@ -123,14 +152,12 @@ const Carousel = ({ setIndexy }) => {
       );
       return;
     }
-
     setFlag(true);
     let content = "";
     const sections = getSections(title);
-    
+
     for (const section of sections) {
-      
-      setNum((prevNum) => prevNum + 1)
+      setNum((prevNum) => prevNum + 1);
 
       setCurrentSection(section.title);
       const response = await axios.post(
@@ -168,11 +195,15 @@ const Carousel = ({ setIndexy }) => {
     };
 
     try {
-      const response = await axios.post("https://reportify-backend.vercel.app/api/report/generate", report, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-        responseType: "arraybuffer",
-      });
+      const response = await axios.post(
+        "https://reportify-backend.vercel.app/api/report/generate",
+        report,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+          responseType: "arraybuffer",
+        }
+      );
 
       const blob = new Blob([response.data], {
         type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -200,6 +231,31 @@ const Carousel = ({ setIndexy }) => {
     setStudents(updatedStudents);
   };
 
+  const handleMoveUp = (index) => {
+    if (index === 0) return;
+    const updatedSections = [...sections];
+    [updatedSections[index], updatedSections[index - 1]] = [
+      updatedSections[index - 1],
+      updatedSections[index],
+    ];
+    setSections(updatedSections);
+  };
+
+  const handleMoveDown = (index) => {
+    if (index === sections.length - 1) return;
+    const updatedSections = [...sections];
+    [updatedSections[index], updatedSections[index + 1]] = [
+      updatedSections[index + 1],
+      updatedSections[index],
+    ];
+    setSections(updatedSections);
+  };
+
+  const handleDelete = (index) => {
+    const updatedSections = sections.filter((_, i) => i !== index);
+    setSections(updatedSections);
+  };
+
   if (flag) {
     return (
       <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md z-9999">
@@ -219,7 +275,7 @@ const Carousel = ({ setIndexy }) => {
   return (
     <CarouselContainer>
       <CarouselInner index={index}>
-        <CarouselItem>
+        <CarouselItem className="overflow-y-auto">
           {width <= 1169 ? <div>Please fill up the details</div> : ""}
           <div className="inputbox">
             <input
@@ -293,6 +349,31 @@ const Carousel = ({ setIndexy }) => {
               <option value="Polymer Science and Technology" />
             </datalist>
             <span>Branch</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              required
+              value={professorName}
+              onChange={(e) => setprofessorName(e.target.value)}
+            />
+            <span>Professor Name</span>
+            <i></i>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              required
+              list="designations"
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+            />
+            <datalist id="designations">
+              <option value="Associate Professor" />
+              <option value="Assistant Professor" />
+            </datalist>
+            <span>Professor Designation</span>
             <i></i>
           </div>
         </CarouselItem>
@@ -394,32 +475,99 @@ const Carousel = ({ setIndexy }) => {
             </button>
           </div>
         </CarouselItem>
-        <CarouselItem>
+        <CarouselItem className="overflow-y-auto h-7 ">
           {width <= 1169 ? <div>Please provide professor details</div> : ""}
-          <div className="inputbox">
+          {sections.map((val, index) => (
+            <div
+              key={index}
+              className="w-full flex justify-between items-center px-5 py-4 rounded-2xl my-2 shadow-md 
+               bg-white/60 backdrop-blur-lg border border-gray-200 transition-all duration-300 
+               hover:shadow-lg hover:border-gray-300"
+            >
+              <div className="text-lg font-semibold text-gray-800">{val}</div>
+
+              <div className="flex gap-3">
+                {index !== 0 ? (
+                  <button
+                    onClick={() => handleMoveUp(index)}
+                    className="p-2 rounded-lg text-gray-600 hover:bg-green-100 transition-all cursor-pointer"
+                    aria-label="Move Up"
+                    title="Move Up"
+                  >
+                    <FaArrowCircleUp
+                      size={28}
+                      className="hover:text-green-500 transition-all"
+                    />
+                  </button>
+                ) : (
+                  ""
+                )}
+                {index !== sections.length - 1 ? (
+                  <button
+                    onClick={() => handleMoveDown(index)}
+                    className="p-2 rounded-lg text-gray-600 hover:bg-blue-100 transition-all cursor-pointer"
+                    aria-label="Move Down"
+                    title="Move Down"
+                  >
+                    <FaArrowCircleDown
+                      size={28}
+                      className="hover:text-blue-500 transition-all"
+                    />
+                  </button>
+                ) : (
+                  ""
+                )}
+
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-all cursor-pointer"
+                  aria-label="Delete"
+                  title="Delete"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 50 59"
+                    className="w-5 h-5 hover:scale-110 transition-all"
+                  >
+                    <path
+                      fill="#EF4444"
+                      d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"
+                    />
+                    <path
+                      fill="#EF4444"
+                      d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"
+                    />
+                    <path
+                      fill="#EF4444"
+                      d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z"
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      fill="#EF4444"
+                      d="M2 13H48L47.6742 21.28H2.32031L2 13Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex gap-2 mb-4">
             <input
               type="text"
-              required
-              value={professorName}
-              onChange={(e) => setprofessorName(e.target.value)}
+              placeholder="Add custom section"
+              value={newSection}
+              onChange={(e) => setNewSection(e.target.value)}
+              className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span>Professor Name</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              list="designations"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-            />
-            <datalist id="designations">
-              <option value="Associate Professor" />
-              <option value="Assistant Professor" />
-            </datalist>
-            <span>Professor Designation</span>
-            <i></i>
+            <button
+              onClick={addSection}
+              className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
+            >
+              Add
+            </button>
           </div>
           <button
             onClick={generateReport}
@@ -465,7 +613,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
@@ -525,7 +673,7 @@ const HomePage = () => {
       <div className="body">
         <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
           <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4 text-white">
-            Hello, {currentUser.name} !
+            Hello, !
           </h1>
           <p className="text-2xl italic text-gray-400">
             Generate your report effortlessly in{" "}
@@ -690,8 +838,40 @@ const CarouselItem = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  overflow: auto;
-
+  /* overflow: auto; */
+  overflow-x: hidden;
+  .deleteButton {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .deleteButton svg {
+    width: 44%;
+  }
+  .deleteButton:hover {
+    background-color: rgb(237, 56, 56);
+    overflow: visible;
+  }
+  .bin path {
+    transition: all 0.2s;
+  }
+  .deleteButton:hover .bin path {
+    fill: #fff;
+  }
+  .deleteButton:active {
+    transform: scale(0.98);
+  }
   .inputbox {
     position: relative;
     width: 500px;
@@ -700,7 +880,7 @@ const CarouselItem = styled.div`
   .inputbox input {
     position: relative;
     width: 100%;
-    padding: 20px 10px 10px;
+    padding: 40px 10px 10px;
     background: transparent;
     outline: none;
     box-shadow: none;
@@ -715,7 +895,7 @@ const CarouselItem = styled.div`
   .inputbox span {
     position: absolute;
     left: 0;
-    padding: 20px 10px 10px;
+    padding: 40px 10px 10px;
     font-size: 1em;
     color: #525252;
     letter-spacing: 0.05em;
