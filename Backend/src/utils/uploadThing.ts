@@ -2,7 +2,7 @@ import { utapi } from "../config/uploadThing"
 
 const DOCX_MIME_TYPE = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
-export const uploadBuffer = async (buffer: Buffer, filename = 'document.docx') => {
+export const uploadBuffer = async (buffer: Buffer, filename : string) => {
   try {
     const blob = new Blob([buffer], { type: DOCX_MIME_TYPE });
     const response = await utapi.uploadFiles([
@@ -12,6 +12,7 @@ export const uploadBuffer = async (buffer: Buffer, filename = 'document.docx') =
     if (!key) throw new Error('Upload failed - no URL returned');
     return key;
   } catch (error) {
+    console.log(error);
     throw new Error(`Failed to upload file: ${error.message}`);
   }
 }
