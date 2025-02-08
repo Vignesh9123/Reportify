@@ -30,24 +30,21 @@ const Carousel = ({ setIndexy }) => {
   const [flag, setFlag] = useState(false);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
-  const [sections, setSections] = useState([
-    "Abstarct",
-    "Introduction",
-    "Importance",
-    "Implementation",
-    "Challenges",
-    "Future Trends",
-    "Conclusion",
-    "References",
-  ]);
+  const [sections, setSections] = useState([]);
   const [newSection, setNewSection] = useState("");
 
   const addSection = () => {
     if (newSection.trim() !== "") {
-      setSections([...sections, newSection]);
+      setSections([...sections, { title: newSection, prompt:  `Provide detailed content or information for the section titled \"${newSection}\" on topic: ${title}.` }]);
       setNewSection("");
     }
   };
+  useEffect(() => {
+    if(index == 2){
+      const sections = getSections(title);
+      setSections(sections);
+    }
+  },[index])
 
   useEffect(() => {
     const handleResize = () => {
@@ -131,7 +128,7 @@ const Carousel = ({ setIndexy }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
-    console.log(sections.length);
+    console.log(sections);
     if (
       !title ||
       !professorName ||
@@ -149,9 +146,15 @@ const Carousel = ({ setIndexy }) => {
       });
       return;
     }
+    if(sections.length > 9){
+      toast.info("Maximum 9 sections allowed. Please remove some sections", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return
+    }
     setFlag(true);
     let content = "";
-    const sections = getSections(title);
 
     for (const section of sections) {
       setNum((prevNum) => prevNum + 1);
@@ -481,7 +484,7 @@ const Carousel = ({ setIndexy }) => {
                bg-white/60 backdrop-blur-lg border border-gray-200 transition-all duration-300 
                hover:shadow-lg hover:border-gray-300"
             >
-              <div className="text-lg font-semibold text-gray-800">{val}</div>
+              <div className="text-lg font-semibold text-gray-800">{index + 1}) {val.title}</div>
 
               <div className="flex gap-3">
                 {index !== 0 ? (
