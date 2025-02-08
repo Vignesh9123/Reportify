@@ -9,8 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { getSections } from "../constants";
 import { apiClient } from "..";
-import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
@@ -30,24 +31,30 @@ const Carousel = ({ setIndexy }) => {
   const [flag, setFlag] = useState(false);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
-  const [sections, setSections] = useState([
-    "Abstarct",
-    "Introduction",
-    "Importance",
-    "Implementation",
-    "Challenges",
-    "Future Trends",
-    "Conclusion",
-    "References",
-  ]);
+  const [sections, setSections] = useState([]);
   const [newSection, setNewSection] = useState("");
 
   const addSection = () => {
     if (newSection.trim() !== "") {
-      setSections([...sections, newSection]);
+      setSections([...sections, { title: newSection, prompt:  `Provide detailed content or information for the section titled \"${newSection}\" on topic: ${title}.` }]);
       setNewSection("");
     }
   };
+  const handleDragEnd = (result) => {
+    console.log('result',result)
+    if (!result.destination) return;
+    const reorderedSections = Array.from(sections);
+    const [removed] = reorderedSections.splice(result.source.index, 1);
+    console.log('removed',removed)
+    reorderedSections.splice(result.destination.index, 0, removed);
+    setSections(reorderedSections);
+  };
+  useEffect(() => {
+    if(index == 2){
+      const sections = getSections(title);
+      setSections(sections);
+    }
+  },[index])
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,47 +70,47 @@ const Carousel = ({ setIndexy }) => {
 
   const nextSlide = () => {
     if (
-      (!title ||
-        !subject ||
-        !subjectCode ||
-        !branch ||
-        !sem ||
-        !professorName ||
-        !designation) &&
-      index === 0
+    (!title ||
+    !subject ||
+    !subjectCode ||
+    !branch ||
+    !sem ||
+    !professorName ||
+    !designation) &&
+    index === 0
     ) {
-      toast.info(
-        "Some fields are missing. Please ensure everything is completed.",
-        {
-          position: "top-center",
-          autoClose: 3000,
-        }
-      );
-      return;
+    toast.info(
+    "Some fields are missing. Please ensure everything is completed.",
+    {
+position: "top-center",
+    autoClose: 3000,
     }
-    if (index === 1) {
-      let flag = false;
-      for (let i = 0; i < students.length; i++) {
-        if (
-          students[i].rollNumber === "" ||
-          students[i].name === "" ||
-          students[i].USN === ""
-        ) {
+);
+    return;
+    }
+if (index === 1) {
+    let flag = false;
+    for (let i = 0; i < students.length; i++) {
+    if (
+    students[i].rollNumber === "" ||
+    students[i].name === "" ||
+    students[i].USN === ""
+    ) {
           flag = true;
           break;
         }
       }
-      if (flag || students.length === 0) {
-        toast.info(
-          "Some fields are missing. Please ensure everything is completed.",
-          {
-            position: "top-center",
-            autoClose: 3000,
-          }
-        );
-        return;
-      }
+if (flag || students.length === 0) {
+    toast.info(
+    "Some fields are missing. Please ensure everything is completed.",
+    {
+position: "top-center",
+    autoClose: 3000,
     }
+);
+    return;
+    }
+}
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setIndexy((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -131,7 +138,7 @@ const Carousel = ({ setIndexy }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
-    console.log(sections.length);
+    console.log(sections);
     if (
       !title ||
       !professorName ||
@@ -149,9 +156,15 @@ const Carousel = ({ setIndexy }) => {
       });
       return;
     }
+    if(sections.length > 9){
+      toast.info("Maximum 9 sections allowed. Please remove some sections", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return
+    }
     setFlag(true);
     let content = "";
-    const sections = getSections(title);
 
     for (const section of sections) {
       setNum((prevNum) => prevNum + 1);
@@ -474,98 +487,67 @@ const Carousel = ({ setIndexy }) => {
         </CarouselItem>
         <CarouselItem className="overflow-y-auto h-7 ">
           {width <= 1169 ? <div>Please provide professor details</div> : ""}
-          {sections.map((val, index) => (
-            <div
-              key={index}
-              className="w-full flex justify-between items-center px-5 py-4 rounded-2xl my-2 shadow-md 
-               bg-white/60 backdrop-blur-lg border border-gray-200 transition-all duration-300 
-               hover:shadow-lg hover:border-gray-300"
-            >
-              <div className="text-lg font-semibold text-gray-800">{val}</div>
-
-              <div className="flex gap-3">
-                {index !== 0 ? (
-                  <button
-                    onClick={() => handleMoveUp(index)}
-                    className="p-2 rounded-lg text-gray-600 hover:bg-green-100 transition-all cursor-pointer"
-                    aria-label="Move Up"
-                    title="Move Up"
-                  >
-                    <FaArrowCircleUp
-                      size={28}
-                      className="hover:text-green-500 transition-all"
-                    />
-                  </button>
-                ) : (
-                  ""
-                )}
-                {index !== sections.length - 1 ? (
-                  <button
-                    onClick={() => handleMoveDown(index)}
-                    className="p-2 rounded-lg text-gray-600 hover:bg-blue-100 transition-all cursor-pointer"
-                    aria-label="Move Down"
-                    title="Move Down"
-                  >
-                    <FaArrowCircleDown
-                      size={28}
-                      className="hover:text-blue-500 transition-all"
-                    />
-                  </button>
-                ) : (
-                  ""
-                )}
-
-                <button
-                  onClick={() => handleDelete(index)}
-                  className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-all cursor-pointer"
-                  aria-label="Delete"
-                  title="Delete"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 50 59"
-                    className="w-5 h-5 hover:scale-110 transition-all"
-                  >
-                    <path
-                      fill="#EF4444"
-                      d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"
-                    />
-                    <path
-                      fill="#EF4444"
-                      d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"
-                    />
-                    <path
-                      fill="#EF4444"
-                      d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z"
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                    />
-                    <path
-                      fill="#EF4444"
-                      d="M2 13H48L47.6742 21.28H2.32031L2 13Z"
-                    />
-                  </svg>
-                </button>
-              </div>
+          <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="sections-list">
+          {(provided) => (
+            <div {...provided.droppableProps} className="my-5" ref={provided.innerRef}>
+              {sections.map((section, index) => (
+                <Draggable key={index} draggableId={`section-${index}`} index={index}>
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      className="w-full flex justify-between items-center px-5 py-4 rounded-2xl my-2 shadow-md 
+                      bg-white/60 backdrop-blur-lg border border-gray-200 transition-all duration-300 
+                      hover:shadow-lg hover:border-gray-300"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          {...provided.dragHandleProps}
+                          className="cursor-grab text-gray-500"
+                          title="Drag"
+                        >
+                          <FaGripVertical size={20} />
+                        </span>
+                        <div className="text-lg font-semibold text-gray-800">
+                          {index + 1}) {section.title}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-all cursor-pointer"
+                        aria-label="Delete"
+                        title="Delete"
+                      >
+                        <FaTrashAlt size={20} />
+                      </button>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
             </div>
-          ))}
+          )}
+        </Droppable>
+      </DragDropContext>
 
-          <div className="flex gap-2 mb-4">
-            <input
-              type="text"
-              placeholder="Add custom section"
-              value={newSection}
-              onChange={(e) => setNewSection(e.target.value)}
-              className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={addSection}
-              className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
-            >
-              Add
-            </button>
-          </div>
+      <div className="flex gap-2 mb-4">
+        <input
+          type="text"
+          placeholder="Add custom section"
+          value={newSection}
+          onChange={(e) => setNewSection(e.target.value)}
+          className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={addSection}
+          className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
+        >
+          Add
+        </button>
+      </div>
+    </div>
           <button
             onClick={generateReport}
             className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
