@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef} from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
 import Footer from "./Footer";
@@ -11,7 +11,6 @@ import { getSections } from "../constants";
 import { apiClient } from "..";
 import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Carousel = ({ setIndexy }) => {
   const [index, setIndex] = useState(0);
@@ -40,15 +39,83 @@ const Carousel = ({ setIndexy }) => {
       setNewSection("");
     }
   };
-  const handleDragEnd = (result) => {
-    console.log('result',result)
-    if (!result.destination) return;
-    const reorderedSections = Array.from(sections);
-    const [removed] = reorderedSections.splice(result.source.index, 1);
-    console.log('removed',removed)
-    reorderedSections.splice(result.destination.index, 0, removed);
-    setSections(reorderedSections);
+  const [draggedIndex, setDraggedIndex] = useState(null);
+  const scrollContainerRef = useRef(null);
+  const autoScrollSpeed = 10;
+  let scrollInterval = null;
+  const scrollIntervalRef = useRef(null);
+
+
+  const handleDragStart = (e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.target.style.opacity = '0.6';
   };
+
+  const handleDragEnd = (e) => {
+    setDraggedIndex(null);
+    e.target.style.opacity = '1';
+    // Clear any ongoing auto-scroll
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedIndex === null) return;
+    
+    const container = scrollContainerRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const scrollThreshold = 60; // pixels from top/bottom to trigger scroll
+
+    // Auto-scroll when near the edges
+    const mouseY = e.clientY;
+    const topTrigger = containerRect.top + scrollThreshold;
+    const bottomTrigger = containerRect.bottom - scrollThreshold;
+
+    // Clear existing interval
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+
+    // Set up auto-scroll if near edges and not at boundaries
+    if (mouseY < topTrigger && container.scrollTop > 0) {
+      scrollIntervalRef.current = setInterval(() => {
+        if (container.scrollTop > 0) {
+          container.scrollTop = Math.max(0, container.scrollTop - autoScrollSpeed);
+        } else {
+          clearInterval(scrollIntervalRef.current);
+          scrollIntervalRef.current = null;
+        }
+      }, 16);
+    } else if (mouseY > bottomTrigger && 
+               container.scrollTop < container.scrollHeight - container.clientHeight) {
+      scrollIntervalRef.current = setInterval(() => {
+        if (container.scrollTop < container.scrollHeight - container.clientHeight) {
+          container.scrollTop = Math.min(
+            container.scrollHeight - container.clientHeight,
+            container.scrollTop + autoScrollSpeed
+          );
+        } else {
+          clearInterval(scrollIntervalRef.current);
+          scrollIntervalRef.current = null;
+        }
+      }, 16);
+    }
+
+    // Reorder sections
+    const newSections = [...sections];
+    const draggedItem = newSections[draggedIndex];
+    newSections.splice(draggedIndex, 1);
+    newSections.splice(index, 0, draggedItem);
+    
+    setSections(newSections);
+    setDraggedIndex(index);
+  };
+
   useEffect(() => {
     if(index == 2){
       const sections = getSections(title);
@@ -485,52 +552,42 @@ position: "top-center",
             </button>
           </div>
         </CarouselItem>
-        <CarouselItem className="overflow-y-auto h-7 ">
+        <CarouselItem ref={scrollContainerRef} className="overflow-y-auto h-7 ">
           {width <= 1169 ? <div>Please provide professor details</div> : ""}
           <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="sections-list">
-          {(provided) => (
-            <div {...provided.droppableProps} className="my-5" ref={provided.innerRef}>
-              {sections.map((section, index) => (
-                <Draggable key={index} draggableId={`section-${index}`} index={index}>
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      className="w-full flex justify-between items-center px-5 py-4 rounded-2xl my-2 shadow-md 
-                      bg-white/60 backdrop-blur-lg border border-gray-200 transition-all duration-300 
-                      hover:shadow-lg hover:border-gray-300"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span
-                          {...provided.dragHandleProps}
-                          className="cursor-grab text-gray-500"
-                          title="Drag"
-                        >
-                          <FaGripVertical size={20} />
-                        </span>
-                        <div className="text-lg font-semibold text-gray-800">
-                          {index + 1}) {section.title}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => handleDelete(index)}
-                        className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-all cursor-pointer"
-                        aria-label="Delete"
-                        title="Delete"
-                      >
-                        <FaTrashAlt size={20} />
-                      </button>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+      <div className="space-y-2">
+        {sections.map((section, index) => (
+          <div
+            key={index}
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragEnd={handleDragEnd}
+            onDragOver={(e) => handleDragOver(e, index)}
+            className={`w-full flex justify-between items-center px-4 py-3 rounded-lg
+              bg-white border border-gray-200 shadow-sm
+              ${draggedIndex === index ? 'opacity-60 border-blue-400' : 'opacity-100'}
+              transform transition-all duration-200 cursor-grab active:cursor-grabbing`}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="flex items-center justify-center w-6 h-6 text-gray-400">
+                ⋮⋮
+              </span>
+              <span className="text-base font-medium text-gray-800 truncate">
+                {index + 1}) {section.title}
+              </span>
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+            <button
+              onClick={() => handleDelete(index)}
+              className="p-2 text-red-500 hover:bg-red-50 rounded-full
+                transition-colors"
+              aria-label="Delete section"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
 
       <div className="flex gap-2 mb-4">
         <input
@@ -546,7 +603,6 @@ position: "top-center",
         >
           Add
         </button>
-      </div>
     </div>
           <button
             onClick={generateReport}
