@@ -7,6 +7,8 @@ import { SiGmail } from "react-icons/si";
 import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -17,7 +19,20 @@ const Team = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("User signed out.");
+        const signOutPromise = axios.get(
+          "https://reportify-backend.vercel.app/api/auth/logout",
+          {
+            withCredentials: true,
+          
+          }
+        ).then(() => {
+          navigate("/");
+        })
+        toast.promise(signOutPromise, {
+          pending: "Signing out...",
+          success: "Signed out successfully!",
+          error: "Failed to sign out. Please try again.",
+        });
       })
       .catch((error) => {
         console.error("Error signing out: ", error);

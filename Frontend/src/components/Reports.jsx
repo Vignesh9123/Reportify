@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiClient } from "..";
+import { toast } from "react-toastify";
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -18,7 +19,20 @@ const Reports = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("User signed out.");
+        const signOutPromise = axios.get(
+          "https://reportify-backend.vercel.app/api/auth/logout",
+          {
+            withCredentials: true,
+          
+          }
+        ).then(() => {
+          navigate("/");
+        })
+        toast.promise(signOutPromise, {
+          pending: "Signing out...",
+          success: "Signed out successfully!",
+          error: "Failed to sign out. Please try again.",
+        });
       })
       .catch((error) => {
         console.error("Error signing out: ", error);
