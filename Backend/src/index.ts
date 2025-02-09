@@ -17,7 +17,7 @@ app.use(cors(
        credentials: true
     }
 ))
-app.set('trust proxy', true)
+app.set('trust proxy', 1)
 app.use((req, res, next) => {
     console.log('Client IP:', req.ip);
     console.log('X-Forwarded-For:', req.headers['x-forwarded-for']);
