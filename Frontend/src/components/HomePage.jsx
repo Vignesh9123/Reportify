@@ -55,7 +55,6 @@ const Carousel = ({ setIndexy }) => {
   const handleDragEnd = (e) => {
     setDraggedIndex(null);
     e.target.style.opacity = '1';
-    // Clear any ongoing auto-scroll
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current);
       scrollIntervalRef.current = null;
@@ -68,20 +67,17 @@ const Carousel = ({ setIndexy }) => {
     
     const container = scrollContainerRef.current;
     const containerRect = container.getBoundingClientRect();
-    const scrollThreshold = 60; // pixels from top/bottom to trigger scroll
+    const scrollThreshold = 60; 
 
-    // Auto-scroll when near the edges
     const mouseY = e.clientY;
     const topTrigger = containerRect.top + scrollThreshold;
     const bottomTrigger = containerRect.bottom - scrollThreshold;
 
-    // Clear existing interval
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current);
       scrollIntervalRef.current = null;
     }
 
-    // Set up auto-scroll if near edges and not at boundaries
     if (mouseY < topTrigger && container.scrollTop > 0) {
       scrollIntervalRef.current = setInterval(() => {
         if (container.scrollTop > 0) {
@@ -106,7 +102,6 @@ const Carousel = ({ setIndexy }) => {
       }, 16);
     }
 
-    // Reorder sections
     const newSections = [...sections];
     const draggedItem = newSections[draggedIndex];
     newSections.splice(draggedIndex, 1);
@@ -342,7 +337,7 @@ position: "top-center",
             Your report is being generated. Please wait.
           </p>
           <span className="mt-2 text-xl font-semibold text-blue-400 animate-pulse">
-            Generating {currentSection}... ( {num} / 9 )
+            Generating {currentSection}... ( {num} / {sections.length} )
           </span>
         </div>
       </div>
@@ -553,7 +548,7 @@ position: "top-center",
           </div>
         </CarouselItem>
         <CarouselItem ref={scrollContainerRef} className="overflow-y-auto h-7 ">
-          {width <= 1169 ? <div>Please provide professor details</div> : ""}
+          {width <= 1169 ? <div>Organize Your Sections & Generate Report</div> : ""}
           <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
       <div className="space-y-2">
         {sections.map((section, index) => (
@@ -648,8 +643,8 @@ const HomePage = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [user, setUser] = useState(null);
+  
   const [loading, setLoading] = useState(true);
-
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -723,7 +718,7 @@ const HomePage = () => {
           <div className="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
             {indexy === 0 ? (
               <span className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-black">
-                🚀 Step 1: Enter Project Title & Course Details
+                🚀 Step 1: Enter Project Title, Course & Professor Details
               </span>
             ) : indexy === 1 ? (
               <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-blue-500">
@@ -731,7 +726,7 @@ const HomePage = () => {
               </span>
             ) : (
               <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
-                🎓 Step 3: Add Professor Details &{" "}
+                🎓 Step 3: Organize Your Sections  &{" "}
                 <span className="text-xl font-bold text-white">
                   Generate Report
                 </span>
@@ -815,7 +810,7 @@ const MainContainer = styled.div`
 
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.227);
+    background-color: rgba(22, 5, 5, 0.445);
   }
 
   ::-webkit-scrollbar-thumb:hover {
