@@ -7,8 +7,8 @@ import { rateLimit } from 'express-rate-limit'
 const app = express()
 
 const apiRateLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 5,
+    windowMs: 60 * 1000,
+    max: 100,
     message: 'Too many requests from this IP, please try again after 1 minute'
 })
 app.use(cors(
