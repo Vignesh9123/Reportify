@@ -26,3 +26,10 @@ export const currentUser = asyncHandler(async (req: Request, res: Response) => {
     if(!user) throw new ApiError(401, "Error while fetching user");
     return res.status(200).json(new ApiResponse(200, "Current user fetched successfully", user, true));
 })
+
+export const logout = asyncHandler(
+    async (req: Request, res: Response) => {
+        res.clearCookie("token", { httpOnly: true , sameSite: "none", secure: true });
+        return res.status(200).json(new ApiResponse(200, "Logout successful", null, true));
+    }
+)
