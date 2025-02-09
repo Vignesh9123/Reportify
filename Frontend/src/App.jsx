@@ -81,6 +81,10 @@ function App() {
         error: "Failed to sign in. Please try again.",
       });
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error during Google Sign-in: ", error);
     }
   };
