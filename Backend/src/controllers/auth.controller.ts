@@ -51,14 +51,12 @@ const shouldResetCredits = (createdAt: string) => {
 export const resetCredits = asyncHandler(async (req: Request, res: Response) => {
     if(req.headers['authorization'] !== `Bearer ${process.env.ADMIN_KEY}`) throw new ApiError(401, "Unauthorized");
     const users = await User.find().sort({ createdAt: -1 });
-    const updatedUsers = await Promise.all(
-        users.map(async (user) => {
-            if (shouldResetCredits(user.createdAt as string)) {
-                user.creditsUsed = 0;
-                await user.save();
-            }
-            return user;
-        })
-    )
+    const updatedUsers = users
+    .filter((user) => shouldResetCredits(user.createdAt as string))
+    .map(async (user) => {
+        user.creditsUsed = 0;
+        await user.save();
+    })
+    await Promise.all(updatedUsers);
     return res.status(200).json(new ApiResponse(200, `Credits reset successfully for ${updatedUsers.length} users`, null, true));
 });
