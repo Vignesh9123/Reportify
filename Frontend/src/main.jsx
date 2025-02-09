@@ -7,11 +7,13 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import Reports from "./components/Reports";
 import Team from "./components/Team";
+import { ToastContainer } from "react-toastify";
 import About from "./components/About";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/homepage" element={<HomePage />} />

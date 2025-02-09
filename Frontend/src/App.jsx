@@ -73,7 +73,6 @@ function App() {
         )
         .then(() => {
           navigate("/homepage");
-          console.log("Login Response:", response.data);
         });
 
       toast.promise(signInPromise, {
@@ -81,8 +80,6 @@ function App() {
         success: "Signed in successfully!",
         error: "Failed to sign in. Please try again.",
       });
-      console.log("Login Response:", response.data);
-      navigate("/homepage");
     } catch (error) {
       console.error("Error during Google Sign-in: ", error);
     }
@@ -123,7 +120,6 @@ function App() {
           <div className="dot dr"></div>
         </div>
       </LeftContainer>
-      <ToastContainer />
     </MainContainer>
   );
 }

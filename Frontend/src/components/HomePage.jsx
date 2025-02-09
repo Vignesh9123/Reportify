@@ -658,11 +658,24 @@ const HomePage = () => {
         }
       );
       setCurrentUser(response.data.data);
-      setLoading(false);
       console.log("Current User:", response.data.data);
     } catch (error) {
-      toast.error("Failed to login - please try again");
+      if(error.status === 401){
+        toast.error("Session Expired - please login again");
+        navigate("/");
+      }
+      else if(error.status === 429){
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
+      else{
+        toast.error("Something went wrong - please try again later");
+        navigate("/");
+      }
       console.error("Error fetching user:", error);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -673,7 +686,20 @@ const HomePage = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("User signed out.");
+        const signOutPromise = axios.get(
+          "https://reportify-backend.vercel.app/api/auth/logout",
+          {
+            withCredentials: true,
+          
+          }
+        ).then(() => {
+          navigate("/");
+        })
+        toast.promise(signOutPromise, {
+          pending: "Signing out...",
+          success: "Signed out successfully!",
+          error: "Failed to sign out. Please try again.",
+        });
       })
       .catch((error) => {
         console.error("Error signing out: ", error);
@@ -736,7 +762,6 @@ const HomePage = () => {
         </div>
 
         <Carousel setIndexy={setIndexy} />
-        <ToastContainer />
       </div>
       <div>
         <Footer handleLogout={handleLogout} />
