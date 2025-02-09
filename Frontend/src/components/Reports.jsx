@@ -19,15 +19,13 @@ const Reports = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios.get(
-          "https://reportify-backend.vercel.app/api/auth/logout",
-          {
+        const signOutPromise = axios
+          .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
-          
-          }
-        ).then(() => {
-          navigate("/");
-        })
+          })
+          .then(() => {
+            navigate("/");
+          });
         toast.promise(signOutPromise, {
           pending: "Signing out...",
           success: "Signed out successfully!",
@@ -35,6 +33,10 @@ const Reports = () => {
         });
       })
       .catch((error) => {
+        if (error.status === 429) {
+          toast.error("Too Many Requests - please try again later");
+          navigate("/");
+        }
         console.error("Error signing out: ", error);
       });
   };
@@ -64,6 +66,10 @@ const Reports = () => {
       setReports(response.data.data || []);
       console.log(reports);
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error fetching reports:", error);
     } finally {
       setLoading(false);
@@ -83,6 +89,10 @@ const Reports = () => {
         console.log("Report deleted successfully!");
       }
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error deleting the report:", error);
     }
   };
@@ -100,6 +110,10 @@ const Reports = () => {
         console.log("All reports deleted successfully!");
       }
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error deleting all reports:", error);
     }
   };
@@ -126,6 +140,10 @@ const Reports = () => {
 
       console.log("Report downloaded successfully!");
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error downloading the report:", error);
     }
   };

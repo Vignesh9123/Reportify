@@ -44,12 +44,12 @@ function App() {
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    toast.info("Welcome! Please click 'Get Started' to log in with Google.", {
-      position: "bottom-left",
-      autoClose: 3000,
-    });
-  }, []);
+  // useEffect(() => {
+  //   toast.info("Welcome! Please click 'Get Started' to log in with Google.", {
+  //     position: "bottom-left",
+  //     autoClose: 3000,
+  //   });
+  // }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -81,6 +81,10 @@ function App() {
         error: "Failed to sign in. Please try again.",
       });
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error during Google Sign-in: ", error);
     }
   };

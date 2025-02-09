@@ -13,7 +13,7 @@ import About from "./components/About";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ToastContainer />
+      <ToastContainer style={{zIndex:"999999"}}/>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/homepage" element={<HomePage />} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
 import Footer from "./Footer";
@@ -35,7 +35,13 @@ const Carousel = ({ setIndexy }) => {
 
   const addSection = () => {
     if (newSection.trim() !== "") {
-      setSections([...sections, { title: newSection, prompt:  `Provide detailed content or information for the section titled \"${newSection}\" on topic: ${title}.` }]);
+      setSections([
+        ...sections,
+        {
+          title: newSection,
+          prompt: `Provide detailed content or information for the section titled \"${newSection}\" on topic: ${title}.`,
+        },
+      ]);
       setNewSection("");
     }
   };
@@ -45,16 +51,15 @@ const Carousel = ({ setIndexy }) => {
   let scrollInterval = null;
   const scrollIntervalRef = useRef(null);
 
-
   const handleDragStart = (e, index) => {
     setDraggedIndex(index);
-    e.dataTransfer.effectAllowed = 'move';
-    e.target.style.opacity = '0.6';
+    e.dataTransfer.effectAllowed = "move";
+    e.target.style.opacity = "0.6";
   };
 
   const handleDragEnd = (e) => {
     setDraggedIndex(null);
-    e.target.style.opacity = '1';
+    e.target.style.opacity = "1";
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current);
       scrollIntervalRef.current = null;
@@ -64,10 +69,10 @@ const Carousel = ({ setIndexy }) => {
   const handleDragOver = (e, index) => {
     e.preventDefault();
     if (draggedIndex === null) return;
-    
+
     const container = scrollContainerRef.current;
     const containerRect = container.getBoundingClientRect();
-    const scrollThreshold = 60; 
+    const scrollThreshold = 60;
 
     const mouseY = e.clientY;
     const topTrigger = containerRect.top + scrollThreshold;
@@ -81,16 +86,24 @@ const Carousel = ({ setIndexy }) => {
     if (mouseY < topTrigger && container.scrollTop > 0) {
       scrollIntervalRef.current = setInterval(() => {
         if (container.scrollTop > 0) {
-          container.scrollTop = Math.max(0, container.scrollTop - autoScrollSpeed);
+          container.scrollTop = Math.max(
+            0,
+            container.scrollTop - autoScrollSpeed
+          );
         } else {
           clearInterval(scrollIntervalRef.current);
           scrollIntervalRef.current = null;
         }
       }, 16);
-    } else if (mouseY > bottomTrigger && 
-               container.scrollTop < container.scrollHeight - container.clientHeight) {
+    } else if (
+      mouseY > bottomTrigger &&
+      container.scrollTop < container.scrollHeight - container.clientHeight
+    ) {
       scrollIntervalRef.current = setInterval(() => {
-        if (container.scrollTop < container.scrollHeight - container.clientHeight) {
+        if (
+          container.scrollTop <
+          container.scrollHeight - container.clientHeight
+        ) {
           container.scrollTop = Math.min(
             container.scrollHeight - container.clientHeight,
             container.scrollTop + autoScrollSpeed
@@ -106,17 +119,17 @@ const Carousel = ({ setIndexy }) => {
     const draggedItem = newSections[draggedIndex];
     newSections.splice(draggedIndex, 1);
     newSections.splice(index, 0, draggedItem);
-    
+
     setSections(newSections);
     setDraggedIndex(index);
   };
 
   useEffect(() => {
-    if(index == 2){
+    if (index == 2) {
       const sections = getSections(title);
       setSections(sections);
     }
-  },[index])
+  }, [index]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -132,47 +145,47 @@ const Carousel = ({ setIndexy }) => {
 
   const nextSlide = () => {
     if (
-    (!title ||
-    !subject ||
-    !subjectCode ||
-    !branch ||
-    !sem ||
-    !professorName ||
-    !designation) &&
-    index === 0
+      (!title ||
+        !subject ||
+        !subjectCode ||
+        !branch ||
+        !sem ||
+        !professorName ||
+        !designation) &&
+      index === 0
     ) {
-    toast.info(
-    "Some fields are missing. Please ensure everything is completed.",
-    {
-position: "top-center",
-    autoClose: 3000,
+      toast.info(
+        "Some fields are missing. Please ensure everything is completed.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
+      return;
     }
-);
-    return;
-    }
-if (index === 1) {
-    let flag = false;
-    for (let i = 0; i < students.length; i++) {
-    if (
-    students[i].rollNumber === "" ||
-    students[i].name === "" ||
-    students[i].USN === ""
-    ) {
+    if (index === 1) {
+      let flag = false;
+      for (let i = 0; i < students.length; i++) {
+        if (
+          students[i].rollNumber === "" ||
+          students[i].name === "" ||
+          students[i].USN === ""
+        ) {
           flag = true;
           break;
         }
       }
-if (flag || students.length === 0) {
-    toast.info(
-    "Some fields are missing. Please ensure everything is completed.",
-    {
-position: "top-center",
-    autoClose: 3000,
+      if (flag || students.length === 0) {
+        toast.info(
+          "Some fields are missing. Please ensure everything is completed.",
+          {
+            position: "top-center",
+            autoClose: 3000,
+          }
+        );
+        return;
+      }
     }
-);
-    return;
-    }
-}
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setIndexy((prevIndex) => (prevIndex + 1) % slides.length);
   };
@@ -218,12 +231,12 @@ position: "top-center",
       });
       return;
     }
-    if(sections.length > 9){
+    if (sections.length > 9) {
       toast.info("Maximum 9 sections allowed. Please remove some sections", {
         position: "top-center",
         autoClose: 3000,
       });
-      return
+      return;
     }
     setFlag(true);
     let content = "";
@@ -232,21 +245,28 @@ position: "top-center",
       setNum((prevNum) => prevNum + 1);
 
       setCurrentSection(section.title);
-      const response = await axios.post(
-        "https://reportify-backend.vercel.app/api/content/generate",
-        {
-          title: section.title,
-          promptContent: section.prompt,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const response = await axios.post(
+          "https://reportify-backend.vercel.app/api/content/generate",
+          {
+            title: section.title,
+            promptContent: section.prompt,
           },
-          withCredentials: true,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        content += response.data.data;
+        console.log("Generating", section.title);
+      } catch (error) {
+        if (error.status === 429) {
+          toast.error("Too Many Requests - please try again later");
+          navigate("/");
         }
-      );
-      content += response.data.data;
-      console.log("Generating", section.title);
+      }
     }
     setNum(0);
     setFlag(false);
@@ -291,6 +311,10 @@ position: "top-center",
 
       setFinalDetails(JSON.stringify(response.data, null, 2));
     } catch (error) {
+      if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      }
       console.error("Error generating report:", error);
     }
     setTimeout(() => {
@@ -301,26 +325,6 @@ position: "top-center",
   const deleteStudentField = (idx) => () => {
     const updatedStudents = students.filter((_, i) => i !== idx);
     setStudents(updatedStudents);
-  };
-
-  const handleMoveUp = (index) => {
-    if (index === 0) return;
-    const updatedSections = [...sections];
-    [updatedSections[index], updatedSections[index - 1]] = [
-      updatedSections[index - 1],
-      updatedSections[index],
-    ];
-    setSections(updatedSections);
-  };
-
-  const handleMoveDown = (index) => {
-    if (index === sections.length - 1) return;
-    const updatedSections = [...sections];
-    [updatedSections[index], updatedSections[index + 1]] = [
-      updatedSections[index + 1],
-      updatedSections[index],
-    ];
-    setSections(updatedSections);
   };
 
   const handleDelete = (index) => {
@@ -548,57 +552,65 @@ position: "top-center",
           </div>
         </CarouselItem>
         <CarouselItem ref={scrollContainerRef} className="overflow-y-auto h-7 ">
-          {width <= 1169 ? <div>Organize Your Sections & Generate Report</div> : ""}
+          {width <= 1169 ? (
+            <div>Organize Your Sections & Generate Report</div>
+          ) : (
+            ""
+          )}
           <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
-      <div className="space-y-2">
-        {sections.map((section, index) => (
-          <div
-            key={index}
-            draggable
-            onDragStart={(e) => handleDragStart(e, index)}
-            onDragEnd={handleDragEnd}
-            onDragOver={(e) => handleDragOver(e, index)}
-            className={`w-full flex justify-between items-center px-4 py-3 rounded-lg
+            <div className="space-y-2">
+              {sections.map((section, index) => (
+                <div
+                  key={index}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  className={`w-full flex justify-between items-center px-4 py-3 rounded-lg
               bg-white border border-gray-200 shadow-sm
-              ${draggedIndex === index ? 'opacity-60 border-blue-400' : 'opacity-100'}
+              ${
+                draggedIndex === index
+                  ? "opacity-60 border-blue-400"
+                  : "opacity-100"
+              }
               transform transition-all duration-200 cursor-grab active:cursor-grabbing`}
-          >
-            <div className="flex items-center gap-3 min-w-0">
-              <span className="flex items-center justify-center w-6 h-6 text-gray-400">
-                ⋮⋮
-              </span>
-              <span className="text-base font-medium text-gray-800 truncate">
-                {index + 1}) {section.title}
-              </span>
-            </div>
-            <button
-              onClick={() => handleDelete(index)}
-              className="p-2 text-red-500 hover:bg-red-50 rounded-full
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="flex items-center justify-center w-6 h-6 text-gray-400">
+                      ⋮⋮
+                    </span>
+                    <span className="text-base font-medium text-gray-800 truncate">
+                      {index + 1}) {section.title}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(index)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-full
                 transition-colors"
-              aria-label="Delete section"
+                    aria-label="Delete section"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex gap-2 mb-4">
+            <input
+              type="text"
+              placeholder="Add custom section"
+              value={newSection}
+              onChange={(e) => setNewSection(e.target.value)}
+              className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={addSection}
+              className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
             >
-              ×
+              Add
             </button>
           </div>
-        ))}
-      </div>
-    </div>
-
-      <div className="flex gap-2 mb-4">
-        <input
-          type="text"
-          placeholder="Add custom section"
-          value={newSection}
-          onChange={(e) => setNewSection(e.target.value)}
-          className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          onClick={addSection}
-          className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
-        >
-          Add
-        </button>
-    </div>
           <button
             onClick={generateReport}
             className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
@@ -643,7 +655,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const [user, setUser] = useState(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
@@ -660,21 +672,18 @@ const HomePage = () => {
       setCurrentUser(response.data.data);
       console.log("Current User:", response.data.data);
     } catch (error) {
-      if(error.status === 401){
+      if (error.status === 401) {
         toast.error("Session Expired - please login again");
         navigate("/");
-      }
-      else if(error.status === 429){
+      } else if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
-      }
-      else{
+      } else {
         toast.error("Something went wrong - please try again later");
         navigate("/");
       }
       console.error("Error fetching user:", error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -686,15 +695,13 @@ const HomePage = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios.get(
-          "https://reportify-backend.vercel.app/api/auth/logout",
-          {
+        const signOutPromise = axios
+          .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
-          
-          }
-        ).then(() => {
-          navigate("/");
-        })
+          })
+          .then(() => {
+            navigate("/");
+          });
         toast.promise(signOutPromise, {
           pending: "Signing out...",
           success: "Signed out successfully!",
@@ -702,6 +709,10 @@ const HomePage = () => {
         });
       })
       .catch((error) => {
+        if (error.status === 429) {
+          toast.error("Too Many Requests - please try again later");
+          navigate("/");
+        }
         console.error("Error signing out: ", error);
       });
   };
@@ -752,7 +763,7 @@ const HomePage = () => {
               </span>
             ) : (
               <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
-                🎓 Step 3: Organize Your Sections  &{" "}
+                🎓 Step 3: Organize Your Sections &{" "}
                 <span className="text-xl font-bold text-white">
                   Generate Report
                 </span>
