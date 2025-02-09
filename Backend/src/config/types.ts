@@ -13,7 +13,10 @@ export type UserType = {
     name: string;
     email: string;
     role: string;
-    loginType: string
+    loginType: string;
+    creditsUsed: number;
+    maxCredits: number;
+    createdAt: string | Date;
 };
 
 export type submissionDetailsType = {

@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler";
 import {createDocument} from "../utils/docsHelper";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { uploadBuffer } from "../utils/uploadThing";
+import User from "../models/user.model";
 import { Report } from "../models/report.model";
 import { utapi } from "../config/uploadThing";
 
@@ -25,6 +26,10 @@ export const generateReport = asyncHandler(async (req: Request, res: Response) =
     const report = await Report.create({topic, submissionDetails, professorDetails, key, userId: req.user._id});
     if(!report) throw new ApiError(500, "Error while creating report");  
     console.log("Stored report in DB");
+    const user = await User.findById(req.user._id);
+    if(!user) throw new ApiError(500, "Error while fetching user");
+    user.creditsUsed += 1;
+    await user.save();
     res.set({
         "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "Content-Disposition": "attachment; filename=generated.docx",
