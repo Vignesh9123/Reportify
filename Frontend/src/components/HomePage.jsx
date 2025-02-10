@@ -352,8 +352,14 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
   return (
     <CarouselContainer>
       {creditsUsed >= maxCredits ? (
-        <div className="p-4 text-center text-red-600 font-bold">
-          Credits Insufficient. Please try again later.
+        <div className="flex items-center justify-center h-full w-full p-4">
+          <div className="text-center text-red-600 font-bold">
+            Insufficient Credits. Your credits have been exhausted for this
+            period.
+            <br />
+            Credits are renewed at the beginning of each month. Please try again
+            later.
+          </div>
         </div>
       ) : (
         <>
