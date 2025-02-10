@@ -6,8 +6,16 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import { asyncHandler } from "../utils/asyncHandler";
 import { calculateResetDate } from "../utils/resetDate";
+import * as admin from "firebase-admin";
+import { config } from "../config";
 export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
-        const { name, email}:{name: string, email: string} = req.body;
+        const app = admin.initializeApp({
+            projectId: config.FIREBASE_PROJECT_ID,
+        });
+        const { idtoken}:{idtoken: string} = req.body;
+        if(!idtoken) throw new ApiError(400, "Missing required fields");
+       const decodedToken = await app.auth().verifyIdToken(idtoken)
+       const { name, email } = decodedToken
         let user = await User.findOne({ email, loginType: "google" });
         if(user) {
             const token = generateToken(user._id);
