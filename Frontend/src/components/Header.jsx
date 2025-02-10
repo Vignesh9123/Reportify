@@ -17,9 +17,9 @@ const Header = ({
             <ul className="wrapper">
               <li className="icon facebook">
                 <span className="tooltip">
-                  Credits will renew on {renewalDateFormatted} if exhausted.
+                  Credits will renew on <span className="text-blue-500">{renewalDateFormatted}</span> if exhausted.
                 </span>
-                Credits Left: {maxCredits - creditsUsed}
+                Credits Left : {maxCredits - creditsUsed}
               </li>
             </ul>
           </div>
@@ -125,12 +125,10 @@ const MainContainer = styled.div`
     color: white;
     border-radius: 50px;
     width: auto;
-    border: 2px solid white;
     padding: 0 10px;
     height: 6.5vh;
     top: 3px;
     font-size: 17px;
-    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -362,7 +360,7 @@ const MainContainer = styled.div`
     .logo {
       position: relative;
       background: url("Reportify-logo.png") no-repeat center/contain;
-      min-width: 130px;
+      min-width: 140px;
       height: 40px;
       animation: dp 0.4s linear;
       filter: drop-shadow(1px 1px 4px purple);
@@ -378,7 +376,7 @@ const MainContainer = styled.div`
     .logo {
       position: relative;
       background: url("Reportify-logo.png") no-repeat center/contain;
-      min-width: 100px;
+      min-width: 120px;
       height: 40px;
       animation: dp 0.4s linear;
       filter: drop-shadow(1px 1px 4px purple);
