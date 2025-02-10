@@ -638,6 +638,13 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                 </button>
               </div>
 
+              <div className="mt-2 text-center text-md text-gray-600">
+                Generating this report will cost 1 credit. You have{" "}
+                <span className="text-red-600 font-extrabold">
+                  {maxCredits - creditsUsed}
+                </span>{" "}
+                credits remaining.
+              </div>
               <button
                 onClick={generateReport}
                 className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
@@ -658,11 +665,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                   Generate Report
                 </span>
               </button>
-              <div className="mt-2 text-center text-md text-gray-600">
-                Generating this report will cost 1 credit. You have{" "}
-                <span className="text-red-600 font-extrabold">{maxCredits - creditsUsed}</span>{" "}
-                credits remaining.
-              </div>
             </CarouselItem>
           </CarouselInner>
           <CarouselButton className="left" onClick={prevSlide}>
