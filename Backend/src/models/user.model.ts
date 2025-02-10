@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { UserType } from "../config/types";
-
+import { calculateResetDate } from "../utils/resetDate";
 const userSchema = new mongoose.Schema({
     name: { 
         type: String, 
@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     maxCredits: {
         type: Number,
         default: 5
+    },
+    creditsResetDate: {
+        type: Date,
+        default: calculateResetDate(new Date())
     }
 }, { timestamps: true });
 
