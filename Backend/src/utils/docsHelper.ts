@@ -144,7 +144,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  }),
                  new TableCell({
                    children: [
@@ -156,7 +156,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  }),
                  new TableCell({
                    children: [
@@ -168,7 +168,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  })
                ],
              }),
@@ -184,7 +184,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  }),
                  new TableCell({
                    children: [
@@ -196,7 +196,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  }),
                  new TableCell({
                    children: [
@@ -208,7 +208,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        spacing: {line: 360 }
                      })
                    ],
-                   width: { size: 5000, type: "auto" },
+                   width: { size: 6000, type: "dxa" },
                  })
                ],
              }))
@@ -309,7 +309,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                  pageBorderLeft: { style: BorderStyle.THIN_THICK_MEDIUM_GAP, size: 4 * 8, color: "000000", space: 30 },
                  pageBorderRight: { style: BorderStyle.THIN_THICK_MEDIUM_GAP, size: 4 * 8, color: "000000", space: 30 },
                  pageBorderTop: { style: BorderStyle.THIN_THICK_MEDIUM_GAP, size: 4 * 8, color: "000000", space: 30 },
-                 pageBorders: { display: PageBorderDisplay.NOT_FIRST_PAGE, offsetFrom: "page", zOrder: PageBorderZOrder.FRONT },
+                 pageBorders: { display: PageBorderDisplay.ALL_PAGES, offsetFrom: "page", zOrder: PageBorderZOrder.FRONT },
                },
                margin: {
                    footer: "0.2cm"
