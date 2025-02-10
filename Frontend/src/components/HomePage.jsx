@@ -12,7 +12,12 @@ import { apiClient } from "..";
 import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 
-const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
+const Carousel = ({
+  setIndexy,
+  creditsUsed,
+  maxCredits,
+  renewalDateFormatted,
+}) => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([
     { rollNumber: "", name: "", USN: "" },
@@ -251,7 +256,7 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
           {
             title: section.title,
             promptContent: section.prompt,
-            firstSection: num === 1, // true only for the first section
+            firstSection: num === 1,
           },
           {
             headers: {
@@ -356,8 +361,9 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
           <div className="text-center text-red-600 font-bold">
             Insufficient Credits. All 5 credits have been used for this period.
             <br />
-            Credits are renewed at the beginning of each month. Please try again
-            later.
+            Credits will be renewed on {renewalDateFormatted}.
+            <br />
+            Please try again later.
           </div>
         </div>
       ) : (
@@ -698,6 +704,8 @@ const HomePage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
   const [maxCredits, setMaxCredits] = useState(5);
+  const [renewalDate, setRenewalDate] = useState(null);
+  const [renewalDateFormatted, setRenewalDateFormatted] = useState("");
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -710,7 +718,21 @@ const HomePage = () => {
       setCurrentUser(response.data.data);
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
-      console.log("Current User:", response.data.data);
+
+      const createdAt = new Date(userData.createdAt);
+      const msIn30Days = 30 * 24 * 60 * 60 * 1000;
+      const now = new Date();
+      const cyclesPassed = Math.floor((now - createdAt) / msIn30Days);
+      const nextRenewal = new Date(
+        createdAt.getTime() + (cyclesPassed + 1) * msIn30Days
+      );
+      setRenewalDate(nextRenewal);
+      const formattedRenewalDate = nextRenewal.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+      setRenewalDateFormatted(formattedRenewalDate);
     } catch (error) {
       if (error.status === 401) {
         toast.error("Session Expired - please login again");
@@ -816,6 +838,7 @@ const HomePage = () => {
           setIndexy={setIndexy}
           creditsUsed={creditsUsed}
           maxCredits={maxCredits}
+          renewalDateFormatted={renewalDateFormatted}
         />
       </div>
       <div>
