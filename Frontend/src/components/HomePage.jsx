@@ -255,7 +255,12 @@ const Carousel = ({
           {
             title: section.title,
             promptContent: section.prompt,
+
+            firstSection: section.title == sections[0].title, // true only for the first section
+            lastSection: section.title == sections[sections.length - 1].title,
+
             firstSection: num === 1,
+
           },
           {
             headers: {

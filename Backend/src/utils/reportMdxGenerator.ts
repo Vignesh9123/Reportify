@@ -2,14 +2,14 @@
 
 
 
-export async function generateSectionContent(title: string, promptContent: string) : Promise<string> {
+export async function generateSectionContent(title: string, promptContent: string, lastSection?: boolean) : Promise<string> {
   try {
     console.log(`Generating content for: ${title}...`);
     const model = getReportModel(title);
     const result = await model.generateContent(`${title}:\n\n${promptContent}`);
     console.log(`Generated content for "${title}":`, result);
     const text = result.response.text();
-    return `${text}\n---\n`;
+    return `${text}\n${lastSection?'':'---'}\n`;
   } catch (error) {
     console.error(`Error generating content for "${title}":`, error);
     return `## ${title}\n\nContent generation failed.\n\n`;
