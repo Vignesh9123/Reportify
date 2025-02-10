@@ -4,7 +4,6 @@ Reportify-AI is a report-generation tool built for JSSSTU students to streamline
 
 Access it live here: [https://reportify-ai.vercel.app](https://reportify-ai.vercel.app)
 
-The backend was developed by [Vignesh D](https://github.com/Vignesh9123), with frontend contributions from [Suraj S G](https://github.com/SurajSG23).  
 
 ---
 
@@ -28,6 +27,8 @@ The backend was developed by [Vignesh D](https://github.com/Vignesh9123), with f
 
 
 ---
+
+The backend was developed by [Vignesh D](https://github.com/Vignesh9123), with frontend contributions from [Suraj S G](https://github.com/SurajSG23).  
 
 ## 🤝 Contribution Guidelines  
 
