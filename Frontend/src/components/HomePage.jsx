@@ -32,6 +32,8 @@ const Carousel = ({ setIndexy }) => {
   const [num, setNum] = useState(0);
   const [sections, setSections] = useState([]);
   const [newSection, setNewSection] = useState("");
+  const [creditsUsed,setCreditsUsed] = useState(0);
+
 
   const addSection = () => {
     if (newSection.trim() !== "") {
@@ -670,6 +672,7 @@ const HomePage = () => {
         }
       );
       setCurrentUser(response.data.data);
+      setCreditsUsed(response.data.data.creditsUsed)
       console.log("Current User:", response.data.data);
     } catch (error) {
       if (error.status === 401) {
