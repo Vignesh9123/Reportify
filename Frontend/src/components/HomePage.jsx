@@ -260,7 +260,6 @@ const Carousel = ({
             lastSection: section.title == sections[sections.length - 1].title,
 
             firstSection: num === 1,
-
           },
           {
             headers: {
@@ -677,11 +676,11 @@ const Carousel = ({
                 <span className="text-xl font-bold leading-none text-white transition-all duration-200 group-hover:opacity-0">
                   Generate Report
                 </span>
-                <div className="my-1.5 text-center text-sm text-red-400">
-                  This report is AI-generated and may contain errors. Please
-                  review it carefully before use.
-                </div>
               </button>
+              <div className="my-1.5 text-center text-sm text-red-400">
+                This report is AI-generated and may contain errors. Please
+                review it carefully before use.
+              </div>
             </CarouselItem>
           </CarouselInner>
           <CarouselButton className="left" onClick={prevSlide}>
