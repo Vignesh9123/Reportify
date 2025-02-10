@@ -699,55 +699,55 @@ const HomePage = () => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
   const [maxCredits, setMaxCredits] = useState(5);
   const [renewalDate, setRenewalDate] = useState(null);
   const [renewalDateFormatted, setRenewalDateFormatted] = useState("");
-  // const fetchCurrentUser = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.get(
-  //       "https://reportify-backend.vercel.app/api/auth/current-user",
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     setCurrentUser(response.data.data);
-  //     setCreditsUsed(response.data.data.creditsUsed);
-  //     setMaxCredits(response.data.data.maxCredits);
+  const fetchCurrentUser = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "https://reportify-backend.vercel.app/api/auth/current-user",
+        {
+          withCredentials: true,
+        }
+      );
+      setCurrentUser(response.data.data);
+      setCreditsUsed(response.data.data.creditsUsed);
+      setMaxCredits(response.data.data.maxCredits);
 
-  //     const createdAt = new Date(response.data.data.creditsResetDate);
+      const createdAt = new Date(response.data.data.creditsResetDate);
 
-  //     const formattedRenewalDate = createdAt.toLocaleDateString("en-US", {
-  //       month: "long",
-  //       day: "numeric",
-  //       year: "numeric",
-  //     });
+      const formattedRenewalDate = createdAt.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
 
-  //     setRenewalDate(createdAt);
-  //     setRenewalDateFormatted(formattedRenewalDate);
-  //   } catch (error) {
-  //     if (error.status === 401) {
-  //       toast.error("Session Expired - please login again");
-  //       navigate("/");
-  //     } else if (error.status === 429) {
-  //       toast.error("Too Many Requests - please try again later");
-  //       navigate("/");
-  //     } else {
-  //       toast.error("Something went wrong - please try again later");
-  //       navigate("/");
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      setRenewalDate(createdAt);
+      setRenewalDateFormatted(formattedRenewalDate);
+    } catch (error) {
+      if (error.status === 401) {
+        toast.error("Session Expired - please login again");
+        navigate("/");
+      } else if (error.status === 429) {
+        toast.error("Too Many Requests - please try again later");
+        navigate("/");
+      } else {
+        toast.error("Something went wrong - please try again later");
+        navigate("/");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchCurrentUser();
-  // }, []);
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   const handleLogout = () => {
     signOut(auth)
@@ -773,15 +773,15 @@ const HomePage = () => {
       });
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //     if (!currentUser) {
-  //       navigate("/");
-  //     }
-  //   });
-  //   return () => unsubscribe();
-  // }, [auth, navigate]);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
 
   if (loading) {
     return (
@@ -804,7 +804,7 @@ const HomePage = () => {
       <div className="body">
         <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
           <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4 text-white">
-            {/* Hello, {currentUser.name} ! */}
+            Hello, {currentUser.name} !
           </h1>
           <p className="text-2xl italic text-gray-400">
             Generate your report effortlessly in{" "}
