@@ -53,4 +53,4 @@ We welcome contributions! Follow these steps to contribute:
 
 ## 📧 Contact  
 
-For inquiries, please reach out to [Suraj S G](surajdhanva23@gmail.com) or [Vignesh D](vignesh.d9123@gmail.com) .
+For inquiries, please reach out to [Suraj S G](https://mail.google.com/mail/?view=cm&fs=1&to=surajdhanva23@gmail.com&su=Reportify) or [Vignesh D](https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com&su=Reportify) .
