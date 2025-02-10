@@ -949,7 +949,7 @@ const CarouselContainer = styled.div`
     max-width: 250px;
     height: 530px;
   }
-  @media (max-height: 747px) {
+  @media (max-height: 777px) {
     height: 500px;
   }
   @media (max-height: 646px) {
@@ -1248,7 +1248,7 @@ const CarouselItem = styled.div`
       width: 230px;
     }
   }
-  @media (max-height: 777px) {
+  @media (max-height: 747px) {
     height: 400px;
   }
   @media (max-height: 646px) {
@@ -1272,7 +1272,7 @@ const CarouselButton = styled.button`
   @media (max-width: 590px) {
     font-size: 1.2rem;
   }
-  @media (max-height: 747px) {
+  @media (max-height: 777px) {
     font-size: 18px;
   }
 `;
