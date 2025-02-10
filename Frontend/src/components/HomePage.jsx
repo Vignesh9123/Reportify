@@ -679,7 +679,7 @@ const Carousel = ({
                 </span>
               </button>
               <div className="my-1.5 text-center text-sm text-red-400">
-              <IoWarning size={12}/> This report is AI-generated and may contain errors. Please
+              <IoWarning size={24} color="red" /> This report is AI-generated and may contain errors. Please
                 review it carefully before use.
               </div>
             </CarouselItem>
