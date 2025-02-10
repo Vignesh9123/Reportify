@@ -361,9 +361,7 @@ const Carousel = ({
           <div className="text-center text-red-600 font-bold">
             Insufficient Credits. All 5 credits have been used for this period.
             <br />
-            Credits will be renewed on {renewalDateFormatted}.
-            <br />
-            Please try again later.
+            Credits will be renewed on <span className="text-blue-500"></span> {renewalDateFormatted}.
           </div>
         </div>
       ) : (
