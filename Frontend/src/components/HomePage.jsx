@@ -251,6 +251,7 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
           {
             title: section.title,
             promptContent: section.prompt,
+            firstSection: num === 1, // true only for the first section
           },
           {
             headers: {

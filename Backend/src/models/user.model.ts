@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "email",
         enum: ["email", "google"]
+    },
+    creditsUsed: {
+        type: Number,
+        default: 0
+    },
+    maxCredits: {
+        type: Number,
+        default: 5
     }
 }, { timestamps: true });
 
