@@ -17,6 +17,7 @@ export type UserType = {
     creditsUsed: number;
     maxCredits: number;
     createdAt: string | Date;
+    creditsResetDate: string | Date;
 };
 
 export type submissionDetailsType = {

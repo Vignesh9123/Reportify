@@ -5,6 +5,7 @@ import {  generateToken } from "../utils/auth";
 import { Request, Response } from "express";
 import User from "../models/user.model";
 import { asyncHandler } from "../utils/asyncHandler";
+import { calculateResetDate } from "../utils/resetDate";
 export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
         const { name, email}:{name: string, email: string} = req.body;
         let user = await User.findOne({ email, loginType: "google" });
@@ -33,28 +34,20 @@ export const logout = asyncHandler(
         return res.status(200).json(new ApiResponse(200, "Logout successful", null, true));
     }
 )
-const shouldResetCredits = (createdAt: string) => {
+const shouldResetCredits = (creditsResetDate: string) => {
     const now = new Date();
-    const joinDate = new Date(createdAt);
-
-    const yearsDiff = now.getFullYear() - joinDate.getFullYear();
-    const monthsDiff = now.getMonth() - joinDate.getMonth();
-    const totalMonths = yearsDiff * 12 + monthsDiff;
-
-    // Adjust for leap years or months with fewer days
-    const maxJoinDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // Last day of the current month
-    const effectiveJoinDate = Math.min(joinDate.getDate(), maxJoinDate.getDate());
-
-    return totalMonths > 0 && now.getDate() === effectiveJoinDate;
+    const resetDate = new Date(creditsResetDate);
+    return now.getDate() === resetDate.getDate() && now.getMonth() === resetDate.getMonth() && now.getFullYear() === resetDate.getFullYear();
 };
 
 export const resetCredits = asyncHandler(async (req: Request, res: Response) => {
     if(req.headers['authorization'] !== `Bearer ${process.env.ADMIN_KEY}`) throw new ApiError(401, "Unauthorized");
     const users = await User.find().sort({ createdAt: -1 });
     const updatedUsers = users
-    .filter((user) => shouldResetCredits(user.createdAt as string))
+    .filter((user) => shouldResetCredits( user.creditsResetDate as string))
     .map(async (user) => {
         user.creditsUsed = 0;
+        user.creditsResetDate = calculateResetDate(new Date());
         await user.save();
     })
     await Promise.all(updatedUsers);
