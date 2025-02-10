@@ -13,7 +13,6 @@ async function createDocument(topic: string, content: string, res : Response, su
     // }
   
    try {
-     console.log("Generated content")
      const lines = content.split("\n").filter((line) => line.trim() !== "");
      const initialContent = [
        new Paragraph({
@@ -440,6 +439,7 @@ async function createDocument(topic: string, content: string, res : Response, su
      return buffer;
    } catch (error) {
       console.log('Error while creating document:', error);
+      throw error;
    }
 }
 

@@ -45,7 +45,6 @@ export const getReports = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const getReport = asyncHandler(async (req: Request, res: Response) => {
-    console.log(req.query)
     const report = await Report.findById(req.query.id);
     if(!report) throw new ApiError(500, "Error while fetching report");
     if(report.userId.toString() !== req.user._id.toString()) throw new ApiError(401, "Unauthorized");
