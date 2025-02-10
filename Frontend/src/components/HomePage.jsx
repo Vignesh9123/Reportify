@@ -326,8 +326,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
   const deleteStudentField = (idx) => () => {
     const updatedStudents = students.filter((_, i) => i !== idx);
     setStudents(updatedStudents);
-    console.log(updatedStudents);
-    console.log(students.filter((_, i) => i !== idx));
   };
 
   const handleDelete = (index) => {
@@ -535,7 +533,7 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                       <div className="flex justify-center items-center">
                         <button
                           className="Btn"
-                          onClick={() => deleteStudentField(idx)}
+                          onClick={() => deleteStudentField(idx)()}
                         >
                           <div className="sign">
                             <svg
