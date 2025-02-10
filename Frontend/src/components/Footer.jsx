@@ -76,7 +76,7 @@ const MainFooterContainer = styled.div`
       gap: 15px;
     }
   }
-  @media (max-width: 514px) {
+  @media (max-width: 584px) {
     .logout {
       display: block;
     }
@@ -91,6 +91,7 @@ const MainFooterContainer = styled.div`
       gap: 15px;
     }
   }
+
   @media (max-width: 303px) {
     height: 13vh;
     .left {

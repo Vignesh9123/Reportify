@@ -729,7 +729,6 @@ const HomePage = () => {
 
       setRenewalDate(createdAt);
       setRenewalDateFormatted(formattedRenewalDate);
-
     } catch (error) {
       if (error.status === 401) {
         toast.error("Session Expired - please login again");
@@ -795,7 +794,12 @@ const HomePage = () => {
   return (
     <MainContainer>
       <div>
-        <Header handleLogout={handleLogout} />
+        <Header
+          handleLogout={handleLogout}
+          creditsUsed={creditsUsed}
+          maxCredits={maxCredits}
+          renewalDateFormatted={renewalDateFormatted}
+        />
       </div>
       <div className="body">
         <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
