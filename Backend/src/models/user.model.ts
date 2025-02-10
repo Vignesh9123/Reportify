@@ -35,9 +35,12 @@ const userSchema = new mongoose.Schema({
         default: 5
     },
     creditsResetDate: {
-        type: Date,
-        default: calculateResetDate(new Date())
+            type: Date,
+            default: function() {
+                return calculateResetDate(new Date());
+            }
     }
+    
 }, { timestamps: true });
 
 const User = mongoose.model<UserType>("User", userSchema);
