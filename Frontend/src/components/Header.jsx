@@ -1,16 +1,31 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-
-const Header = ({ handleLogout }) => {
+const Header = ({
+  handleLogout,
+  creditsUsed,
+  maxCredits,
+  renewalDateFormatted,
+}) => {
   const location = useLocation();
   return (
     <MainContainer>
       <Link to="/homepage" className="logo"></Link>
-      <div className="flex gap-2.5">
-        <button className="button2" onClick={handleLogout}>
-          Log Out
-        </button>
+      <div className="border h-[7vh] flex gap-2.5">
+        {location.pathname === "/homepage" ? (
+          <div>
+            <ul className="wrapper">
+              <li className="icon facebook">
+                <span className="tooltip">
+                  Credits will renew on <span className="text-blue-500">{renewalDateFormatted}</span> if exhausted.
+                </span>
+                Credits Left : {maxCredits - creditsUsed}
+              </li>
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
 
         <Link
           to={location.pathname === "/homepage" ? "/reports" : "/homepage"}
@@ -45,6 +60,9 @@ const Header = ({ handleLogout }) => {
           </span>
           {location.pathname === "/homepage" ? "My Reports" : "Home Page"}
         </Link>
+        <button className="button2" onClick={handleLogout}>
+          Log Out
+        </button>
       </div>
     </MainContainer>
   );
@@ -91,6 +109,68 @@ const MainContainer = styled.div`
   z-index: 9999;
   animation: ${fadeIn} 0.5s ease-in-out,
     ${gradientAnimation} 10s infinite alternate ease-in-out;
+
+  .wrapper {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    justify-content: center;
+  }
+
+  .wrapper .icon {
+    position: relative;
+    background: black;
+    color: white;
+    border-radius: 50px;
+    width: auto;
+    padding: 0 10px;
+    height: 6.5vh;
+    top: 3px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .wrapper .tooltip {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    background: #000000;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap;
+  }
+
+  .wrapper .tooltip::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: #000000;
+  }
+
+  .wrapper .icon:hover .tooltip {
+    bottom: -53px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .logo {
     position: relative;
     background: url("Reportify-logo.png") no-repeat center/contain;
@@ -229,12 +309,41 @@ const MainContainer = styled.div`
     }
   }
 
-  @media (max-width: 514px) {
+  @media (max-width: 664px) {
+    .wrapper .icon {
+      font-size: 14px;
+    }
+    .button2 {
+      font-size: 14px;
+    }
+    .button {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 584px) {
     .button2 {
       display: none;
     }
   }
-  @media (max-width: 330px) {
+  @media (max-width: 492px) {
+    .wrapper .icon {
+      font-size: 12px;
+      height: 5vh;
+      top: 10px;
+    }
+    .button__icon-wrapper {
+      display: none;
+    }
+    .button {
+      width: auto;
+      font-size: 12px;
+      padding: 0 5px;
+      height: 5vh;
+      top: 10px;
+      position: relative;
+    }
+  }
+  @media (max-width: 423px) {
     .logo {
       position: relative;
       background: url("Reportify-logo.png") no-repeat center/contain;
@@ -243,8 +352,11 @@ const MainContainer = styled.div`
       animation: dp 0.4s linear;
       filter: drop-shadow(1px 1px 4px purple);
     }
+    .button {
+      font-size: 12px;
+    }
   }
-  @media (max-width: 423px) {
+  @media (max-width: 368px) {
     .logo {
       position: relative;
       background: url("Reportify-logo.png") no-repeat center/contain;
@@ -253,8 +365,32 @@ const MainContainer = styled.div`
       animation: dp 0.4s linear;
       filter: drop-shadow(1px 1px 4px purple);
     }
+    .wrapper .icon {
+      font-size: 10px;
+    }
     .button {
-      font-size: 12px;
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 330px) {
+    .logo {
+      position: relative;
+      background: url("Reportify-logo.png") no-repeat center/contain;
+      min-width: 120px;
+      height: 40px;
+      animation: dp 0.4s linear;
+      filter: drop-shadow(1px 1px 4px purple);
+    }
+    .wrapper .icon {
+      font-size: 10px;
+    }
+    .button__icon-wrapper {
+      display: none;
+    }
+    .button {
+      width: auto;
+      font-size: 10px;
+      padding: 0 5px;
     }
   }
 `;

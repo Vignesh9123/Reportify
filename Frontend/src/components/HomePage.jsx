@@ -12,7 +12,12 @@ import { apiClient } from "..";
 import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 
-const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
+const Carousel = ({
+  setIndexy,
+  creditsUsed,
+  maxCredits,
+  renewalDateFormatted,
+}) => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([
     { rollNumber: "", name: "", USN: "" },
@@ -213,7 +218,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
   }, [index, slides.length]);
 
   const generateReport = async () => {
-    console.log(sections);
     if (
       !title ||
       !professorName ||
@@ -251,8 +255,12 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
           {
             title: section.title,
             promptContent: section.prompt,
+
             firstSection: section.title == sections[0].title, // true only for the first section
             lastSection: section.title == sections[sections.length - 1].title,
+
+            firstSection: num === 1,
+
           },
           {
             headers: {
@@ -262,7 +270,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
           }
         );
         content += response.data.data;
-        console.log("Generating", section.title);
       } catch (error) {
         if (error.status === 429) {
           toast.error("Too Many Requests - please try again later");
@@ -317,7 +324,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error generating report:", error);
     }
     setTimeout(() => {
       window.location.reload();
@@ -354,11 +360,15 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
     <CarouselContainer>
       {creditsUsed >= maxCredits ? (
         <div className="flex items-center justify-center h-full w-full p-4">
-          <div className="text-center text-red-600 font-bold">
-            Insufficient Credits. All 5 credits have been used for this period.
+          <div className="text-center text-gray-600 font-bold">
+            <span className="text-red-600">
+              Insufficient Credits.
+              <br />
+            </span>
+            All 5 credits have been used for this period.
             <br />
-            Credits are renewed at the beginning of each month. Please try again
-            later.
+            Credits will be renewed on{" "}
+            <span className="text-blue-500">{renewalDateFormatted}.</span>
           </div>
         </div>
       ) : (
@@ -534,7 +544,7 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                       <div className="flex justify-center items-center">
                         <button
                           className="Btn"
-                          onClick={() => deleteStudentField(idx)}
+                          onClick={() => deleteStudentField(idx)()}
                         >
                           <div className="sign">
                             <svg
@@ -639,6 +649,15 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                 </button>
               </div>
 
+              <div className="my-1.5 text-center text-md text-gray-600">
+                Generating this report will cost 1 credit. You have{" "}
+                <span className="text-red-600 font-bold">
+                  {maxCredits - creditsUsed}
+                </span>{" "}
+                {maxCredits - creditsUsed === 1
+                  ? "credit remaining."
+                  : "credits remaining."}
+              </div>
               <button
                 onClick={generateReport}
                 className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
@@ -659,11 +678,6 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                   Generate Report
                 </span>
               </button>
-              <div className="mt-2 text-center text-sm text-gray-600">
-                Generating this report will cost 1 credit. You have{" "}
-                <span className="text-red-600">{maxCredits - creditsUsed}</span>{" "}
-                credits remaining.
-              </div>
             </CarouselItem>
           </CarouselInner>
           <CarouselButton className="left" onClick={prevSlide}>
@@ -695,6 +709,8 @@ const HomePage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
   const [maxCredits, setMaxCredits] = useState(5);
+  const [renewalDate, setRenewalDate] = useState(null);
+  const [renewalDateFormatted, setRenewalDateFormatted] = useState("");
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -707,7 +723,17 @@ const HomePage = () => {
       setCurrentUser(response.data.data);
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
-      console.log("Current User:", response.data.data);
+
+      const createdAt = new Date(response.data.data.creditsResetDate);
+
+      const formattedRenewalDate = createdAt.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+
+      setRenewalDate(createdAt);
+      setRenewalDateFormatted(formattedRenewalDate);
     } catch (error) {
       if (error.status === 401) {
         toast.error("Session Expired - please login again");
@@ -719,7 +745,6 @@ const HomePage = () => {
         toast.error("Something went wrong - please try again later");
         navigate("/");
       }
-      console.error("Error fetching user:", error);
     } finally {
       setLoading(false);
     }
@@ -750,7 +775,6 @@ const HomePage = () => {
           toast.error("Too Many Requests - please try again later");
           navigate("/");
         }
-        console.error("Error signing out: ", error);
       });
   };
 
@@ -775,7 +799,12 @@ const HomePage = () => {
   return (
     <MainContainer>
       <div>
-        <Header handleLogout={handleLogout} />
+        <Header
+          handleLogout={handleLogout}
+          creditsUsed={creditsUsed}
+          maxCredits={maxCredits}
+          renewalDateFormatted={renewalDateFormatted}
+        />
       </div>
       <div className="body">
         <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
@@ -813,6 +842,7 @@ const HomePage = () => {
           setIndexy={setIndexy}
           creditsUsed={creditsUsed}
           maxCredits={maxCredits}
+          renewalDateFormatted={renewalDateFormatted}
         />
       </div>
       <div>
@@ -924,7 +954,7 @@ const CarouselContainer = styled.div`
     max-width: 250px;
     height: 530px;
   }
-  @media (max-height: 747px) {
+  @media (max-height: 777px) {
     height: 500px;
   }
   @media (max-height: 646px) {
@@ -1223,8 +1253,8 @@ const CarouselItem = styled.div`
       width: 230px;
     }
   }
-  @media (max-height: 747px) {
-    height: 400px;
+  @media (max-height: 777px) {
+    height: 410px;
   }
   @media (max-height: 646px) {
     height: 350px;
@@ -1247,7 +1277,7 @@ const CarouselButton = styled.button`
   @media (max-width: 590px) {
     font-size: 1.2rem;
   }
-  @media (max-height: 747px) {
+  @media (max-height: 777px) {
     font-size: 18px;
   }
 `;

@@ -37,7 +37,6 @@ const Reports = () => {
           toast.error("Too Many Requests - please try again later");
           navigate("/");
         }
-        console.error("Error signing out: ", error);
       });
   };
 
@@ -64,13 +63,11 @@ const Reports = () => {
         }
       );
       setReports(response.data.data || []);
-      console.log(reports);
     } catch (error) {
       if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error fetching reports:", error);
     } finally {
       setLoading(false);
     }
@@ -86,14 +83,12 @@ const Reports = () => {
       );
       if (response.data.success) {
         setReports(reports.filter((report) => report._id !== reportId));
-        console.log("Report deleted successfully!");
       }
     } catch (error) {
       if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error deleting the report:", error);
     }
   };
 
@@ -107,19 +102,16 @@ const Reports = () => {
       );
       if (response.data.success) {
         setReports([]);
-        console.log("All reports deleted successfully!");
       }
     } catch (error) {
       if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error deleting all reports:", error);
     }
   };
 
   const downloadReport = async (reportId, topic) => {
-    console.log();
     try {
       const response = await axios.get(
         `https://reportify-backend.vercel.app/api/report/get-report?id=${reportId}`,
@@ -137,14 +129,11 @@ const Reports = () => {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
-      console.log("Report downloaded successfully!");
     } catch (error) {
       if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error downloading the report:", error);
     }
   };
 

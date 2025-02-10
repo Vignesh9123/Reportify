@@ -18,15 +18,13 @@ const About = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios.get(
-          "https://reportify-backend.vercel.app/api/auth/logout",
-          {
+        const signOutPromise = axios
+          .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
-          
-          }
-        ).then(() => {
-          navigate("/");
-        })
+          })
+          .then(() => {
+            navigate("/");
+          });
         toast.promise(signOutPromise, {
           pending: "Signing out...",
           success: "Signed out successfully!",
@@ -34,7 +32,10 @@ const About = () => {
         });
       })
       .catch((error) => {
-        console.error("Error signing out: ", error);
+        if (error.status === 429) {
+          toast.error("Too Many Requests - please try again later");
+          navigate("/");
+        }
       });
   };
 
@@ -154,7 +155,7 @@ const MainContainer = styled.div`
   position: relative;
   justify-content: space-between;
   overflow: hidden;
-  
+
   a {
     all: unset;
   }
@@ -166,7 +167,7 @@ const MainContainer = styled.div`
     top: 10vh;
     display: flex;
     animation: ${fadeIn} 0.5s ease-in-out,
-    ${gradientAnimation} 10s infinite alternate ease-in-out;
+      ${gradientAnimation} 10s infinite alternate ease-in-out;
     @media (max-width: 1024px) {
       flex-direction: column-reverse;
     }
