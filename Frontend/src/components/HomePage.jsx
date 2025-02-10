@@ -11,6 +11,7 @@ import { getSections } from "../constants";
 import { apiClient } from "..";
 import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
+import { IoWarning } from "react-icons/io5";
 
 const Carousel = ({
   setIndexy,
@@ -678,7 +679,7 @@ const Carousel = ({
                 </span>
               </button>
               <div className="my-1.5 text-center text-sm text-red-400">
-                This report is AI-generated and may contain errors. Please
+              <IoWarning size={12}/> This report is AI-generated and may contain errors. Please
                 review it carefully before use.
               </div>
             </CarouselItem>
