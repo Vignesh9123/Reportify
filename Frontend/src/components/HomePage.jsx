@@ -638,12 +638,14 @@ const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
                 </button>
               </div>
 
-              <div className="mt-2 text-center text-md text-gray-600">
+              <div className="my-1.5 text-center text-md text-gray-600">
                 Generating this report will cost 1 credit. You have{" "}
-                <span className="text-red-600 font-extrabold">
+                <span className="text-red-600 font-bold">
                   {maxCredits - creditsUsed}
                 </span>{" "}
-                credits remaining.
+                {maxCredits - creditsUsed === 1
+                  ? "credit remaining."
+                  : "credits remaining."}
               </div>
               <button
                 onClick={generateReport}
