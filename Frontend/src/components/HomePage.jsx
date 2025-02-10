@@ -32,7 +32,7 @@ const Carousel = ({ setIndexy }) => {
   const [num, setNum] = useState(0);
   const [sections, setSections] = useState([]);
   const [newSection, setNewSection] = useState("");
-  const [creditsUsed,setCreditsUsed] = useState(0);
+  
 
 
   const addSection = () => {
@@ -661,7 +661,8 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [creditsUsed,setCreditsUsed] = useState(0);
+  
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -673,6 +674,7 @@ const HomePage = () => {
       );
       setCurrentUser(response.data.data);
       setCreditsUsed(response.data.data.creditsUsed)
+      console.log(creditsUsed)
       console.log("Current User:", response.data.data);
     } catch (error) {
       if (error.status === 401) {
