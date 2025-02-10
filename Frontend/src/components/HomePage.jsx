@@ -1248,7 +1248,7 @@ const CarouselItem = styled.div`
       width: 230px;
     }
   }
-  @media (max-height: 747px) {
+  @media (max-height: 777px) {
     height: 400px;
   }
   @media (max-height: 646px) {
