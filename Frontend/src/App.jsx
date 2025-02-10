@@ -55,7 +55,6 @@ function App() {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Signed in user: ", user);
       const userData = {
         name: user.displayName,
         email: user.email,
@@ -85,7 +84,6 @@ function App() {
         toast.error("Too Many Requests - please try again later");
         navigate("/");
       }
-      console.error("Error during Google Sign-in: ", error);
     }
   };
   return (
