@@ -679,7 +679,7 @@ const Carousel = ({
                 </span>
               </button>
               <div className="flex items-center gap-2 my-1.5 text-center text-sm text-red-400">
-                <IoWarning size={12} color="red"/>
+                <IoWarning size={14} color="red"/>
                 <span>
                   This report is AI-generated and may contain errors. Please
                   review it carefully before use.
