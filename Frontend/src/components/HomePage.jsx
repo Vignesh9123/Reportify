@@ -719,7 +719,7 @@ const HomePage = () => {
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
 
-      const createdAt = new Date(userData.createdAt);
+      const createdAt = new Date(response.data.data.createdAt);
       const msIn30Days = 30 * 24 * 60 * 60 * 1000;
       const now = new Date();
       const cyclesPassed = Math.floor((now - createdAt) / msIn30Days);
