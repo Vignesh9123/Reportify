@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = ({ handleLogout }) => {
   return (
-    <MainContainer>
+    <MainFooterContainer>
       <div className="left text-gray-500">
         All Rights Reserved &copy; 2025 Reportify
       </div>
@@ -28,7 +28,7 @@ const Header = ({ handleLogout }) => {
           </li>
         </ul>
       </div>
-    </MainContainer>
+    </MainFooterContainer>
   );
 };
 
@@ -45,7 +45,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const MainContainer = styled.div`
+const MainFooterContainer = styled.div`
   width: 100%;
   height: 7vh;
   position: relative;

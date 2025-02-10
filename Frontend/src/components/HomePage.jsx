@@ -12,7 +12,7 @@ import { apiClient } from "..";
 import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 
-const Carousel = ({ setIndexy }) => {
+const Carousel = ({ setIndexy, creditsUsed, maxCredits }) => {
   const [index, setIndex] = useState(0);
   const [students, setStudents] = useState([
     { rollNumber: "", name: "", USN: "" },
@@ -351,303 +351,335 @@ const Carousel = ({ setIndexy }) => {
 
   return (
     <CarouselContainer>
-      <CarouselInner index={index}>
-        <CarouselItem className="overflow-y-auto">
-          {width <= 1169 ? <div>Please fill up the details</div> : ""}
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <span>Title</span>
-            <i></i>
+      {creditsUsed >= maxCredits ? (
+        <div className="flex items-center justify-center h-full w-full p-4">
+          <div className="text-center text-red-600 font-bold">
+            Insufficient Credits. All 5 credits have been used for this period.
+            <br />
+            Credits are renewed at the beginning of each month. Please try again
+            later.
           </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-            <span>Subject</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              value={subjectCode}
-              onChange={(e) => setSubjectCode(e.target.value.toUpperCase())}
-            />
-            <span>Subject Code</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="number"
-              list="sems"
-              min={1}
-              max={8}
-              required
-              value={sem}
-              onChange={(e) => setSem(e.target.value)}
-            />
-            <datalist id="sems">
-              <option value="1" />
-              <option value="2" />
-              <option value="3" />
-              <option value="4" />
-              <option value="5" />
-              <option value="6" />
-              <option value="7" />
-              <option value="8" />
-            </datalist>
-            <span>Sem</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              list="branches"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-            />
-            <datalist id="branches">
-              <option value="Computer Science and Engineering" />
-              <option value="Electronics and Communication Engineering" />
-              <option value="Mechanical Engineering" />
-              <option value="Civil Engineering" />
-              <option value="Electrical and Electronics Engineering" />
-              <option value="Information Science and Engineering" />
-              <option value="Environmental Engineering" />
-              <option value="Polymer Science and Technology" />
-            </datalist>
-            <span>Branch</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              value={professorName}
-              onChange={(e) => setprofessorName(e.target.value)}
-            />
-            <span>Professor Name</span>
-            <i></i>
-          </div>
-          <div className="inputbox">
-            <input
-              type="text"
-              required
-              list="designations"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-            />
-            <datalist id="designations">
-              <option value="Associate Professor" />
-              <option value="Assistant Professor" />
-            </datalist>
-            <span>Professor Designation</span>
-            <i></i>
-          </div>
-        </CarouselItem>
-        <CarouselItem style={{ justifyContent: "center" }}>
-          {width <= 1169 ? <div>Please add students details</div> : ""}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "98%",
-              justifyContent: "center",
-            }}
-            className="studentDetails"
-          >
-            {students.map((student, idx) => (
-              <React.Fragment key={idx}>
-                <div className="flex fields">
-                  <div className="textInputWrapper" style={{ width: "100px" }}>
-                    <input
-                      placeholder="Roll no."
-                      type="number"
-                      min={1}
-                      value={student.rollNumber}
-                      onChange={(e) => {
-                        const updatedStudents = [...students];
-                        updatedStudents[idx].rollNumber = e.target.value;
-                        setStudents(updatedStudents);
-                      }}
-                      className="textInput"
-                    />
-                  </div>
-                  <div className="textInputWrapper" style={{ width: "280px" }}>
-                    <input
-                      placeholder="Name"
-                      type="text"
-                      value={student.name}
-                      onChange={(e) => {
-                        const updatedStudents = [...students];
-                        updatedStudents[idx].name = e.target.value;
-                        setStudents(updatedStudents);
-                      }}
-                      className="textInput"
-                    />
-                  </div>
-                  <div className="textInputWrapper" style={{ width: "200px" }}>
-                    <input
-                      placeholder="USN"
-                      type="text"
-                      value={student.USN}
-                      onChange={(e) => {
-                        const updatedStudents = [...students];
-                        updatedStudents[idx].USN = e.target.value.toUpperCase();
-                        setStudents(updatedStudents);
-                      }}
-                      className="textInput"
-                    />
-                  </div>
-                  <div className="flex justify-center items-center">
-                    <button className="Btn" onClick={deleteStudentField(idx)}>
-                      <div className="sign">
-                        <svg
-                          viewBox="0 0 16 16"
-                          className="bi bi-trash3-fill"
-                          fill="currentColor"
-                          height="18"
-                          width="18"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
-                        </svg>
-                      </div>
-                      <div className="text">Delete</div>
-                    </button>
-                  </div>
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
-          <div>
-            <button
-              className="group cursor-pointer outline-none hover:rotate-90 duration-300"
-              title="Add Student"
-              onClick={addStudentField}
-            >
-              <svg
-                className="stroke-black fill-none group-hover:fill-white group-active:stroke-white group-active:fill-white group-active:duration-0 duration-300"
-                viewBox="0 0 24 24"
-                height="40px"
-                width="40px"
-                xmlns="http://www.w3.org/2000/svg"
+        </div>
+      ) : (
+        <>
+          <CarouselInner index={index}>
+            <CarouselItem className="overflow-y-auto">
+              {width <= 1169 ? <div>Please fill up the details</div> : ""}
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <span>Title</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+                <span>Subject</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  value={subjectCode}
+                  onChange={(e) => setSubjectCode(e.target.value.toUpperCase())}
+                />
+                <span>Subject Code</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="number"
+                  list="sems"
+                  min={1}
+                  max={8}
+                  required
+                  value={sem}
+                  onChange={(e) => setSem(e.target.value)}
+                />
+                <datalist id="sems">
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                  <option value="4" />
+                  <option value="5" />
+                  <option value="6" />
+                  <option value="7" />
+                  <option value="8" />
+                </datalist>
+                <span>Sem</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  list="branches"
+                  value={branch}
+                  onChange={(e) => setBranch(e.target.value)}
+                />
+                <datalist id="branches">
+                  <option value="Computer Science and Engineering" />
+                  <option value="Electronics and Communication Engineering" />
+                  <option value="Mechanical Engineering" />
+                  <option value="Civil Engineering" />
+                  <option value="Electrical and Electronics Engineering" />
+                  <option value="Information Science and Engineering" />
+                  <option value="Environmental Engineering" />
+                  <option value="Polymer Science and Technology" />
+                </datalist>
+                <span>Branch</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  value={professorName}
+                  onChange={(e) => setprofessorName(e.target.value)}
+                />
+                <span>Professor Name</span>
+                <i></i>
+              </div>
+              <div className="inputbox">
+                <input
+                  type="text"
+                  required
+                  list="designations"
+                  value={designation}
+                  onChange={(e) => setDesignation(e.target.value)}
+                />
+                <datalist id="designations">
+                  <option value="Associate Professor" />
+                  <option value="Assistant Professor" />
+                </datalist>
+                <span>Professor Designation</span>
+                <i></i>
+              </div>
+            </CarouselItem>
+
+            <CarouselItem style={{ justifyContent: "center" }}>
+              {width <= 1169 ? <div>Please add students details</div> : ""}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "98%",
+                  justifyContent: "center",
+                }}
+                className="studentDetails"
               >
-                <path
-                  strokeWidth="1.5"
-                  d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                ></path>
-                <path strokeWidth="1.5" d="M8 12H16"></path>
-                <path strokeWidth="1.5" d="M12 16V8"></path>
-              </svg>
-            </button>
-          </div>
-        </CarouselItem>
-        <CarouselItem ref={scrollContainerRef} className="overflow-y-auto h-7 ">
+                {students.map((student, idx) => (
+                  <React.Fragment key={idx}>
+                    <div className="flex fields">
+                      <div
+                        className="textInputWrapper"
+                        style={{ width: "100px" }}
+                      >
+                        <input
+                          placeholder="Roll no."
+                          type="number"
+                          min={1}
+                          value={student.rollNumber}
+                          onChange={(e) => {
+                            const updatedStudents = [...students];
+                            updatedStudents[idx].rollNumber = e.target.value;
+                            setStudents(updatedStudents);
+                          }}
+                          className="textInput"
+                        />
+                      </div>
+                      <div
+                        className="textInputWrapper"
+                        style={{ width: "280px" }}
+                      >
+                        <input
+                          placeholder="Name"
+                          type="text"
+                          value={student.name}
+                          onChange={(e) => {
+                            const updatedStudents = [...students];
+                            updatedStudents[idx].name = e.target.value;
+                            setStudents(updatedStudents);
+                          }}
+                          className="textInput"
+                        />
+                      </div>
+                      <div
+                        className="textInputWrapper"
+                        style={{ width: "200px" }}
+                      >
+                        <input
+                          placeholder="USN"
+                          type="text"
+                          value={student.USN}
+                          onChange={(e) => {
+                            const updatedStudents = [...students];
+                            updatedStudents[idx].USN =
+                              e.target.value.toUpperCase();
+                            setStudents(updatedStudents);
+                          }}
+                          className="textInput"
+                        />
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <button
+                          className="Btn"
+                          onClick={() => deleteStudentField(idx)}
+                        >
+                          <div className="sign">
+                            <svg
+                              viewBox="0 0 16 16"
+                              className="bi bi-trash3-fill"
+                              fill="currentColor"
+                              height="18"
+                              width="18"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
+                            </svg>
+                          </div>
+                          <div className="text">Delete</div>
+                        </button>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+              <div>
+                <button
+                  className="group cursor-pointer outline-none hover:rotate-90 duration-300"
+                  title="Add Student"
+                  onClick={addStudentField}
+                >
+                  <svg
+                    className="stroke-black fill-none group-hover:fill-white group-active:stroke-white group-active:fill-white group-active:duration-0 duration-300"
+                    viewBox="0 0 24 24"
+                    height="40px"
+                    width="40px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeWidth="1.5"
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                    ></path>
+                    <path strokeWidth="1.5" d="M8 12H16"></path>
+                    <path strokeWidth="1.5" d="M12 16V8"></path>
+                  </svg>
+                </button>
+              </div>
+            </CarouselItem>
+
+            <CarouselItem
+              ref={scrollContainerRef}
+              className="overflow-y-auto h-7 "
+            >
+              {width <= 1169 ? (
+                <div>Organize Your Sections & Generate Report</div>
+              ) : (
+                ""
+              )}
+              <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
+                <div className="space-y-2">
+                  {sections.map((section, index) => (
+                    <div
+                      key={index}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, index)}
+                      onDragEnd={handleDragEnd}
+                      onDragOver={(e) => handleDragOver(e, index)}
+                      className={`w-full flex justify-between items-center px-4 py-3 rounded-lg bg-white border border-gray-200 shadow-sm ${
+                        draggedIndex === index
+                          ? "opacity-60 border-blue-400"
+                          : "opacity-100"
+                      } transform transition-all duration-200 cursor-grab active:cursor-grabbing`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="flex items-center justify-center w-6 h-6 text-gray-400">
+                          ⋮⋮
+                        </span>
+                        <span className="text-base font-medium text-gray-800 truncate">
+                          {index + 1}) {section.title}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                        aria-label="Delete section"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="text"
+                  placeholder="Add custom section"
+                  value={newSection}
+                  onChange={(e) => setNewSection(e.target.value)}
+                  className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  onClick={addSection}
+                  className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
+                >
+                  Add
+                </button>
+              </div>
+
+              <button
+                onClick={generateReport}
+                className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
+              >
+                <svg
+                  className="animate-pulse absolute z-10 overflow-visible transition-all duration-300 text-[#2e2e2e] group-hover:text-white top-[calc(var(--sz-text)/7)] left-[calc(var(--sz-text)/7)] h-[var(--gen-sz)] w-[var(--gen-sz)] group-hover:h-[var(--sz-text)] group-hover:w-[var(--sz-text)] group-hover:left-[calc(var(--sz-text)/0.6)] group-hover:top-[calc(calc(var(--gen-sz))/2)]"
+                  stroke="none"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
+                  ></path>
+                </svg>
+                <span className="text-xl font-bold leading-none text-white transition-all duration-200 group-hover:opacity-0">
+                  Generate Report
+                </span>
+              </button>
+              <div className="mt-2 text-center text-sm text-gray-600">
+                Generating this report will cost 1 credit. You have{" "}
+                <span className="text-red-600">{maxCredits - creditsUsed}</span>{" "}
+                credits remaining.
+              </div>
+            </CarouselItem>
+          </CarouselInner>
+          <CarouselButton className="left" onClick={prevSlide}>
+            Prev &#10094;
+          </CarouselButton>
           {width <= 1169 ? (
-            <div>Organize Your Sections & Generate Report</div>
+            <div className="flex justify-center items-center">
+              Step : {index + 1} / 3
+            </div>
           ) : (
             ""
           )}
-          <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
-            <div className="space-y-2">
-              {sections.map((section, index) => (
-                <div
-                  key={index}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, index)}
-                  onDragEnd={handleDragEnd}
-                  onDragOver={(e) => handleDragOver(e, index)}
-                  className={`w-full flex justify-between items-center px-4 py-3 rounded-lg
-              bg-white border border-gray-200 shadow-sm
-              ${
-                draggedIndex === index
-                  ? "opacity-60 border-blue-400"
-                  : "opacity-100"
-              }
-              transform transition-all duration-200 cursor-grab active:cursor-grabbing`}
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="flex items-center justify-center w-6 h-6 text-gray-400">
-                      ⋮⋮
-                    </span>
-                    <span className="text-base font-medium text-gray-800 truncate">
-                      {index + 1}) {section.title}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => handleDelete(index)}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-full
-                transition-colors"
-                    aria-label="Delete section"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-2 mb-4">
-            <input
-              type="text"
-              placeholder="Add custom section"
-              value={newSection}
-              onChange={(e) => setNewSection(e.target.value)}
-              className="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={addSection}
-              className="bg-gray-400 border-1 text-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer"
-            >
-              Add
-            </button>
-          </div>
-          <button
-            onClick={generateReport}
-            className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
-          >
-            <svg
-              className="animate-pulse absolute z-10 overflow-visible transition-all duration-300 text-[#2e2e2e] group-hover:text-white top-[calc(var(--sz-text)/7)] left-[calc(var(--sz-text)/7)] h-[var(--gen-sz)] w-[var(--gen-sz)] group-hover:h-[var(--sz-text)] group-hover:w-[var(--sz-text)] group-hover:left-[calc(var(--sz-text)/0.6)] group-hover:top-[calc(calc(var(--gen-sz))/2)]"
-              stroke="none"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
-              ></path>
-            </svg>
-            <span className="text-xl font-bold leading-none text-white transition-all duration-200 group-hover:opacity-0">
-              Generate Report
-            </span>
-          </button>
-        </CarouselItem>
-      </CarouselInner>
-      <CarouselButton className="left" onClick={prevSlide}>
-        Prev &#10094;
-      </CarouselButton>
-      {width <= 1169 ? (
-        <div className="flex justify-center items-center">
-          Step : {index + 1} / 3
-        </div>
-      ) : (
-        ""
+          <CarouselButton className="right" onClick={nextSlide}>
+            Next &#10095;
+          </CarouselButton>
+        </>
       )}
-
-      <CarouselButton className="right" onClick={nextSlide}>
-        Next &#10095;
-      </CarouselButton>
     </CarouselContainer>
   );
 };
@@ -660,7 +692,8 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [creditsUsed, setCreditsUsed] = useState(0);
+  const [maxCredits, setMaxCredits] = useState(5);
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -671,6 +704,8 @@ const HomePage = () => {
         }
       );
       setCurrentUser(response.data.data);
+      setCreditsUsed(response.data.data.creditsUsed);
+      setMaxCredits(response.data.data.maxCredits);
       console.log("Current User:", response.data.data);
     } catch (error) {
       if (error.status === 401) {
@@ -773,7 +808,11 @@ const HomePage = () => {
           </div>
         </div>
 
-        <Carousel setIndexy={setIndexy} />
+        <Carousel
+          setIndexy={setIndexy}
+          creditsUsed={creditsUsed}
+          maxCredits={maxCredits}
+        />
       </div>
       <div>
         <Footer handleLogout={handleLogout} />
