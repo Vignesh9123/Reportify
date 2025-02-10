@@ -357,7 +357,8 @@ const Carousel = ({
         <div className="flex items-center justify-center h-full w-full p-4">
           <div className="text-center text-gray-600 font-bold">
             <span className="text-red-600">
-              Insufficient Credits.<br />
+              Insufficient Credits.
+              <br />
             </span>
             All 5 credits have been used for this period.
             <br />
@@ -718,20 +719,17 @@ const HomePage = () => {
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
 
-      const createdAt = new Date(response.data.data.createdAt);
-      const msIn30Days = 30 * 24 * 60 * 60 * 1000;
-      const now = new Date();
-      const cyclesPassed = Math.floor((now - createdAt) / msIn30Days);
-      const nextRenewal = new Date(
-        createdAt.getTime() + (cyclesPassed + 1) * msIn30Days
-      );
-      setRenewalDate(nextRenewal);
-      const formattedRenewalDate = nextRenewal.toLocaleDateString("en-US", {
+      const createdAt = new Date(response.data.data.creditsResetDate);
+
+      const formattedRenewalDate = createdAt.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
       });
+
+      setRenewalDate(createdAt);
       setRenewalDateFormatted(formattedRenewalDate);
+
     } catch (error) {
       if (error.status === 401) {
         toast.error("Session Expired - please login again");
