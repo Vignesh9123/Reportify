@@ -56,8 +56,7 @@ function App() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const userData = {
-        name: user.displayName,
-        email: user.email,
+        idtoken: await user.getIdToken(),
       };
       const signInPromise = axios
         .post(
