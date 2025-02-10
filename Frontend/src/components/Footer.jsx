@@ -17,7 +17,7 @@ const Header = ({ handleLogout }) => {
             <Link to="/about">About</Link>
           </li>
           <li className="cursor-pointer">
-            <a href="Crypto.docx" download>
+            <a href="AI in Automobile Industry.docx" download>
               Sample Report
             </a>
           </li>
