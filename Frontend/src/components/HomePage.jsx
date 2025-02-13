@@ -263,6 +263,7 @@ const Carousel = ({
           {
             headers: {
               "Content-Type": "application/json",
+              "Authorization":`Bearer ${localStorage.getItem("token")}`
             },
             withCredentials: true,
           }
@@ -298,7 +299,7 @@ const Carousel = ({
         "https://reportify-backend.vercel.app/api/report/generate",
         report,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json","Authorization":`Bearer ${localStorage.getItem("token")}` },
           withCredentials: true,
           responseType: "arraybuffer",
         }
@@ -771,8 +772,12 @@ const HomePage = () => {
         const signOutPromise = axios
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
           })
           .then(() => {
+            localStorage.removeItem("token");
             navigate("/");
           });
         toast.promise(signOutPromise, {
