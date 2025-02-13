@@ -161,7 +161,7 @@ const Carousel = ({
       index === 0
     ) {
       toast.info(
-        "Some fields are missing. Please ensure everything is completed.",
+        "Some fields are missing. Please scroll down.",
         {
           position: "top-center",
           autoClose: 3000,
