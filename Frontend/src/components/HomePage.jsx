@@ -725,6 +725,9 @@ const HomePage = () => {
       const response = await axios.get(
         "https://reportify-backend.vercel.app/api/auth/current-user",
         {
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
           withCredentials: true,
         }
       );
