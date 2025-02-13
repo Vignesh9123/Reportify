@@ -22,8 +22,12 @@ const Reports = () => {
         const signOutPromise = axios
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
           })
           .then(() => {
+            localStorage.removeItem("token");
             navigate("/");
           });
         toast.promise(signOutPromise, {
@@ -60,6 +64,9 @@ const Reports = () => {
         "https://reportify-backend.vercel.app/api/report/get-all-reports",
         {
           withCredentials: true,
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       setReports(response.data.data || []);
@@ -79,6 +86,9 @@ const Reports = () => {
         `https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`,
         {
           withCredentials: true,
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       if (response.data.success) {
@@ -98,6 +108,9 @@ const Reports = () => {
         "https://reportify-backend.vercel.app/api/report/delete-all-reports",
         {
           withCredentials: true,
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       if (response.data.success) {
@@ -118,6 +131,9 @@ const Reports = () => {
         {
           responseType: "blob",
           withCredentials: true,
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
 
