@@ -69,8 +69,10 @@ function App() {
             withCredentials: true,
           }
         )
-        .then(() => {
+        .then((response) => {
+          localStorage.setItem("token", response.data.data.token);
           navigate("/homepage");
+
         });
 
       toast.promise(signInPromise, {
