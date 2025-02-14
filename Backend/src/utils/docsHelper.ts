@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber } from "docx";
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber, TableOfContents } from "docx";
 // import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
@@ -16,7 +16,6 @@ async function createDocument(topic: string, content: string, res : Response, su
      const lines = content.split("\n").filter((line) => line.trim() !== "");
      const initialContent = [
        new Paragraph({
-         heading: HeadingLevel.HEADING_1,
          children: [
            new TextRun({ 
              text: "JSS MAHAVIDYAPEETHA", 
@@ -30,7 +29,6 @@ async function createDocument(topic: string, content: string, res : Response, su
          spacing: { line: 360 }
        }),
        new Paragraph({
-           heading: HeadingLevel.HEADING_1,
            children: [
              new TextRun({ 
                text: "JSS Science and Technology University", 
@@ -63,7 +61,6 @@ async function createDocument(topic: string, content: string, res : Response, su
            alignment: "center",
        }),
        new Paragraph({
-           heading: HeadingLevel.HEADING_1,
            children: [
              new TextRun({ 
                text:  `"${topic}"`, 
@@ -294,6 +291,25 @@ async function createDocument(topic: string, content: string, res : Response, su
          new Paragraph({
            pageBreakBefore: true,
          }),
+         new Paragraph({
+           children: [
+             new TextRun({
+               text: "Table of Contents",
+           bold: true,
+           size: 32,
+           font: "Times New Roman",
+               color: "000000"
+             })
+           ],
+           alignment: "center",
+         }),
+         new TableOfContents("Table of Contents", {
+          hyperlink: true,
+          headingStyleRange: "1-2",
+      }),
+      new Paragraph({
+        pageBreakBefore: true,
+      })
                  
    ]
          
@@ -349,14 +365,15 @@ async function createDocument(topic: string, content: string, res : Response, su
                ...lines.map((line) => {
                  if (line.startsWith("# ")) {
                    return new Paragraph({
-                     heading: HeadingLevel.TITLE,
+                     heading: HeadingLevel.HEADING_1,
                      children: [
                        new TextRun({ 
                          text: line.replace("# ", ""), 
                          bold: true, 
                          size: 48, 
                          font: "Times New Roman", 
-                         color: "000000" 
+                         color: "000000" ,
+                         
                        })
                      ],
                      alignment: "center",
@@ -365,7 +382,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                  } else if (line.startsWith("## ")) {
                    // Heading 1 (H2)
                    return new Paragraph({
-                     heading: HeadingLevel.HEADING_1,
+                    heading: HeadingLevel.HEADING_2,
                      children: [
                        new TextRun({ 
                          text: line.replace("## ", ""), 
@@ -380,7 +397,8 @@ async function createDocument(topic: string, content: string, res : Response, su
                  } else if (line.startsWith("### ")) {
                    // Heading 2 (H3)
                    return new Paragraph({
-                     heading: HeadingLevel.HEADING_2,
+                    heading: HeadingLevel.HEADING_3,
+
                      children: [
                        new TextRun({ 
                          text: line.replace("### ", ""), 
@@ -395,7 +413,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                  } else if (line.startsWith("#### ")) {
                    // Heading 3 (H4)
                    return new Paragraph({
-                     heading: HeadingLevel.HEADING_3,
+                     heading: HeadingLevel.HEADING_4,
                      children: [
                        new TextRun({ 
                          text: line.replace("#### ", ""), 
