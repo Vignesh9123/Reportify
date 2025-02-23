@@ -23,9 +23,13 @@ const Team = () => {
           "https://reportify-backend.vercel.app/api/auth/logout",
           {
             withCredentials: true,
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
           
           }
         ).then(() => {
+          localStorage.removeItem("token");
           navigate("/");
         })
         toast.promise(signOutPromise, {
