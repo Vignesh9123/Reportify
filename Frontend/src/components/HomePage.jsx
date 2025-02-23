@@ -277,6 +277,7 @@ const Carousel = ({
     }
     setNum(0);
     setFlag(false);
+    setFlag2(false);
 
     const report = {
       topic: title,
