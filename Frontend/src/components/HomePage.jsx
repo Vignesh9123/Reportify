@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect, useRef } from "react";
 import Header from "./Header";
 import styled, { keyframes } from "styled-components";
@@ -8,9 +9,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { getSections } from "../constants";
-import { apiClient } from "..";
-import { FaArrowCircleUp, FaGripVertical, FaTrashAlt } from "react-icons/fa";
-import { FaArrowCircleDown } from "react-icons/fa";
 import { IoWarning } from "react-icons/io5";
 
 const Carousel = ({
@@ -34,6 +32,7 @@ const Carousel = ({
   const [finalDetails, setFinalDetails] = useState("");
   const [width, setWidth] = useState(window.innerWidth);
   const [flag, setFlag] = useState(false);
+  const [flag2, setFlag2] = useState(false);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
   const [sections, setSections] = useState([]);
@@ -354,6 +353,60 @@ const Carousel = ({
     );
   }
 
+  if (flag2) {
+    return (
+      <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md z-9999">
+        <div className="bg-gray-900 text-white rounded-2xl shadow-2xl w-96 p-6 flex flex-col items-center">
+          {/* Header */}
+          <h3 className="text-lg  mb-2 font-bold">Important Notice</h3>
+
+          {/* Credits Info */}
+          <div className="bg-gray-900 text-white rounded-2xl shadow-xl w-full max-w-md flex flex-col gap-2">
+            {/* Credit Information */}
+            <p className="text-gray-400 text-center text-sm bg-gray-800 py-2 px-1 rounded-lg">
+              1. Generating this report will cost
+              <span className="font-bold text-red-500"> 1 credit</span>.
+              You  <br /> have
+              <span className="font-bold text-red-500">
+                {" "}
+                {maxCredits - creditsUsed}
+              </span>
+              {maxCredits - creditsUsed === 1
+                ? " credit remaining."
+                : " credits remaining."}
+            </p>
+            <p className="text-gray-400 text-center text-sm bg-gray-800 py-2 px-1 rounded-lg">
+              2. This report is AI-generated and may contain errors. Please
+              review it carefully before use.
+            </p>
+            <p className="text-gray-400 text-center text-sm bg-gray-800 py-2  rounded-lg">
+              3. The table of contents will be generated once{" "}
+              <span className="font-bold">"Enable Edit"</span> is clicked in MS
+              Word.
+            </p>
+          </div>
+
+          <div className="flex justify-between gap-4 mt-5 w-full">
+            <button
+              onClick={() => {
+                setFlag2(false);
+              }}
+              className="w-1/2 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg transition cursor-pointer text-xl"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={generateReport}
+              className="w-1/2 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg transition text-xl cursor-pointer"
+            >
+              Generate
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <CarouselContainer>
       {creditsUsed >= maxCredits ? (
@@ -647,17 +700,10 @@ const Carousel = ({
                 </button>
               </div>
 
-              <div className="my-1.5 text-center text-md text-gray-600">
-                Generating this report will cost 1 credit. You have{" "}
-                <span className="text-red-600 font-bold">
-                  {maxCredits - creditsUsed}
-                </span>{" "}
-                {maxCredits - creditsUsed === 1
-                  ? "credit remaining."
-                  : "credits remaining."}
-              </div>
               <button
-                onClick={generateReport}
+                onClick={() => {
+                  setFlag2(true);
+                }}
                 className="group relative outline-0 bg-sky-200 [--sz-btn:68px] [--space:calc(var(--sz-btn)/5.5)] [--gen-sz:calc(var(--space)*2)] [--sz-text:calc(var(--sz-btn)-var(--gen-sz))] h-[65px] w-[200px] border border-solid border-transparent rounded-xl flex items-center justify-center aspect-square cursor-pointer transition-transform duration-200 active:scale-[0.95] bg-[linear-gradient(135deg,#000000,#000000)] [box-shadow:#3c40434d_0_1px_2px_0,#3c404326_0_2px_6px_2px,#0000004d_0_30px_60px_-30px,#34343459_0_-2px_6px_0_inset]"
               >
                 <svg
@@ -676,16 +722,6 @@ const Carousel = ({
                   Generate Report
                 </span>
               </button>
-              <div className="flex items-center my-1.5 text-center text-sm text-red-400">
-                <span className="hidden sm:inline">
-                  {" "}
-                  <IoWarning size={20} color="red" />
-                </span>
-                <span >
-                  This report is AI-generated and may contain errors. Please
-                  review it carefully before use.
-                </span>
-              </div>
             </CarouselItem>
           </CarouselInner>
           <CarouselButton className="left" onClick={prevSlide}>
