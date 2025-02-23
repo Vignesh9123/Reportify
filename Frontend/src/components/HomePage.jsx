@@ -383,7 +383,7 @@ const Carousel = ({
             </p>
             <p className="text-gray-400 text-center text-sm bg-gray-800 py-2  rounded-lg">
               3. The table of contents will be generated once{" "}
-              <span className="font-bold">"Enable Edit"</span> is clicked in MS
+              <span className="font-bold">"Enable Editing"</span> is clicked in MS
               Word.
             </p>
           </div>
