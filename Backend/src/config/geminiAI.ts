@@ -6,7 +6,7 @@ import { config } from ".";
 const getContentIndex = (title: string)=>{
   const index = Math.floor(Math.random() * 2);
   console.log("Content Index: ", index);
-  return title.includes("Abstract")? 0: index
+  return 1
 }
 
 const getKeyIndex = ()=>{
