@@ -31,7 +31,7 @@
     "firebase-admin": "^13.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.6",
-    "uploadthing": "^7.4.4"
+    "uploadthing": "^7.5.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
