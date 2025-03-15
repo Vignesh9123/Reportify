@@ -164,7 +164,7 @@ const Reports = () => {
     );
   }
 
-  const deleteFunc = () => {
+  const deleteFunc = (reportID) => {
     setFlag(!flag);
     return (
       <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
