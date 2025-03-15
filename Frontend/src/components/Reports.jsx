@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -16,7 +15,6 @@ const Reports = () => {
   const [loading, setLoading] = useState(true);
   const [reports, setReports] = useState([]);
   const [event, setEvent] = useState(false);
-  const [flag, setFlag] = useState(false);
 
   const handleLogout = () => {
     signOut(auth)
@@ -25,8 +23,8 @@ const Reports = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
           })
           .then(() => {
             localStorage.removeItem("token");
@@ -66,9 +64,9 @@ const Reports = () => {
         "https://reportify-backend.vercel.app/api/report/get-all-reports",
         {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       setReports(response.data.data || []);
@@ -88,9 +86,9 @@ const Reports = () => {
         `https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`,
         {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       if (response.data.success) {
@@ -110,9 +108,9 @@ const Reports = () => {
         "https://reportify-backend.vercel.app/api/report/delete-all-reports",
         {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
       if (response.data.success) {
@@ -133,9 +131,9 @@ const Reports = () => {
         {
           responseType: "blob",
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers:{
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
       );
 
@@ -164,38 +162,6 @@ const Reports = () => {
     );
   }
 
-  const deleteFunc = (reportID) => {
-    setFlag(!flag);
-    return (
-      <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
-        <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
-          <p className="text-gray-300 text-center mb-6">
-            This action will permanently delete <br /> this reports and cannot
-            be undone.
-          </p>
-          <div className="flex justify-center items-center space-x-4">
-            <button
-              className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-              onClick={() => setEvent(!flag)}
-            >
-              Cancel
-            </button>
-            <button
-              className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-              onClick={() => {
-                // deleteReport(report._id)
-                setEvent(!flag);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <MainContainer>
       <Header handleLogout={handleLogout} />
@@ -221,7 +187,7 @@ const Reports = () => {
                     >
                       Download
                     </DownloadButton>
-                    <DeleteButton onClick={() => deleteFunc(report._id)}>
+                    <DeleteButton onClick={() => deleteReport(report._id)}>
                       Delete
                     </DeleteButton>
                   </ButtonGroup>
