@@ -81,7 +81,6 @@ export default function App() {
     <div className="min-h-screen w-full bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white font-sans">
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
 
-      {/* Hero Section with Glassmorphism */}
       <section className="relative min-h-screen flex gap-20 justify-center items-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 w-full h-[100vh]">
           <div className="absolute top-[-15%] left-[-10%] w-[400px] h-[400px] bg-cyan-800 opacity-10 blur-[150px] rounded-full animate-pulse"></div>
@@ -143,7 +142,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Steps Section with Glassmorphism Cards */}
       <section className="relative min-h-[90vh] h-auto flex items-center justify-center py-2 bg-gradient-to-t from-[#0F172A] via-[#1E293B] to-[#0F172A]">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400">
