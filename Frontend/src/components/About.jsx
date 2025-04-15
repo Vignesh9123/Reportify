@@ -98,7 +98,7 @@ const About = () => {
 };
 
 const FeatureCard = ({ title, desc }) => (
-  <div className="bg-gray-900 h-auto p-12 rounded-xl shadow-lg border border-gray-700 hover:scale-105 transition-transform duration-300">
+  <div className="bg-gray-900 h-auto py-8 px-10 rounded-xl shadow-lg border border-gray-700 hover:scale-105 transition-transform duration-300">
     <h3 className="text-xl font-semibold text-cyan-300 mb-2">{title}</h3>
     <p className="text-gray-400 w-64">{desc}</p>
   </div>

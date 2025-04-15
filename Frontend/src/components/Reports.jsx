@@ -167,110 +167,116 @@ const Reports = () => {
 
   return (
     <MainContainer>
-      <Header handleLogout={handleLogout} />
-      <div className="body">
-        {reports.length > 0 ? (
-          <>
-            <ReportList>
-              {reports.map((report) => (
-                <ReportCard key={report._id}>
-                  <h3 className="font-bold text-md text-emerald-800">
-                    {report.topic}
-                  </h3>
-                  <p>
-                    Professor: <b>{report.professorDetails.name}</b>{" "}
-                  </p>
-                  <p>Subject: {report.professorDetails.subject}</p>
-                  <p>
-                    Subject Code: <b>{report.professorDetails.subjectCode}</b>
-                  </p>
-                  <ButtonGroup>
-                    <DownloadButton
-                      onClick={() => downloadReport(report._id, report.topic)}
-                    >
-                      Download
-                    </DownloadButton>
-                    <DeleteButton
-                      onClick={() => {
-                        setReportDlt(report._id);
-                        setEvent2(!event2);
-                      }}
-                    >
-                      Delete
-                    </DeleteButton>
-                  </ButtonGroup>
-                </ReportCard>
-              ))}
-            </ReportList>
-            <DeleteAllButton onClick={() => setEvent(!event)}>
-              Delete All Reports
-            </DeleteAllButton>
-            {event2 ? (
-              <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
-                <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
-                  <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
-                  <p className="text-gray-300 text-center mb-6">
-                    This action will permanently delete <br /> this reports and
-                    cannot be undone.
-                  </p>
-                  <div className="flex justify-center items-center space-x-4">
-                    <button
-                      className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                      onClick={() => setEvent2(!event2)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                      onClick={() => {
-                        deleteReport(reportDlt)
-                        setEvent2(!event2);
-                      }}
-                    >
-                      Delete
-                    </button>
+      <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
+        <Header handleLogout={handleLogout} />
+        <div className="body">
+          {reports.length > 0 ? (
+            <>
+              <ReportList>
+                {reports.map((report) => (
+                  <ReportCard key={report._id}>
+                    <h3 className="font-bold text-md text-emerald-800">
+                      {report.topic}
+                    </h3>
+                    <p>
+                      Professor: <b>{report.professorDetails.name}</b>{" "}
+                    </p>
+                    <p>Subject: {report.professorDetails.subject}</p>
+                    <p>
+                      Subject Code: <b>{report.professorDetails.subjectCode}</b>
+                    </p>
+                    <ButtonGroup>
+                      <DownloadButton
+                        onClick={() => downloadReport(report._id, report.topic)}
+                      >
+                        Download
+                      </DownloadButton>
+                      <DeleteButton
+                        onClick={() => {
+                          setReportDlt(report._id);
+                          setEvent2(!event2);
+                        }}
+                      >
+                        Delete
+                      </DeleteButton>
+                    </ButtonGroup>
+                  </ReportCard>
+                ))}
+              </ReportList>
+              <DeleteAllButton onClick={() => setEvent(!event)}>
+                Delete All Reports
+              </DeleteAllButton>
+              {event2 ? (
+                <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
+                  <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-semibold mb-4">
+                      Are you sure?
+                    </h2>
+                    <p className="text-gray-300 text-center mb-6">
+                      This action will permanently delete <br /> this reports
+                      and cannot be undone.
+                    </p>
+                    <div className="flex justify-center items-center space-x-4">
+                      <button
+                        className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                        onClick={() => setEvent2(!event2)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                        onClick={() => {
+                          deleteReport(reportDlt);
+                          setEvent2(!event2);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              ""
-            )}
-            {event ? (
-              <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
-                <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
-                  <h2 className="text-2xl font-semibold mb-4">Are you sure?</h2>
-                  <p className="text-gray-300 text-center mb-6">
-                    This action will permanently delete <br /> all reports and
-                    cannot be undone.
-                  </p>
-                  <div className="flex justify-center items-center space-x-4">
-                    <button
-                      className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                      onClick={() => setEvent(!event)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
-                      onClick={() => {
-                        deleteAllReports();
-                        setEvent(!event);
-                      }}
-                    >
-                      Delete
-                    </button>
+              ) : (
+                ""
+              )}
+              {event ? (
+                <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-md">
+                  <div className="min-w-[30vw] h-[38vh] border border-gray-700 bg-black bg-opacity-70 backdrop-blur-lg text-white flex flex-col justify-center items-center rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-semibold mb-4">
+                      Are you sure?
+                    </h2>
+                    <p className="text-gray-300 text-center mb-6">
+                      This action will permanently delete <br /> all reports and
+                      cannot be undone.
+                    </p>
+                    <div className="flex justify-center items-center space-x-4">
+                      <button
+                        className="bg-gray-700 hover:bg-gray-600 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                        onClick={() => setEvent(!event)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="bg-red-600 hover:bg-red-500 transition-all px-5 py-2 rounded-md text-white font-medium cursor-pointer"
+                        onClick={() => {
+                          deleteAllReports();
+                          setEvent(!event);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              ""
-            )}
-          </>
-        ) : (
-          <NoReports>No Reports to Display</NoReports>
-        )}
+              ) : (
+                ""
+              )}
+            </>
+          ) : (
+            <NoReports>No Reports to Display</NoReports>
+          )}
+        </div>
+        <Footer handleLogout={handleLogout} />
       </div>
-      <Footer handleLogout={handleLogout} />
     </MainContainer>
   );
 };
@@ -291,9 +297,8 @@ export default Reports;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 80vh;
   height: auto;
-  background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
   position: relative;
   justify-content: space-between;
   overflow: hidden;
@@ -313,10 +318,9 @@ const MainContainer = styled.div`
   }
   .body {
     position: relative;
-    height: 90vh;
+    height: auto;
     padding-top: 10vh;
     width: 100vw;
-    background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
     border-radius: 10px 10px 0 0;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;

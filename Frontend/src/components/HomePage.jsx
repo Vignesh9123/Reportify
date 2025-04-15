@@ -159,13 +159,10 @@ const Carousel = ({
         !designation) &&
       index === 0
     ) {
-      toast.info(
-        "Some fields are missing. Please scroll down.",
-        {
-          position: "top-center",
-          autoClose: 3000,
-        }
-      );
+      toast.info("Some fields are missing. Please scroll down.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       return;
     }
     if (index === 1) {
@@ -262,7 +259,7 @@ const Carousel = ({
           {
             headers: {
               "Content-Type": "application/json",
-              "Authorization":`Bearer ${localStorage.getItem("token")}`
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             withCredentials: true,
           }
@@ -299,7 +296,10 @@ const Carousel = ({
         "https://reportify-backend.vercel.app/api/report/generate",
         report,
         {
-          headers: { "Content-Type": "application/json","Authorization":`Bearer ${localStorage.getItem("token")}` },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
           withCredentials: true,
           responseType: "arraybuffer",
         }
@@ -367,8 +367,8 @@ const Carousel = ({
             {/* Credit Information */}
             <p className="text-gray-400 text-center text-sm bg-gray-800 py-2 px-1 rounded-lg">
               1. Generating this report will cost
-              <span className="font-bold text-red-500"> 1 credit</span>.
-              You  <br /> have
+              <span className="font-bold text-red-500"> 1 credit</span>. You{" "}
+              <br /> have
               <span className="font-bold text-red-500">
                 {" "}
                 {maxCredits - creditsUsed}
@@ -383,8 +383,8 @@ const Carousel = ({
             </p>
             <p className="text-gray-400 text-center text-sm bg-gray-800 py-2  rounded-lg">
               3. The table of contents will be generated once{" "}
-              <span className="font-bold">"Enable Editing"</span> is clicked in MS
-              Word.
+              <span className="font-bold">"Enable Editing"</span> is clicked in
+              MS Word.
             </p>
           </div>
 
@@ -750,7 +750,7 @@ const HomePage = () => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
@@ -763,8 +763,8 @@ const HomePage = () => {
       const response = await axios.get(
         "https://reportify-backend.vercel.app/api/auth/current-user",
         {
-          headers:{
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           withCredentials: true,
         }
@@ -810,8 +810,8 @@ const HomePage = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           })
           .then(() => {
             localStorage.removeItem("token");
@@ -851,55 +851,57 @@ const HomePage = () => {
   }
   return (
     <MainContainer>
-      <div>
-        <Header
-          handleLogout={handleLogout}
-          creditsUsed={creditsUsed}
-          maxCredits={maxCredits}
-          renewalDateFormatted={renewalDateFormatted}
-        />
-      </div>
-      <div className="body">
-        <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
-          <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent py-4 text-white">
-            Hello, {currentUser.name} !
-          </h1>
-          <p className="text-2xl italic text-gray-400">
-            Generate your report effortlessly in{" "}
-            <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-200 to-amber-400">
-              3 simple steps
-            </span>
-          </p>
-
-          <div className="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-            {indexy === 0 ? (
-              <span className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-black">
-                🚀 Step 1: Enter Project Title, Course & Professor Details
-              </span>
-            ) : indexy === 1 ? (
-              <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-blue-500">
-                📄 Step 2: Provide Student Information
-              </span>
-            ) : (
-              <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
-                🎓 Step 3: Organize Your Sections &{" "}
-                <span className="text-xl font-bold text-white">
-                  Generate Report
-                </span>
-              </span>
-            )}
-          </div>
+      <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
+        <div>
+          <Header
+            handleLogout={handleLogout}
+            creditsUsed={creditsUsed}
+            maxCredits={maxCredits}
+            renewalDateFormatted={renewalDateFormatted}
+          />
         </div>
+        <div className="body">
+          <div className="hello text-white flex flex-col items-center justify-center space-y-8 animate-fadeIn">
+            <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text py-4 text-white">
+              Hello, {currentUser.name} !
+            </h1>
+            <p className="text-2xl italic text-gray-400">
+              Generate your report effortlessly in{" "}
+              <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-200 to-amber-400">
+                3 simple steps
+              </span>
+            </p>
 
-        <Carousel
-          setIndexy={setIndexy}
-          creditsUsed={creditsUsed}
-          maxCredits={maxCredits}
-          renewalDateFormatted={renewalDateFormatted}
-        />
-      </div>
-      <div>
-        <Footer handleLogout={handleLogout} />
+            <div className="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+              {indexy === 0 ? (
+                <span className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-black">
+                  🚀 Step 1: Enter Project Title, Course & Professor Details
+                </span>
+              ) : indexy === 1 ? (
+                <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-blue-500">
+                  📄 Step 2: Provide Student Information
+                </span>
+              ) : (
+                <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
+                  🎓 Step 3: Organize Your Sections &{" "}
+                  <span className="text-xl font-bold text-white">
+                    Generate Report
+                  </span>
+                </span>
+              )}
+            </div>
+          </div>
+
+          <Carousel
+            setIndexy={setIndexy}
+            creditsUsed={creditsUsed}
+            maxCredits={maxCredits}
+            renewalDateFormatted={renewalDateFormatted}
+          />
+        </div>
+        <div>
+          <Footer handleLogout={handleLogout} />
+        </div>
       </div>
     </MainContainer>
   );
@@ -933,7 +935,7 @@ const MainContainer = styled.div`
   justify-content: space-between;
   overflow: hidden;
   .body {
-    height: auto;
+    height: 80vh;
     border-radius: 10px;
     display: flex;
     & .hello {
