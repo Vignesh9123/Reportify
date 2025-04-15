@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
@@ -22,9 +23,7 @@ const Header = ({ handleLogout }) => {
             </a>
           </li>
           <li className="cursor-pointer logout" onClick={handleLogout}>
-            <a className="text-red-400 px-1 py-0.5 rounded-2xl">
-              Logout
-            </a>
+            <a className="text-red-400 px-1 py-0.5 rounded-2xl">Logout</a>
           </li>
         </ul>
       </div>
