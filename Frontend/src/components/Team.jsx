@@ -202,7 +202,7 @@ const MainContainer = styled.div`
   }
   .body {
     position: relative;
-    height: 70vh;
+    height: auto;
     width: 100vw;
     border-radius: 10px 10px 0 0;
     animation: ${fadeIn} 1s ease-in-out,
@@ -359,7 +359,8 @@ const MainContainer = styled.div`
   @media (max-width: 556px) {
     .body {
       position: relative;
-      min-height: 110vh;
+      height: auto;
+      padding: 10px 0;
       width: 100vw;
       border-radius: 10px 10px 0 0;
       animation: ${fadeIn} 1s ease-in-out,

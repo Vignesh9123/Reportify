@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { getSections } from "../constants";
 import { IoWarning } from "react-icons/io5";
-
+import { UserCircle, BookText, Sparkles } from "lucide-react";
 const Carousel = ({
   setIndexy,
   creditsUsed,
@@ -37,6 +37,7 @@ const Carousel = ({
   const [num, setNum] = useState(0);
   const [sections, setSections] = useState([]);
   const [newSection, setNewSection] = useState("");
+  const [current, setCurrent] = useState(0);
 
   const addSection = () => {
     if (newSection.trim() !== "") {
@@ -50,6 +51,21 @@ const Carousel = ({
       setNewSection("");
     }
   };
+  const steps = [
+    {
+      icon: <BookText className="h-5 w-5 sm:h-6 sm:w-6" />,
+      title: "Report Details",
+    },
+    {
+      icon: <UserCircle className="h-5 w-5 sm:h-6 sm:w-6" />,
+      title: "Student Information",
+    },
+    {
+      icon: <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />,
+      title: "Report Sections",
+    },
+  ];
+
   const [draggedIndex, setDraggedIndex] = useState(null);
   const scrollContainerRef = useRef(null);
   const autoScrollSpeed = 10;
@@ -190,11 +206,13 @@ const Carousel = ({
     }
     setIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setIndexy((prevIndex) => (prevIndex + 1) % slides.length);
+    setCurrent((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
   const prevSlide = () => {
     setIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     setIndexy((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrent((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
   };
 
   const addStudentField = () => {
@@ -426,9 +444,47 @@ const Carousel = ({
         </div>
       ) : (
         <>
-          <CarouselInner index={index}>
+          <div className="bg-muted/30 px-3 sm:px-6 py-3 sm:py-4 border-b bg-zinc-800">
+            <div className="flex justify-between">
+              {steps.map((step, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <div
+                    className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full mb-1 sm:mb-2 transition-all ${
+                      index === current
+                        ? "bg-blue-300 text-primary-foreground"
+                        : index < current
+                        ? "bg-blue-400/20 text-blue-300"
+                        : "text-white"
+                    }`}
+                  >
+                    {step.icon}
+                  </div>
+                  <span
+                    className={`text-xs font-medium ${
+                      index === current ? "text-blue-300" : "text-white"
+                    }`}
+                  >
+                    {width >= 356 ? <>{step.title}</> : ""}
+                  </span>
+
+                  {/* Progress line - hidden on mobile */}
+                  {index < steps.length - 1 && (
+                    <div className="hidden sm:block absolute h-0.5 w-[calc((100%/3)-3rem)] bg-muted left-[calc((100%/6)+1.5rem)] transform translate-y-5">
+                      <div
+                        className="h-full bg-primary transition-all"
+                        style={{ width: current > index ? "100%" : "0%" }}
+                      ></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <CarouselInner
+            index={index}
+            className=" w-full h-auto mb-[20vh] "
+          >
             <CarouselItem className="overflow-y-auto">
-              {width <= 1169 ? <div>Please fill up the details</div> : ""}
               <div className="inputbox">
                 <input
                   type="text"
@@ -531,7 +587,6 @@ const Carousel = ({
             </CarouselItem>
 
             <CarouselItem style={{ justifyContent: "center" }}>
-              {width <= 1169 ? <div>Please add students details</div> : ""}
               <div
                 style={{
                   display: "flex",
@@ -646,11 +701,6 @@ const Carousel = ({
               ref={scrollContainerRef}
               className="overflow-y-auto h-7 "
             >
-              {width <= 1169 ? (
-                <div>Organize Your Sections & Generate Report</div>
-              ) : (
-                ""
-              )}
               <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
                 <div className="space-y-2">
                   {sections.map((section, index) => (
@@ -726,21 +776,17 @@ const Carousel = ({
               </button>
             </CarouselItem>
           </CarouselInner>
-          <CarouselButton className="left" onClick={prevSlide}>
-            Prev &#10094;
-          </CarouselButton>
-          {width <= 1169 ? (
-            <div className="flex justify-center items-center">
-              Step : {index + 1} / 3
-            </div>
-          ) : (
-            ""
-          )}
-          <CarouselButton className="right" onClick={nextSlide}>
-            Next &#10095;
-          </CarouselButton>
         </>
       )}
+      <div>
+        <CarouselButton className="left" onClick={prevSlide}>
+          Prev &#10094;
+        </CarouselButton>
+
+        <CarouselButton className="right" onClick={nextSlide}>
+          Next &#10095;
+        </CarouselButton>
+      </div>
     </CarouselContainer>
   );
 };
@@ -750,14 +796,14 @@ const HomePage = () => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
   const [maxCredits, setMaxCredits] = useState(5);
   const [renewalDate, setRenewalDate] = useState(null);
   const [renewalDateFormatted, setRenewalDateFormatted] = useState("");
-  
+
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -875,15 +921,15 @@ const HomePage = () => {
 
             <div className="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
               {indexy === 0 ? (
-                <span className="px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-black">
+                <span className="px-8 py-3 bg-gradient-to-r from-red-900 to-red-800 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-wiggle ring-2 ring-red-500">
                   🚀 Step 1: Enter Project Title, Course & Professor Details
                 </span>
               ) : indexy === 1 ? (
-                <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-blue-500">
+                <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-float ring-2 ring-green-500">
                   📄 Step 2: Provide Student Information
                 </span>
               ) : (
-                <span className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-green-500">
+                <span className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-gray-100 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounceSlow ring-2 ring-blue-500">
                   🎓 Step 3: Organize Your Sections &{" "}
                   <span className="text-xl font-bold text-white">
                     Generate Report
@@ -1029,13 +1075,15 @@ const CarouselInner = styled.div`
 
 const CarouselItem = styled.div`
   min-width: 100%;
-  height: 450px;
+  max-height: 320px;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   /* overflow: auto; */
   overflow-x: hidden;
+  
   .deleteButton {
     width: 30px;
     height: 30px;

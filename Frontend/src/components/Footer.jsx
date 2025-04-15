@@ -91,7 +91,7 @@ const MainFooterContainer = styled.div`
     }
   }
 
-  @media (max-width: 303px) {
+  @media (max-width: 325px) {
     height: 13vh;
     .left {
       font-size: 12px;
