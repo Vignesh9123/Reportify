@@ -699,7 +699,7 @@ const Carousel = ({
 
             <CarouselItem
               ref={scrollContainerRef}
-              className="overflow-y-auto h-7 "
+              className="overflow-y-auto"
             >
               <div className="w-full mx-auto mb-5 p-5 bg-gray-100 rounded-xl shadow-md">
                 <div className="space-y-2">
@@ -1327,7 +1327,7 @@ const CarouselItem = styled.div`
   }
 
   @media (max-width: 590px) {
-    max-height: 350px;
+    max-height: 360px;
     .inputbox {
       position: relative;
       width: 350px;
