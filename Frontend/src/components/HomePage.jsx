@@ -750,13 +750,14 @@ const HomePage = () => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [indexy, setIndexy] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
   const [creditsUsed, setCreditsUsed] = useState(0);
   const [maxCredits, setMaxCredits] = useState(5);
   const [renewalDate, setRenewalDate] = useState(null);
   const [renewalDateFormatted, setRenewalDateFormatted] = useState("");
+  
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
