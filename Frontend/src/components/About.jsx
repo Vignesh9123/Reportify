@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import styled, { keyframes } from "styled-components";
-import { FaGithub } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { SiGmail } from "react-icons/si";
 import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const About = () => {
   const navigate = useNavigate();
   const auth = getAuth();
@@ -22,8 +19,8 @@ const About = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           })
           .then(() => {
             localStorage.removeItem("token");
@@ -44,218 +41,67 @@ const About = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (!currentUser) {
-        navigate("/");
-      }
+      if (!currentUser) navigate("/");
     });
     return () => unsubscribe();
   }, [auth, navigate]);
 
   if (loading) {
     return (
-      <LoadingContainer className="bg-black">
-        <Spinner />
-        <p className="text-white">Loading...</p>
-      </LoadingContainer>
+      <div className="flex flex-col items-center justify-center h-screen bg-black">
+        <div className="w-12 h-12 border-4 border-gray-400 border-t-transparent rounded-full animate-spin" />
+        <p className="text-white mt-4">Loading...</p>
+      </div>
     );
   }
+
   return (
-    <MainContainer>
-      <div>
-        <Header handleLogout={handleLogout} />
-      </div>
-      <div className="body">
-        <div className="left flex flex-col text-white text-center justify-center items-center space-y-6 p-8">
-          <h2 className="text-4xl font-bold text-cyan-400">About Us</h2>
-          <p className="text-lg text-gray-300 max-w-2xl">
-            Welcome to{" "}
-            <span className="text-cyan-300 font-semibold">REPORTIFY</span>, your
-            AI-powered solution for effortless and professional report
-            generation. Designed specifically for JSS STU students, our platform
-            simplifies documentation for students and educators, ensuring time
-            efficiency, accuracy, and structured formatting. Transform your
-            ideas into well-organized reports instantly and focus on what truly
-            matters.
-          </p>
-          <div className="boxes flex space-x-6">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
-              <h3 className="text-xl font-semibold text-cyan-300">
-                AI-Powered
-              </h3>
-              <p className="text-gray-400">
-                Generate structured reports with AI in seconds.
-              </p>
-            </div>
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
-              <h3 className="text-xl font-semibold text-cyan-300">
-                Accuracy & Clarity
-              </h3>
-              <p className="text-gray-400">
-                Ensure professional & polished reports every time.
-              </p>
-            </div>
+    <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
+      <Header handleLogout={handleLogout} />
+      <div className=" text-white flex flex-col justify-center items-center py-10">
+        <h2 className="text-4xl font-bold text-cyan-400 mb-4">About Us</h2>
+        <p className="text-lg text-gray-300 max-w-2xl text-center">
+          Welcome to{" "}
+          <span className="text-cyan-300 font-semibold">REPORTIFY</span>, your
+          AI-powered solution for effortless and professional report generation.
+          Designed specifically for JSS STU students, our platform simplifies
+          documentation for students and educators, ensuring time efficiency,
+          accuracy, and structured formatting. Transform your ideas into
+          well-organized reports instantly and focus on what truly matters.
+        </p>
 
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer">
-              <h3 className="text-xl font-semibold text-cyan-300">
-                Effortless Workflow
-              </h3>
-              <p className="text-gray-400">
-                Streamline your reporting process with automation.
-              </p>
-            </div>
-            <div className="bg-gray-800 p-0 rounded-lg shadow-lg hover:scale-105 transition cursor-pointer"></div>
-          </div>
+        <div className="flex flex-wrap justify-center items-center sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-full cursor-pointer">
+          <FeatureCard
+            title="AI-Powered"
+            desc="Generate structured, context-aware reports with AI in just seconds—no manual effort required."
+          />
+          <FeatureCard
+            title="Accuracy & Clarity"
+            desc="Ensure every report is professional, polished, and precise—ideal for academic or official use."
+          />
+          <FeatureCard
+            title="Effortless Workflow"
+            desc="Automate your reporting process end-to-end, saving time and boosting productivity."
+          />
         </div>
-
-        <div className="right"></div>
       </div>
-      <div>
-        <Footer handleLogout={handleLogout} />
-      </div>
-    </MainContainer>
+      <Footer handleLogout={handleLogout} />
+    </div>
   );
 };
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const gradientAnimation = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
+const FeatureCard = ({ title, desc }) => (
+  <div className="bg-gray-900 h-auto p-12 rounded-xl shadow-lg border border-gray-700 hover:scale-105 transition-transform duration-300">
+    <h3 className="text-xl font-semibold text-cyan-300 mb-2">{title}</h3>
+    <p className="text-gray-400 w-64">{desc}</p>
+  </div>
+);
 
 export default About;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  height: auto;
-  background: linear-gradient(135deg, #141414, #383838, #585858);
-  position: relative;
-  justify-content: space-between;
-  overflow: hidden;
-
-  a {
-    all: unset;
-  }
-
-  .body {
-    width: 100vw;
-    height: 80vh;
-    position: absolute;
-    top: 10vh;
-    display: flex;
-    animation: ${fadeIn} 0.5s ease-in-out,
-      ${gradientAnimation} 10s infinite alternate ease-in-out;
-    @media (max-width: 1024px) {
-      flex-direction: column-reverse;
-    }
-  }
-  .body .left {
-    width: 60vw;
-    height: 79vh;
-    .boxes {
-      position: relative;
-      left: 15px;
-    }
-    position: relative;
-    @media (max-width: 1024px) {
-      width: 100vw;
-    }
-    @media (max-width: 665px) {
-      overflow: auto;
-      height: 100vh;
-      padding-top: 10vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .boxes {
-        flex-direction: column;
-        gap: 20px;
-      }
-    }
-    @media (max-width: 390px) {
-      padding-top: 16vh;
-      .boxes {
-        flex-direction: column;
-        gap: 20px;
-      }
-    }
-    @media (max-height: 910px) and (max-width: 665px) {
-      padding-top: 20vh;
-    }
-    @media (max-height: 852px) and (max-width: 665px) {
-      padding-top: 27vh;
-    }
-    @media (max-height: 796px) and (max-width: 665px) {
-      padding-top: 40vh;
-    }
-    @media (max-height: 700px) and (max-width: 665px) {
-      padding-top: 48vh;
-    }
-  }
-  .body .right {
-    width: 40vw;
-    height: 79vh;
-    position: relative;
-    right: 0;
-    background: url("AI.png") no-repeat bottom right/contain;
-    @media (max-width: 1024px) {
-      width: 100vw;
-      height: 0;
-      background: none;
-    }
-    @media (max-width: 665px) {
-      height: 0;
-      background: none;
-    }
-  }
-`;
-
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const Spinner = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ccc;
-  border-top-color: #000;
-  border-radius: 50%;
-  animation: ${spin} 1s linear infinite;
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;

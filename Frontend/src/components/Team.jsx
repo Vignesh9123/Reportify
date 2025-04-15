@@ -19,19 +19,17 @@ const Team = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios.get(
-          "https://reportify-backend.vercel.app/api/auth/logout",
-          {
+        const signOutPromise = axios
+          .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-          
-          }
-        ).then(() => {
-          localStorage.removeItem("token");
-          navigate("/");
-        })
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then(() => {
+            localStorage.removeItem("token");
+            navigate("/");
+          });
         toast.promise(signOutPromise, {
           pending: "Signing out...",
           success: "Signed out successfully!",
@@ -70,91 +68,97 @@ const Team = () => {
   }
   return (
     <MainContainer>
-      <div>
-        <Header handleLogout={handleLogout} />
-      </div>
-      <div className="body">
-        <div className="card">
-          <div className="top-section">
-            <div className="border"></div>
-            <div className="icons">
-              <div className="logo text-white flex justify-center items-center font-bold">
-                Backend
+      <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
+        <div>
+          <Header handleLogout={handleLogout} />
+        </div>
+        <div className="body">
+          <div className="card">
+            <div className="top-section">
+              <div className="border"></div>
+              <div className="icons">
+                <div className="logo text-white flex justify-center items-center font-bold">
+                  Backend
+                </div>
+              </div>
+            </div>
+            <div className="bottom-section">
+              <p className="font-bold text-blue-300 text-2xl text-center">
+                VIGNESH D
+              </p>
+              <p className="text-white text-sm text-center">
+                Student @ SJCE 26'
+              </p>
+              <div className="row row1">
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a href="https://github.com/Vignesh9123" target="_blank">
+                    <FaGithub className="text-4xl  duration-100 hover:hover:text-zinc-700 hover:scale-130" />
+                  </a>
+                </div>
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a
+                    href="https://www.linkedin.com/in/vignesh-d-mys/"
+                    target="_blank"
+                  >
+                    <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
+                  </a>
+                </div>
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
+                    target="_blank"
+                  >
+                    <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-          <div className="bottom-section">
-            <p className="font-bold text-blue-300 text-2xl text-center">
-              VIGNESH D
-            </p>
-            <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
-            <div className="row row1">
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://github.com/Vignesh9123" target="_blank">
-                  <FaGithub className="text-4xl  duration-100 hover:text-black hover:scale-130" />
-                </a>
+          <div className="card">
+            <div className="top-section">
+              <div className="border"></div>
+              <div className="icons">
+                <div className="logo text-white flex justify-center items-center font-bold">
+                  Frontend
+                </div>
               </div>
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://www.linkedin.com/in/vignesh-d-mys/"
-                  target="_blank"
-                >
-                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
-                </a>
-              </div>
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
-                  target="_blank"
-                >
-                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
-                </a>
+            </div>
+            <div className="bottom-section">
+              <p className="font-bold text-blue-300 text-2xl text-center">
+                SURAJ S G DHANVA
+              </p>
+              <p className="text-white text-sm text-center">
+                Student @ SJCE 26'
+              </p>
+              <div className="row row1">
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a href="https://github.com/SurajSG23" target="_blank">
+                    <FaGithub className="text-4xl  duration-100 hover:text-zinc-700 hover:scale-130" />
+                  </a>
+                </div>
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a
+                    href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
+                    target="_blank"
+                  >
+                    <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
+                  </a>
+                </div>
+                <div className="item flex justify-center items-center cursor-pointer">
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
+                    target="_blank"
+                  >
+                    <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="card">
-          <div className="top-section">
-            <div className="border"></div>
-            <div className="icons">
-              <div className="logo text-white flex justify-center items-center font-bold">
-                Frontend
-              </div>
-            </div>
-          </div>
-          <div className="bottom-section">
-            <p className="font-bold text-blue-300 text-2xl text-center">
-              SURAJ S G DHANVA
-            </p>
-            <p className="text-white text-sm text-center">Student @ SJCE 26'</p>
-            <div className="row row1">
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a href="https://github.com/SurajSG23" target="_blank">
-                  <FaGithub className="text-4xl  duration-100 hover:text-black hover:scale-130" />
-                </a>
-              </div>
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
-                  target="_blank"
-                >
-                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
-                </a>
-              </div>
-              <div className="item flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
-                  target="_blank"
-                >
-                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
-                </a>
-              </div>
-            </div>
-          </div>
+        <div>
+          <Footer handleLogout={handleLogout} />
         </div>
-      </div>
-      <div>
-        <Footer handleLogout={handleLogout}/>
       </div>
     </MainContainer>
   );
@@ -188,9 +192,8 @@ export default Team;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 80vh;
   height: auto;
-  background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
   position: relative;
   justify-content: space-between;
   overflow: hidden;
@@ -199,9 +202,8 @@ const MainContainer = styled.div`
   }
   .body {
     position: relative;
-    height: 90vh;
+    height: 70vh;
     width: 100vw;
-    background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
     border-radius: 10px 10px 0 0;
     animation: ${fadeIn} 1s ease-in-out,
       ${gradientAnimation} 10s infinite alternate ease-in-out;
@@ -213,13 +215,14 @@ const MainContainer = styled.div`
   }
 
   .card {
-    width: 250px;
+    width: 255px;
     border-radius: 20px;
-    background: #3b3b3b;
+    background: black;
     padding: 5px;
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 20px 0px;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid gray;
   }
 
   .card:hover {
@@ -247,10 +250,10 @@ const MainContainer = styled.div`
     border-bottom-right-radius: 10px;
     height: 30px;
     width: 130px;
-    background: #3b3b3b;
+    background: black;
     position: relative;
     transform: skew(-40deg);
-    box-shadow: -10px -10px 0 0 #3b3b3b;
+    box-shadow: -10px -10px 0 0 black;
   }
 
   .card .top-section .border::before {
@@ -262,7 +265,7 @@ const MainContainer = styled.div`
     right: -15px;
     background: rgba(255, 255, 255, 0);
     border-top-left-radius: 10px;
-    box-shadow: -5px -5px 0 2px #3b3b3b;
+    box-shadow: -5px -5px 0 2px black;
   }
 
   .card .top-section::before {
@@ -274,7 +277,7 @@ const MainContainer = styled.div`
     height: 15px;
     width: 15px;
     border-top-left-radius: 15px;
-    box-shadow: -5px -5px 0 2px #3b3b3b;
+    box-shadow: -5px -5px 0 2px black;
   }
 
   .card .top-section .icons {
@@ -358,7 +361,6 @@ const MainContainer = styled.div`
       position: relative;
       min-height: 110vh;
       width: 100vw;
-      background: linear-gradient(135deg, #2c2c2c, #6f6f6f, #828181);
       border-radius: 10px 10px 0 0;
       animation: ${fadeIn} 1s ease-in-out,
         ${gradientAnimation} 10s infinite alternate ease-in-out;

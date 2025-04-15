@@ -22,7 +22,7 @@ const Header = ({ handleLogout }) => {
             </a>
           </li>
           <li className="cursor-pointer logout" onClick={handleLogout}>
-            <a className="text-red-400 border-2 border-amber-400 px-1 py-0.5 rounded-2xl">
+            <a className="text-red-400 px-1 py-0.5 rounded-2xl">
               Logout
             </a>
           </li>
@@ -48,7 +48,6 @@ const fadeIn = keyframes`
 const MainFooterContainer = styled.div`
   width: 100%;
   height: 7vh;
-  position: relative;
   bottom: 0;
   left: 0;
   z-index: 1000;

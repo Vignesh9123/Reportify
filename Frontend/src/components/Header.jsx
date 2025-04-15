@@ -98,9 +98,7 @@ const MainContainer = styled.div`
   height: 10vh;
   backdrop-filter: blur(10px);
   border: 1px solid black;
-  border-radius: 0 0 10px 10px;
   display: flex;
-  position: absolute;
   top: 0;
   justify-content: space-between;
   padding: 0 20px 0 15px;
