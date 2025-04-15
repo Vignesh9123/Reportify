@@ -912,6 +912,7 @@ const HomePage = () => {
             <h1 className="text-5xl font-bold drop-shadow-lg bg-gradient-to-r from-gray-900 to-black bg-clip-text py-4 text-white">
               Hello, {currentUser.name} !
             </h1>
+            
             <p className="text-2xl italic text-gray-400">
               Generate your report effortlessly in{" "}
               <span className="font-bold bg-clip-text  text-transparent bg-gradient-to-r from-amber-200 to-amber-400">
