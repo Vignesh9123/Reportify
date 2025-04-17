@@ -83,8 +83,8 @@ export default function App() {
 
       <section className="relative min-h-screen flex gap-20 justify-center items-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 w-full h-[100vh]">
-          <div className="absolute top-[-15%] left-[-10%] w-[400px] h-[400px] bg-cyan-800 opacity-10 blur-[150px] rounded-full animate-pulse"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-blue-800 opacity-20 blur-[150px] rounded-full animate-pulse"></div>
+          <div className="absolute top-[-15%] left-[-10%] w-[400px] h-[400px] bg-cyan-800 opacity-10 blur-[150px] rounded-full"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-blue-800 opacity-20 blur-[150px] rounded-full"></div>
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto">

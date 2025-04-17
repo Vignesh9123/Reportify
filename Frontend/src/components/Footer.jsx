@@ -7,7 +7,7 @@ const Header = ({ handleLogout }) => {
   return (
     <MainFooterContainer>
       <div className="left text-gray-500">
-        All Rights Reserved &copy; 2025 Reportify
+      <p>&copy; {new Date().getFullYear()} Reportify. All rights reserved.</p>
       </div>
       <div className="right">
         <ul className="ul flex gap-8">
