@@ -1,0 +1,26 @@
+diff --git a/node_modules/uploadthing/dist/upload-builder-RrqQb3by.cjs b/node_modules/uploadthing/dist/upload-builder-RrqQb3by.cjs
+index be98e12..1732829 100644
+--- a/node_modules/uploadthing/dist/upload-builder-RrqQb3by.cjs
++++ b/node_modules/uploadthing/dist/upload-builder-RrqQb3by.cjs
+@@ -40,7 +40,7 @@ const effect_ManagedRuntime = require_chunk.__toESM(require("effect/ManagedRunti
+ * process.env.UPLOADTHING_TOKEN = "foo"
+ * Config.string("token"); // Config<"foo">
+ */
+-const envProvider = effect_ConfigProvider.fromEnv().pipe(effect_ConfigProvider.orElse(() => effect_ConfigProvider.fromMap(new Map(Object.entries((0, __uploadthing_shared.filterDefinedObjectValues)(import.meta?.env ?? {}))), { pathDelim: "_" })), effect_ConfigProvider.nested("uploadthing"), effect_ConfigProvider.constantCase);
++const envProvider = effect_ConfigProvider.fromEnv().pipe(effect_ConfigProvider.orElse(() => effect_ConfigProvider.fromMap(new Map(Object.entries((0, __uploadthing_shared.filterDefinedObjectValues)(process?.env ?? {}))), { pathDelim: "_" })), effect_ConfigProvider.nested("uploadthing"), effect_ConfigProvider.constantCase);
+ /**
+ * Config provider that merges the options from the object
+ * and environment variables prefixed with `UPLOADTHING_`.
+diff --git a/node_modules/uploadthing/dist/upload-builder-e0_p9NOT.js b/node_modules/uploadthing/dist/upload-builder-e0_p9NOT.js
+index 16ec06b..82121e8 100644
+--- a/node_modules/uploadthing/dist/upload-builder-e0_p9NOT.js
++++ b/node_modules/uploadthing/dist/upload-builder-e0_p9NOT.js
+@@ -50,7 +50,7 @@ import * as ManagedRuntime from "effect/ManagedRuntime";
+ * process.env.UPLOADTHING_TOKEN = "foo"
+ * Config.string("token"); // Config<"foo">
+ */
+-const envProvider = ConfigProvider.fromEnv().pipe(ConfigProvider.orElse(() => ConfigProvider.fromMap(new Map(Object.entries(filterDefinedObjectValues(import.meta?.env ?? {}))), { pathDelim: "_" })), ConfigProvider.nested("uploadthing"), ConfigProvider.constantCase);
++const envProvider = ConfigProvider.fromEnv().pipe(ConfigProvider.orElse(() => ConfigProvider.fromMap(new Map(Object.entries(filterDefinedObjectValues(process?.env ?? {}))), { pathDelim: "_" })), ConfigProvider.nested("uploadthing"), ConfigProvider.constantCase);
+ /**
+ * Config provider that merges the options from the object
+ * and environment variables prefixed with `UPLOADTHING_`.
