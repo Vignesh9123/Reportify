@@ -242,7 +242,7 @@ const Carousel = ({
       !subjectCode ||
       !sem ||
       students.length === 0 ||
-      sections.length <= 5
+      sections.length < 5
     ) {
       toast.info("Add atleast five sections", {
         position: "top-center",
