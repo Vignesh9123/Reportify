@@ -20,7 +20,7 @@ const Team = () => {
     signOut(auth)
       .then(() => {
         const signOutPromise = axios.get(
-          "https://reportify-backend.vercel.app/api/auth/logout",
+          "http://localhost:8000/api/auth/logout",
           {
             withCredentials: true,
             headers: {

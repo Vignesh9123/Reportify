@@ -20,7 +20,7 @@ const Reports = () => {
     signOut(auth)
       .then(() => {
         const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
+          .get("http://localhost:8000/api/auth/logout", {
             withCredentials: true,
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -61,7 +61,7 @@ const Reports = () => {
   const fetchAllReports = async () => {
     try {
       const response = await axios.get(
-        "https://reportify-backend.vercel.app/api/report/get-all-reports",
+        "http://localhost:8000/api/report/get-all-reports",
         {
           withCredentials: true,
           headers:{
@@ -83,7 +83,7 @@ const Reports = () => {
   const deleteReport = async (reportId) => {
     try {
       const response = await axios.delete(
-        `https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`,
+        `http://localhost:8000/api/report/delete?id=${reportId}`,
         {
           withCredentials: true,
           headers:{
@@ -105,7 +105,7 @@ const Reports = () => {
   const deleteAllReports = async () => {
     try {
       const response = await axios.delete(
-        "https://reportify-backend.vercel.app/api/report/delete-all-reports",
+        "http://localhost:8000/api/report/delete-all-reports",
         {
           withCredentials: true,
           headers:{
@@ -127,7 +127,7 @@ const Reports = () => {
   const downloadReport = async (reportId, topic) => {
     try {
       const response = await axios.get(
-        `https://reportify-backend.vercel.app/api/report/get-report?id=${reportId}`,
+        `http://localhost:8000/api/report/get-report?id=${reportId}`,
         {
           responseType: "blob",
           withCredentials: true,

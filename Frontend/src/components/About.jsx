@@ -19,7 +19,7 @@ const About = () => {
     signOut(auth)
       .then(() => {
         const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
+          .get("http://localhost:8000/api/auth/logout", {
             withCredentials: true,
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`

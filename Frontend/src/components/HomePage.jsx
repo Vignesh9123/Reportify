@@ -251,7 +251,7 @@ const Carousel = ({
       setCurrentSection(section.title);
       try {
         const response = await axios.post(
-          "https://reportify-backend.vercel.app/api/content/generate",
+          "http://localhost:8000/api/content/generate",
           {
             title: section.title,
             promptContent: section.prompt,
@@ -296,7 +296,7 @@ const Carousel = ({
 
     try {
       const response = await axios.post(
-        "https://reportify-backend.vercel.app/api/report/generate",
+        "http://localhost:8000/api/report/generate",
         report,
         {
           headers: { "Content-Type": "application/json","Authorization":`Bearer ${localStorage.getItem("token")}` },
@@ -761,7 +761,7 @@ const HomePage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://reportify-backend.vercel.app/api/auth/current-user",
+        "http://localhost:8000/api/auth/current-user",
         {
           headers:{
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -807,7 +807,7 @@ const HomePage = () => {
     signOut(auth)
       .then(() => {
         const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
+          .get("http://localhost:8000/api/auth/logout", {
             withCredentials: true,
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`

@@ -13,5 +13,7 @@ export const config = {
     'GEMINI2.0':'gemini-2.0-flash',
     ADMIN_KEY: String(process.env.ADMIN_KEY),
     UPLOADTHING_TOKEN: String(process.env.UPLOADTHING_TOKEN),
-    FIREBASE_PROJECT_ID: String(process.env.FIREBASE_PROJECT_ID)
+    FIREBASE_PROJECT_ID: String(process.env.FIREBASE_PROJECT_ID),
+    CUSTOM_SEARCH_API_KEY: String(process.env.CUSTOM_SEARCH_API_KEY),
+    CUSTOM_SEARCH_CX: String(process.env.CUSTOM_SEARCH_CX)
 }

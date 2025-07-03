@@ -5,12 +5,34 @@ import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { Response } from "express";
+import { imageSearch } from "./imageSearch";
 async function createDocument(topic: string, content: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
     // const mdText = await generateCompleteMDXContent(topic);
     // if (!mdText) {
     //   console.error("Failed to generate MDX content.");
     //   return;
     // }
+    const imageUrls = await imageSearch(topic);
+
+    const imagePromises = imageUrls.map((url) =>
+      fetch(url).then((response) => response.arrayBuffer())
+      .then((blob)=>Buffer.from(blob).toString('base64'))
+      .then((buffer)=>{
+        return {
+          buffer,
+          used: false
+        }
+      })
+    );
+    const images = await Promise.all(imagePromises);
+    
+  const randomNum =()=> Math.floor(Math.random() * 100) % 5;
+  const randomUnusedImageIndex = ()=>{
+    const index = images.findIndex((image) => !image.used);
+    if(index === -1) return null;
+    images[index].used = true;
+    return index;
+  }
   
    try {
      const lines = content.split("\n").filter((line) => line.trim() !== "");
@@ -362,27 +384,54 @@ async function createDocument(topic: string, content: string, res : Response, su
            
            children: [
                ...initialContent,
-               ...lines.map((line) => {
+               ...lines.flatMap((line) => {
                  if (line.startsWith("# ")) {
-                   return new Paragraph({
+                   const headingParagraph = new Paragraph({
                      heading: HeadingLevel.HEADING_1,
                      children: [
                        new TextRun({ 
                          text: line.replace("# ", ""), 
-                         bold: true, 
-                         size: 48, 
-                         font: "Times New Roman", 
-                         color: "000000" ,
-                         
+                         bold: true,
+                         size: 48,
+                         font: "Times New Roman",
+                         color: "000000"
                        })
                      ],
                      alignment: "center",
                      spacing: { line: 360 }
                    });
+
+                   // Handle image if needed
+                   if (!(["", " ", "Abstract"].includes(line.replace("# ", ""))) && images[randomNum()] && images.findIndex((image) => !image.used) !== -1) {
+                     return [
+                       headingParagraph,
+                       new Paragraph({
+                         children: [   
+                           new ImageRun({
+                             data: images[randomUnusedImageIndex()].buffer,
+                             type: "png",
+                             transformation: {
+                               width: 500,
+                               height: 300,
+                             },
+                             altText: {
+                               title: "This is an ultimate title",
+                               description: "This is an ultimate image",
+                               name: "My Ultimate Image",
+                             },
+                           })
+                         ],
+                         alignment: AlignmentType.CENTER,
+                         spacing: { line: 360 }
+                       })
+                     ];
+                   }
+                   return [headingParagraph];
                  } else if (line.startsWith("## ")) {
                    // Heading 1 (H2)
                    return new Paragraph({
                     heading: HeadingLevel.HEADING_2,
+
                      children: [
                        new TextRun({ 
                          text: line.replace("## ", ""), 
