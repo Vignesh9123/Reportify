@@ -16,3 +16,11 @@ export const uploadBuffer = async (buffer: Buffer, filename : string) => {
     throw new Error(`Failed to upload file: ${error.message}`);
   }
 }
+
+
+export const deleteFiles = async(keys: string[])=>{
+  if(keys.length === 0) return true;
+  const res = await utapi.deleteFiles(keys);
+  if(!res.success) throw new Error('Failed to delete files');
+  return res.success;
+}
