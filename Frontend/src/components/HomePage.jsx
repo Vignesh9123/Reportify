@@ -492,7 +492,7 @@ const Carousel = ({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <span>Title e.g., Reportify - AI Powered Report Builder</span>
+                <span>Title  (e.g.,Reportify-AI Powered Report Builder)</span>
                 <i></i>
               </div>
               <div className="inputbox">
