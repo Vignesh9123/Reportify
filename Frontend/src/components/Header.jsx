@@ -74,7 +74,7 @@ const Header = ({
           className={`${
             isMobile
               ? isMenuOpen
-                ? "flex flex-col absolute top-12 right-1 w-65 text-center gap-2 bg-gray-900 border-b border-gray-700 py-4 z-20"
+                ? "flex flex-col absolute top-12 right-4 w-65 text-center gap-2 bg-gray-900 border-b border-gray-700 py-4 z-20"
                 : "hidden"
               : "flex items-center gap-4 h-[7vh]"
           } `}
