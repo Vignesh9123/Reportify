@@ -46,7 +46,7 @@ const HomePage = () => {
           withCredentials: true,
         }
       );
-      setCurrentUser(response.data.name);
+      setCurrentUser(response.data.data);
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
 
@@ -442,7 +442,7 @@ const HomePage = () => {
               Your report is being generated. Please wait.
             </p>
             <span className="mt-2 text-xl font-semibold text-blue-400 animate-pulse">
-              {/* Generating {currentSection}... ( {num} / {sections.length} ) */}
+              Generating {currentSection}... ( {num} / {sections.length} )
             </span>
           </div>
         </div>
@@ -505,7 +505,7 @@ const HomePage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-4">
               <h1 className="text-3xl md:text-5xl font-bold mb-4 py-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Hello {currentUser} Welcome to Reportify
+                Hello {currentUser.name} Welcome to Reportify
               </h1>
               <p className="text-lg md:text-xl text-gray-300 mb-4">
                 Generate your report effortlessly in 3 simple steps.
