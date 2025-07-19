@@ -889,7 +889,7 @@ const HomePage = () => {
                         />
                         <button
                           onClick={addSection}
-                          className="px-5 py-2 border-gray-500 border-1 rounded-lg font-semibold transition-all transform hover:scale-105 cursor-pointer"
+                          className="px-5 py-2 border-gray-500 border-1 rounded-lg font-semibold transition-all transform max-[420px]:border-none max-[420px]:px-0 hover:scale-105 cursor-pointer"
                         >
                           <Plus className="w-6 h-6" />
                         </button>
