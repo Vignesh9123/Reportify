@@ -47,6 +47,8 @@ const HomePage = () => {
         }
       );
       setCurrentUser(response.data.data);
+      console.log(currentUser);
+
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
 
