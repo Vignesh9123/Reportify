@@ -1,37 +1,38 @@
 /* eslint-disable */
-import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Header = ({ handleLogout }) => {
+const Footer = () => {
   return (
-    <MainFooterContainer>
-      <div className="left text-gray-500">
-      <p>&copy; {new Date().getFullYear()} Reportify. All rights reserved.</p>
-      </div>
-      <div className="right">
-        <ul className="ul flex gap-8">
-          <li className="cursor-pointer">
-            <Link to="/team">Our Team</Link>
-          </li>
-          <li className="cursor-pointer">
-            <Link to="/about">About</Link>
-          </li>
-          <li className="cursor-pointer">
-            <a href="AI in Automobile Industry.docx" download>
-              Sample Report
-            </a>
-          </li>
-          <li className="cursor-pointer logout" onClick={handleLogout}>
-            <a className="text-red-400 px-1 py-0.5 rounded-2xl">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </MainFooterContainer>
+    <>
+      <div className="w-full border-1 border-gray-600"></div>
+      <MainFooterContainer>
+        <div className="left text-gray-500">
+          <p className="text-xl">
+            &copy; {new Date().getFullYear()} Reportify. All rights reserved.
+          </p>
+        </div>
+        <div className="right">
+          <ul className="ul flex gap-8">
+            <li className="cursor-pointer">
+              <Link to="/team">Our Team</Link>
+            </li>
+            <li className="cursor-pointer">
+              <Link to="/about">About</Link>
+            </li>
+            <li className="cursor-pointer">
+              <a href="AI in Automobile Industry.docx" download>
+                Sample Report
+              </a>
+            </li>
+          </ul>
+        </div>
+      </MainFooterContainer>
+    </>
   );
 };
 
-export default Header;
+export default Footer;
 
 const fadeIn = keyframes`
   from {
@@ -59,12 +60,8 @@ const MainFooterContainer = styled.div`
   background-color: #000;
   animation: ${fadeIn} 0.5s ease-in-out;
   color: white;
-  border-radius: 10px 10px 0 0;
   margin-top: auto;
   height: 10vh;
-  .logout {
-    display: none;
-  }
   .ul li:hover {
     text-decoration: underline;
   }
@@ -72,11 +69,6 @@ const MainFooterContainer = styled.div`
   @media (max-width: 610px) {
     .ul {
       gap: 15px;
-    }
-  }
-  @media (max-width: 584px) {
-    .logout {
-      display: block;
     }
   }
   @media (max-width: 550px) {

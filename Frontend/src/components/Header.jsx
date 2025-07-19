@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+/* eslint-disable */
 import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
 const Header = ({
   handleLogout,
   creditsUsed,
@@ -8,387 +9,142 @@ const Header = ({
   renewalDateFormatted,
 }) => {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Assuming 768px as breakpoint for mobile
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <MainContainer>
-      <Link to="/homepage" className="logo"></Link>
-      <div className="border h-[7vh] flex gap-2.5">
-        {location.pathname === "/homepage" ? (
-          <div>
-            <ul className="wrapper">
-              <li className="icon facebook">
-                <span className="tooltip">
-                  Credits will renew on <span className="text-blue-500">{renewalDateFormatted}</span> if exhausted.
-                </span>
-                Credits Left : {maxCredits - creditsUsed}
-              </li>
-            </ul>
-          </div>
-        ) : (
-          ""
+    <div className="w-full bg-gray-900 border-b border-gray-700 p-2">
+      <div className="flex items-center justify-between mx-auto">
+        <Link
+          to="/homepage"
+          className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-300 transition-all duration-300"
+        >
+          <img src="Reportify-logo.png" alt="Logo" width={250} />
+        </Link>
+
+        {isMobile && (
+          <button
+            onClick={toggleMenu}
+            className="text-white focus:outline-none focus:text-white"
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="w-10 h-10"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
         )}
 
-        <Link
-          to={location.pathname === "/homepage" ? "/reports" : "/homepage"}
-          className="button"
+        <div
+          className={`${
+            isMobile
+              ? isMenuOpen
+                ? "flex flex-col absolute top-12 right-1 w-65 text-center gap-2 bg-gray-900 border-b border-gray-700 py-4 z-20"
+                : "hidden"
+              : "flex items-center gap-4 h-[7vh]"
+          } `}
         >
-          <span className="button__icon-wrapper">
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg"
-              width="10"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
+          <Link
+            to={location.pathname === "/homepage" ? "/reports" : "/homepage"}
+            className="group relative  border-1 border-white text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg overflow-hidden"
+            onClick={() => isMobile && setIsMenuOpen(false)} // Close menu on link click
+          >
+            <span className="relative z-10 flex justify-center items-center gap-2">
+              <span className="relative w-4 h-4 overflow-hidden">
+                <svg
+                  viewBox="0 0 14 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute inset-0 w-full h-full transition-transform duration-300 group-hover:translate-x-full group-hover:-translate-y-full"
+                  width="14"
+                >
+                  <path
+                    d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                    fill="currentColor"
+                  />
+                </svg>
 
-            <svg
-              viewBox="0 0 14 15"
-              fill="none"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              className="button__icon-svg button__icon-svg--copy"
-            >
-              <path
-                d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                fill="currentColor"
-              ></path>
-            </svg>
-          </span>
-          {location.pathname === "/homepage" ? "My Reports" : "Home Page"}
-        </Link>
-        <button className="button2" onClick={handleLogout}>
-          Log Out
-        </button>
+                <svg
+                  viewBox="0 0 14 15"
+                  fill="none"
+                  width="14"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute inset-0 w-full h-full transition-transform duration-300 -translate-x-full translate-y-full group-hover:translate-x-0 group-hover:translate-y-0"
+                >
+                  <path
+                    d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              {location.pathname === "/homepage" ? "My Reports" : "Home Page"}
+            </span>
+          </Link>
+
+          {location.pathname === "/homepage" && (
+            <div className="relative group">
+              <div className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-md text-gray-300 hover:bg-gray-700 transition-all duration-300 cursor-pointer">
+                Credits Left: {maxCredits - creditsUsed}
+                <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-xs text-gray-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                  Credits will renew on{" "}
+                  <span className="text-blue-400">{renewalDateFormatted}</span>{" "}
+                  if exhausted.
+                  <div className="absolute bottom-full left-1/2 transform rotate-180 translate-x-1/2 border-4 border-transparent border-t-gray-700"></div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <button
+            className={`${
+              isMobile ? "w-fit mx-auto mt-4" : "max-[584px]:hidden"
+            } hover:bg-red-700 text-white p-1 rounded-lg font-semibold text-[14px] transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-red-500 hover:border-red-400 cursor-pointer`}
+            onClick={() => {
+              handleLogout();
+              isMobile && setIsMenuOpen(false); // Close menu on logout
+            }}
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-    </MainContainer>
+    </div>
   );
 };
 
 export default Header;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const gradientAnimation = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
-const MainContainer = styled.div`
-  width: 100vw;
-  height: 10vh;
-  backdrop-filter: blur(10px);
-  border: 1px solid black;
-  display: flex;
-  top: 0;
-  justify-content: space-between;
-  padding: 0 20px 0 15px;
-  align-items: center;
-  background-color: #000;
-  z-index: 9999;
-  animation: ${fadeIn} 0.5s ease-in-out,
-    ${gradientAnimation} 10s infinite alternate ease-in-out;
-
-  .wrapper {
-    list-style: none;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-family: "Poppins", sans-serif;
-    justify-content: center;
-  }
-
-  .wrapper .icon {
-    position: relative;
-    background: black;
-    color: white;
-    border-radius: 50px;
-    width: auto;
-    padding: 0 10px;
-    height: 6.5vh;
-    top: 3px;
-    font-size: 17px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  .wrapper .tooltip {
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 14px;
-    background: #000000;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease-in-out;
-    white-space: nowrap;
-  }
-
-  .wrapper .tooltip::before {
-    content: "";
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    background: #000000;
-  }
-
-  .wrapper .icon:hover .tooltip {
-    bottom: -53px;
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .logo {
-    position: relative;
-    background: url("Reportify-logo.png") no-repeat center/contain;
-    min-width: 200px;
-    height: 60px;
-    animation: dp 0.4s linear;
-    filter: drop-shadow(1px 1px 4px purple);
-  }
-  .button {
-    line-height: 1;
-    text-decoration: none;
-    display: inline-flex;
-    cursor: pointer;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: large;
-    background-color: var(--clr);
-    color: white;
-    border: 2px solid #fff;
-    border-radius: 10rem;
-    font-weight: 600;
-    padding: 0.75rem 1.25rem;
-    padding-left: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: background-color 0.3s;
-  }
-
-  .button__icon-wrapper {
-    flex-shrink: 0;
-    width: 25px;
-    height: 25px;
-    position: relative;
-    color: var(--clr);
-    background-color: #fff;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    color: black;
-  }
-
-  .button:hover {
-    background-color: white;
-    color: black;
-  }
-
-  .button:hover .button__icon-wrapper {
-    color: white;
-    background-color: #000;
-  }
-
-  .button__icon-svg--copy {
-    position: absolute;
-    transform: translate(-150%, 150%);
-  }
-
-  .button:hover .button__icon-svg:first-child {
-    transition: transform 0.3s ease-in-out;
-    transform: translate(150%, -150%);
-  }
-
-  .button:hover .button__icon-svg--copy {
-    transition: transform 0.3s ease-in-out 0.1s;
-    transform: translate(0);
-  }
-  .button2 {
-    position: relative;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    padding-block: 0.5rem;
-    padding-inline: 0.75rem;
-    background-color: black;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffff;
-    gap: 10px;
-    font-weight: bold;
-    border: 3px solid #ffffff4d;
-    outline: none;
-    overflow: hidden;
-    font-size: 17px;
-    cursor: pointer;
-  }
-
-  .icon {
-    width: 24px;
-    height: 24px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .button2:hover {
-    transform: scale(1.05);
-    border-color: #fff9;
-  }
-
-  .button2:hover .icon {
-    transform: translate(4px);
-  }
-
-  .button2:hover::before {
-    animation: shine 1.5s ease-out infinite;
-  }
-
-  .button2::before {
-    content: "";
-    position: absolute;
-    width: 100px;
-    height: 100%;
-    background-image: linear-gradient(
-      120deg,
-      rgba(0, 0, 0, 0) 30%,
-      rgba(239, 239, 239, 0.856),
-      rgba(0, 0, 0, 0) 70%
-    );
-
-    top: 0;
-    left: -100px;
-    opacity: 0.6;
-  }
-
-  @keyframes shine {
-    0% {
-      left: -100px;
-    }
-
-    60% {
-      left: 100%;
-    }
-
-    to {
-      left: 100%;
-    }
-  }
-
-  @media (max-width: 664px) {
-    .wrapper .icon {
-      font-size: 14px;
-    }
-    .button2 {
-      font-size: 14px;
-    }
-    .button {
-      font-size: 14px;
-    }
-  }
-  @media (max-width: 584px) {
-    .button2 {
-      display: none;
-    }
-  }
-  @media (max-width: 492px) {
-    .wrapper .icon {
-      font-size: 12px;
-      height: 5vh;
-      top: 10px;
-    }
-    .button__icon-wrapper {
-      display: none;
-    }
-    .button {
-      width: auto;
-      font-size: 12px;
-      padding: 0 5px;
-      height: 5vh;
-      top: 10px;
-      position: relative;
-    }
-  }
-  @media (max-width: 423px) {
-    .logo {
-      position: relative;
-      background: url("Reportify-logo.png") no-repeat center/contain;
-      min-width: 150px;
-      height: 40px;
-      animation: dp 0.4s linear;
-      filter: drop-shadow(1px 1px 4px purple);
-    }
-    .button {
-      font-size: 12px;
-    }
-  }
-  @media (max-width: 368px) {
-    .logo {
-      position: relative;
-      background: url("Reportify-logo.png") no-repeat center/contain;
-      min-width: 140px;
-      height: 40px;
-      animation: dp 0.4s linear;
-      filter: drop-shadow(1px 1px 4px purple);
-    }
-    .wrapper .icon {
-      font-size: 10px;
-    }
-    .button {
-      font-size: 10px;
-    }
-  }
-  @media (max-width: 330px) {
-    .logo {
-      position: relative;
-      background: url("Reportify-logo.png") no-repeat center/contain;
-      min-width: 120px;
-      height: 40px;
-      animation: dp 0.4s linear;
-      filter: drop-shadow(1px 1px 4px purple);
-    }
-    .wrapper .icon {
-      font-size: 10px;
-    }
-    .button__icon-wrapper {
-      display: none;
-    }
-    .button {
-      width: auto;
-      font-size: 10px;
-      padding: 0 5px;
-    }
-  }
-`;
