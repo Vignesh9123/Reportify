@@ -33,7 +33,9 @@ const HomePage = () => {
   const [flag, setFlag] = useState(false);
   const [downloadingDoc, setDownloadingDoc] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-
+  const [currentSection, setCurrentSection] = useState("");
+  const [num, setNum] = useState(0);
+  
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
