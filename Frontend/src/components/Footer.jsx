@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <div className="w-full border-1 border-gray-600"></div>
       <MainFooterContainer>
+        <div className="w-full border-1 absolute top-0 border-gray-600"></div>
         <div className="left text-gray-500">
           <p className="text-xl">
             &copy; {new Date().getFullYear()} Reportify. All rights reserved.
