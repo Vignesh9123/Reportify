@@ -35,7 +35,7 @@ const HomePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
-  
+
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
@@ -320,6 +320,7 @@ const HomePage = () => {
       });
       return;
     }
+    setFlag2(false);
     setFlag(true);
     let content = "";
 
@@ -351,14 +352,11 @@ const HomePage = () => {
           toast.error("Too Many Requests - please try again later");
           navigate("/");
         }
-      } finally {
-        setNum(0);
-        setFlag(false);
-        setFlag2(false);
-        setDownloadingDoc(true);
       }
     }
-
+    setNum(0);
+    setFlag(false);
+    setDownloadingDoc(true);
     const report = {
       topic: title,
       content: content,
