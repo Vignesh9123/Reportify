@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
-import styled, { keyframes } from "styled-components";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -60,340 +59,118 @@ const Team = () => {
 
   if (loading) {
     return (
-      <LoadingContainer className="bg-black">
-        <Spinner />
-        <p className="text-white">Loading...</p>
-      </LoadingContainer>
+      <div className="flex flex-col items-center justify-center h-screen bg-black">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+        <p className="text-white mt-4">Loading...</p>
+      </div>
     );
   }
+
   return (
-    <MainContainer>
-      <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
-        <div>
-          <Header handleLogout={handleLogout} />
-        </div>
-        <div className="body">
-          <div className="card">
-            <div className="top-section">
-              <div className="border"></div>
-              <div className="icons">
-                <div className="logo text-white flex justify-center items-center font-bold">
-                  Backend
-                </div>
-              </div>
-            </div>
-            <div className="bottom-section">
-              <p className="font-bold text-blue-300 text-2xl text-center">
-                VIGNESH D
-              </p>
-              <p className="text-white text-sm text-center">
-                Student @ SJCE 26'
-              </p>
-              <div className="row row1">
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a href="https://github.com/Vignesh9123" target="_blank">
-                    <FaGithub className="text-4xl  duration-100 hover:hover:text-zinc-700 hover:scale-130" />
-                  </a>
-                </div>
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a
-                    href="https://www.linkedin.com/in/vignesh-d-mys/"
-                    target="_blank"
-                  >
-                    <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
-                  </a>
-                </div>
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
-                    target="_blank"
-                  >
-                    <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
-                  </a>
-                </div>
+    <div className="flex flex-col min-h-screen justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
+      <div>
+        <Header handleLogout={handleLogout} />
+      </div>
+      
+      <div className="relative h-auto w-full rounded-t-[10px] animate-fade-in flex justify-center items-center flex-wrap gap-[10vw] py-8 md:py-16 px-4 md:flex-row flex-col md:gap-[10vw] gap-[5vh]">
+        <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
+          <div className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('vig.png')"}}>
+            <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
+            
+            <div className="absolute top-0 w-full h-[30px] flex justify-between">
+              <div className="h-full aspect-square pt-[7px] pb-[7px] pl-[15px] text-white flex justify-center items-center font-bold">
+                Backend
               </div>
             </div>
           </div>
-          <div className="card">
-            <div className="top-section">
-              <div className="border"></div>
-              <div className="icons">
-                <div className="logo text-white flex justify-center items-center font-bold">
-                  Frontend
-                </div>
+          
+          <div className="mt-[15px] p-[10px_5px]">
+            <p className="font-bold text-blue-300 text-2xl text-center tracking-[2px]">
+              VIGNESH D
+            </p>
+            <p className="text-white text-sm text-center mt-2">
+              Student @ SJCE 26'
+            </p>
+            <div className="flex justify-between mt-5">
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
+                <a href="https://github.com/Vignesh9123" target="_blank" rel="noopener noreferrer">
+                  <FaGithub className="text-4xl duration-100 hover:text-zinc-700 hover:scale-125 transition-all" />
+                </a>
               </div>
-            </div>
-            <div className="bottom-section">
-              <p className="font-bold text-blue-300 text-2xl text-center">
-                SURAJ S G DHANVA
-              </p>
-              <p className="text-white text-sm text-center">
-                Student @ SJCE 26'
-              </p>
-              <div className="row row1">
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a href="https://github.com/SurajSG23" target="_blank">
-                    <FaGithub className="text-4xl  duration-100 hover:text-zinc-700 hover:scale-130" />
-                  </a>
-                </div>
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a
-                    href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
-                    target="_blank"
-                  >
-                    <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-130" />
-                  </a>
-                </div>
-                <div className="item flex justify-center items-center cursor-pointer">
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
-                    target="_blank"
-                  >
-                    <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-130" />
-                  </a>
-                </div>
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer border-l border-r border-white/20">
+                <a
+                  href="https://www.linkedin.com/in/vignesh-d-mys/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-125 transition-all" />
+                </a>
+              </div>
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-125 transition-all" />
+                </a>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <Footer handleLogout={handleLogout} />
+
+        <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
+          <div className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('suraj.png')"}}>
+            <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
+            
+            <div className="absolute top-0 w-full h-[30px] flex justify-between">
+              <div className="h-full aspect-square pt-[7px] pb-[7px] pl-[15px] text-white flex justify-center items-center font-bold">
+                Frontend
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-[15px] p-[10px_5px]">
+            <p className="font-bold text-blue-300 text-[21px] text-center tracking-[2px]">
+              SURAJ S G DHANVA
+            </p>
+            <p className="text-white text-sm text-center mt-2">
+              Student @ SJCE 26'
+            </p>
+            <div className="flex justify-between mt-5">
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
+                <a href="https://github.com/SurajSG23" target="_blank" rel="noopener noreferrer">
+                  <FaGithub className="text-4xl duration-100 hover:text-zinc-700 hover:scale-125 transition-all" />
+                </a>
+              </div>
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer border-l border-r border-white/20">
+                <a
+                  href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-125 transition-all" />
+                </a>
+              </div>
+              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-125 transition-all" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </MainContainer>
+      
+      <div>
+        <Footer />
+      </div>
+    </div>
   );
 };
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const gradientAnimation = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
 export default Team;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 80vh;
-  height: auto;
-  position: relative;
-  justify-content: space-between;
-  overflow: hidden;
-  a {
-    all: unset;
-  }
-  .body {
-    position: relative;
-    height: auto;
-    width: 100vw;
-    border-radius: 10px 10px 0 0;
-    animation: ${fadeIn} 1s ease-in-out,
-      ${gradientAnimation} 10s infinite alternate ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10vw;
-  }
-
-  .card {
-    width: 255px;
-    border-radius: 20px;
-    background: black;
-    padding: 5px;
-    overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 20px 0px;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid gray;
-  }
-
-  .card:hover {
-    transform: scale(1.05);
-  }
-
-  .card:nth-child(1) .top-section {
-    height: 200px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    background: url("vig.png") no-repeat center/cover;
-    position: relative;
-  }
-  .card:nth-child(2) .top-section {
-    height: 200px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    background: url("suraj.png") no-repeat center/cover;
-    position: relative;
-  }
-
-  .card .top-section .border {
-    border-bottom-right-radius: 10px;
-    height: 30px;
-    width: 130px;
-    background: black;
-    position: relative;
-    transform: skew(-40deg);
-    box-shadow: -10px -10px 0 0 black;
-  }
-
-  .card .top-section .border::before {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    top: 0;
-    right: -15px;
-    background: rgba(255, 255, 255, 0);
-    border-top-left-radius: 10px;
-    box-shadow: -5px -5px 0 2px black;
-  }
-
-  .card .top-section::before {
-    content: "";
-    position: absolute;
-    top: 30px;
-    left: 0;
-    background: rgba(255, 255, 255, 0);
-    height: 15px;
-    width: 15px;
-    border-top-left-radius: 15px;
-    box-shadow: -5px -5px 0 2px black;
-  }
-
-  .card .top-section .icons {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 30px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .card .top-section .icons .logo {
-    height: 100%;
-    aspect-ratio: 1;
-    padding: 7px 0 7px 15px;
-  }
-
-  .card .top-section .icons .logo .top-section {
-    height: 100%;
-  }
-
-  .card .top-section .icons .social-media {
-    height: 100%;
-    padding: 8px 15px;
-    display: flex;
-    gap: 7px;
-  }
-
-  .card .top-section .icons .social-media .svg {
-    height: 100%;
-    fill: #1b233d;
-  }
-
-  .card .top-section .icons .social-media .svg:hover {
-    fill: white;
-  }
-
-  .card .bottom-section {
-    margin-top: 15px;
-    padding: 10px 5px;
-  }
-
-  .card .bottom-section .title {
-    display: block;
-    font-size: 17px;
-    font-weight: bolder;
-    color: white;
-    text-align: center;
-    letter-spacing: 2px;
-  }
-
-  .card .bottom-section .row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-
-  .card .bottom-section .row .item {
-    flex: 30%;
-    text-align: center;
-    padding: 5px;
-    color: #fff;
-  }
-
-  .card .bottom-section .row .item .big-text {
-    font-size: 12px;
-    display: block;
-  }
-
-  .card .bottom-section .row .item .regular-text {
-    font-size: 9px;
-  }
-
-  .card .bottom-section .row .item:nth-child(2) {
-    border-left: 1px solid rgba(255, 255, 255, 0.126);
-    border-right: 1px solid rgba(255, 255, 255, 0.126);
-  }
-
-  @media (max-width: 556px) {
-    .body {
-      position: relative;
-      height: auto;
-      padding: 10px 0;
-      width: 100vw;
-      border-radius: 10px 10px 0 0;
-      animation: ${fadeIn} 1s ease-in-out,
-        ${gradientAnimation} 10s infinite alternate ease-in-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-wrap: nowrap;
-      margin-top: 10vh;
-      gap: 10vw;
-    }
-  }
-`;
-
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const Spinner = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ccc;
-  border-top-color: #000;
-  border-radius: 50%;
-  animation: ${spin} 1s linear infinite;
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;

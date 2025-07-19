@@ -136,7 +136,7 @@ const Header = ({
             } hover:bg-red-700 text-white p-1 rounded-lg font-semibold text-[14px] transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-red-500 hover:border-red-400 cursor-pointer`}
             onClick={() => {
               handleLogout();
-              isMobile && setIsMenuOpen(false); // Close menu on logout
+              isMobile && setIsMenuOpen(false);
             }}
           >
             Log Out
