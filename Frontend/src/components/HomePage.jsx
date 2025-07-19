@@ -46,7 +46,7 @@ const HomePage = () => {
           withCredentials: true,
         }
       );
-      setCurrentUser(response.data.data);
+      setCurrentUser(response.data.name);
       setCreditsUsed(response.data.data.creditsUsed);
       setMaxCredits(response.data.data.maxCredits);
 
