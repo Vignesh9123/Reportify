@@ -77,6 +77,15 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        navigate("/homepage");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white font-sans">
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
