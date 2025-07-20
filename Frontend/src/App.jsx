@@ -1,11 +1,11 @@
+/* eslint-disable */
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { signInWithPopup, GoogleAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useEffect } from "react";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -76,15 +76,6 @@ export default function App() {
       }
     }
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        navigate("/homepage");
-      }
-    });
-    return () => unsubscribe();
-  }, [auth, navigate]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white font-sans">
