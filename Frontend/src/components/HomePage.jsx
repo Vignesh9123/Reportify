@@ -874,17 +874,17 @@ const HomePage = () => {
                       ))}
                     </div>
 
-                    <div className="bg-gray-700/30 border border-gray-600/50 rounded-xl p-6">
+                    <div className="bg-gray-700/30 border border-gray-600/50 rounded-xl p-6 max-[400px]:p-2">
                       <h3 className="text-lg font-semibold mb-4 text-blue-300">
                         Add New Section
                       </h3>
-                      <div className="flex gap-3">
+                      <div className="flex gap-3 max-[400px]:gap-1">
                         <input
                           type="text"
                           value={newSection}
                           onChange={(e) => setNewSection(e.target.value)}
                           onKeyPress={(e) => e.key === "Enter" && addSection()}
-                          className="flex-1 px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="flex-1 px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 "
                           placeholder="Enter section title"
                         />
                         <button
@@ -899,7 +899,7 @@ const HomePage = () => {
                     <div className="flex justify-between gap-6 pt-6">
                       <button
                         onClick={prevStep}
-                        className="group bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer"
+                        className="group bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer max-[400px]:px-4 "
                       >
                         <div className="flex items-center gap-2">
                           <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
@@ -912,7 +912,7 @@ const HomePage = () => {
                         className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 p-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-purple-500/25 cursor-pointer"
                       >
                         <div className="flex items-center gap-3 text-2xl max-[542px]:text-[16px]">
-                          <Sparkles className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300 max-[542px]:w-6 max-[542px]:h-6" />
+                          <Sparkles className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300 max-[542px]:w-6 max-[542px]:h-6 max-[400px]:w-8 max-[400px]:h-8" />
                           Generate Report
                         </div>
                       </button>
