@@ -1,6 +1,5 @@
-/* eslint-disable */
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
