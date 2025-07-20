@@ -6,6 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useEffect } from "react";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
