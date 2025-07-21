@@ -21,7 +21,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
   return genAI.getGenerativeModel({
     model: getContentIndex(title) ? config["GEMINI2.0"]: config["GEMINI1.5"],
     systemInstruction: `
-  Generate a well-structured MDX document about the given topic with the following sections:
+  Generate a well-structured MDX document about the given topic, subject and description with the following sections:
   1. Title (H1)
   2. Key Sections (H2)
   3. Bullet Points
@@ -33,6 +33,8 @@ const genAI = new GoogleGenerativeAI(apiKey);
   Please don't use the section titles given here, use your own
   Make sure that the content is relevant to the topic and as detailed as possible and is plagiary free
   Dont wrap it inside code blocks
+  Dont give conclusion and intro section unless asked for
+
   `,
   });
 }

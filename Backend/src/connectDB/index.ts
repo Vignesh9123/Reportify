@@ -4,7 +4,7 @@ import { config } from "../config";
 
 export async function connectDB(){
     try{
-        const connection = await mongoose.connect(config.MONGO_URL,{dbName: 'production'})
+        const connection = await mongoose.connect(config.MONGO_URL,{dbName: config.ENVIRONMENT == 'dev'? 'dev': 'production'})
         console.log(`MongoDB Connected: ${connection.connection.host}`)
 
         connection.connection.on('disconnected', () => {
