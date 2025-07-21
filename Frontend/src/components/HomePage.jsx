@@ -35,6 +35,17 @@ const HomePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const fetchCurrentUser = async () => {
     setLoading(true);
@@ -129,6 +140,7 @@ const HomePage = () => {
   const [sem, setSem] = useState("");
   const [professorName, setprofessorName] = useState("");
   const [designation, setDesignation] = useState("");
+  const [description, setDescription] = useState("");
 
   // Student Information
   const [students, setStudents] = useState([
@@ -259,7 +271,8 @@ const HomePage = () => {
         !branch ||
         !sem ||
         !professorName ||
-        !designation) &&
+        !designation ||
+        !description) &&
       currentStep === 1
     ) {
       toast.info("Some fields are missing.", {
@@ -334,8 +347,9 @@ const HomePage = () => {
           {
             title: section.title,
             promptContent: section.prompt,
-
-            firstSection: section.title == sections[0].title, // true only for the first section
+            description: description,
+            subject: subject,
+            firstSection: section.title == sections[0].title,
             lastSection: section.title == sections[sections.length - 1].title,
           },
           {
@@ -574,20 +588,23 @@ const HomePage = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Project Topic
+                        <label className="flex items-center gap-1 text-lg font-medium text-gray-300 mb-2">
+                          Project Title <br />{" "}
+                          <p className="text-sm">
+                            (Displayed in the front page)
+                          </p>
                         </label>
                         <input
                           type="text"
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                          placeholder="e.g., Reportify - AI Powered Report Builder"
+                          placeholder="e.g., Reportify"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Subject
                         </label>
                         <input
@@ -600,7 +617,7 @@ const HomePage = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Subject Code
                         </label>
                         <input
@@ -615,7 +632,7 @@ const HomePage = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Semester
                         </label>
                         <input
@@ -641,7 +658,7 @@ const HomePage = () => {
                       </div>
 
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Branch
                         </label>
 
@@ -667,7 +684,7 @@ const HomePage = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Professor Name
                         </label>
                         <input
@@ -680,7 +697,7 @@ const HomePage = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-lg font-medium text-gray-300 mb-2">
                           Professor Designation
                         </label>
                         <input
@@ -699,6 +716,23 @@ const HomePage = () => {
                           <option value="Assistant Professor" />
                         </datalist>
                       </div>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-lg font-medium text-gray-300 mb-2">
+                        Describe your project
+                      </label>
+
+                      <textarea
+                        rows={3}
+                        cols={10}
+                        maxLength={200}
+                        required
+                        className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="e.g., AI-Powered Report Builder simplifies report creation by generating professional documents from user inputs using AI. It ensures speed, consistency, and minimal manual effort.
+"
+                      />
                     </div>
 
                     <div className="flex justify-end pt-6">
@@ -841,7 +875,19 @@ const HomePage = () => {
                   <div className="space-y-6" ref={scrollContainerRef}>
                     <div className="flex items-center gap-3 mb-8">
                       <BookOpen className="w-8 h-8 text-blue-400" />
-                      <h2 className="text-3xl font-bold">Report Sections</h2>
+                      <div>
+                        <h2 className="text-3xl font-bold">Report Sections</h2>
+                        {innerWidth < 575 ? (
+                          <p className="text-red-400 text-sm">
+                            Click and hold to drag the sections, then rearrange
+                            them as you like.
+                          </p>
+                        ) : (
+                          <p className="text-red-400 ">
+                            Drag and rearrange the sections.
+                          </p>
+                        )}
+                      </div>
                     </div>
 
                     <div className="space-y-3">
