@@ -56,7 +56,7 @@ const Team = () => {
 
   const handleFeedbackSubmit = (e) => {
     e.preventDefault();
-    setMsgSent(false);
+    setMsgSent(true);
 
     const templateParams = {
       to_name: "Suraj S G",
@@ -75,7 +75,7 @@ const Team = () => {
       .then(() => {
         toast.success("Feedback sent successfully!");
         setMsg("");
-        setMsgSent(true);
+        setMsgSent(false);
       })
       .catch((error) => {
         console.error("Error sending feedback: ", error);
@@ -252,7 +252,7 @@ const Team = () => {
                 className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-[15px] border border-blue-500 hover:from-blue-700 hover:to-blue-800 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 cursor-pointer"
                 disabled={msgSent}
               >
-                Submit Feedback
+                {msgSent ? "Sending..." : "Submit Feedback"}
               </button>
             </div>
           </form>
