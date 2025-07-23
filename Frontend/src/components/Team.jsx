@@ -60,8 +60,8 @@ const Team = () => {
 
     const templateParams = {
       to_name: "Suraj S G",
-      from_name: user !== null ? user.displayName : "Anonymous",
-      from_email: user !== null ? user.email : "Anonymous@gmail.com",
+      from_name: user ? user.displayName : "Anonymous",
+      from_email: user ? user.email : "Anonymous@gmail.com",
       message: msg,
     };
 
