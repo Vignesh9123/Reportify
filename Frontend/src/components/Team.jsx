@@ -43,14 +43,25 @@ const Team = () => {
       });
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+
+      if (!currentUser) {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const handleFeedbackSubmit = (e) => {
-    setMsgSent(false);
     e.preventDefault();
+    setMsgSent(false);
 
     const templateParams = {
       to_name: "Suraj S G",
-      from_name: user ? user.displayName : "Anonymous",
-      from_email: user ? user.email : "",
+      from_name: user !== null ? user.displayName : "Anonymous",
+      from_email: user !== null ? user.email : "Anonymous@gmail.com",
       message: msg,
     };
 
@@ -78,18 +89,6 @@ const Team = () => {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      console.log(user);
-
-      if (!currentUser) {
-        navigate("/");
-      }
-    });
-    return () => unsubscribe();
-  }, [auth, navigate]);
 
   if (loading) {
     return (
