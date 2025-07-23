@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="right">
           <ul className="ul flex gap-8">
             <li className="cursor-pointer">
-              <Link to="/team">Our Team</Link>
+              <Link to="/team">Contact Us</Link>
             </li>
             <li className="cursor-pointer">
               <Link to="/about">About</Link>
@@ -34,16 +34,6 @@ const Footer = () => {
 
 export default Footer;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
 
 const MainFooterContainer = styled.div`
   width: 100%;
@@ -58,7 +48,6 @@ const MainFooterContainer = styled.div`
   padding: 0 20px;
   align-items: center;
   background-color: #000;
-  animation: ${fadeIn} 0.5s ease-in-out;
   color: white;
   margin-top: auto;
   height: 10vh;
