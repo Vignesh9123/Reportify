@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -57,25 +58,40 @@ const Team = () => {
     e.preventDefault();
     setMsgSent(true);
 
+    const templateParams = {
+      to_name: "Suraj S G",
+      from_name: user ? user.displayName : "Anonymous",
+      from_email: user ? user.email : "Anonymous@gmail.com",
+      message: msg,
+    };
+
+    const templateParams2 = {
+      to_name: "Vignesh D",
+      from_name: templateParams.from_name,
+      from_email: templateParams.from_email,
+      message: msg,
+    };
+
     try {
-      await axios.post(
-        "https://reportify-backend.vercel.app/api/email/send",
-        {
-          name: user ? user.displayName : "Anonymous",
-          email: user ? user.email : "Anonymous@gmail.com",
-          message: msg,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+      await emailjs.send(
+        import.meta.env.VITE_EMAIL_JS_SERVICE_ID,
+        import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY
       );
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID_1,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID_1,
+        templateParams2,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY_1
+      );
+
       toast.success("Feedback sent successfully!");
+      setMsg("");
     } catch (error) {
       console.error("Error sending feedback: ", error);
-      toast.error("Failed to send feedback. Please try again later.");
+      toast.error("Failed to send feedback. Please try again.");
     } finally {
       setMsg("");
       setMsgSent(false);
