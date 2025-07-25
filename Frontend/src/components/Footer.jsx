@@ -1,95 +1,56 @@
-/* eslint-disable */
-import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <>
-      <MainFooterContainer>
-        <div className="w-full border-1 absolute left-0 top-0 border-gray-600"></div>
-        <div className="left text-gray-500">
-          <p className="text-xl">
-            &copy; {new Date().getFullYear()} Reportify. All rights reserved.
-          </p>
+    <footer className="w-full bg-black text-white border-t border-gray-800 mt-auto">
+      <div className="container mx-auto p-6">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+          <div className="text-center lg:text-left">
+            <p className="text-gray-400 text-lg">
+              &copy; {new Date().getFullYear()} Reportify. All rights reserved.
+            </p>
+          </div>
+
+          <nav className="flex flex-wrap justify-center lg:justify-end gap-8">
+            <Link 
+              to="/team" 
+              className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4 decoration-2 decoration-blue-500"
+            >
+              Contact Us
+            </Link>
+            <Link 
+              to="/about" 
+              className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4 decoration-2 decoration-blue-500"
+            >
+              About
+            </Link>
+            <a 
+              href="AI in Automobile Industry.docx" 
+              download
+              className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4 decoration-2 decoration-blue-500 flex items-center"
+            >
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                />
+              </svg>
+              Sample Report
+            </a>
+          </nav>
         </div>
-        <div className="right">
-          <ul className="ul flex gap-8">
-            <li className="cursor-pointer">
-              <Link to="/team">Our Team</Link>
-            </li>
-            <li className="cursor-pointer">
-              <Link to="/about">About</Link>
-            </li>
-            <li className="cursor-pointer">
-              <a href="AI in Automobile Industry.docx" download>
-                Sample Report
-              </a>
-            </li>
-          </ul>
-        </div>
-      </MainFooterContainer>
-    </>
+      </div>
+
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm -z-10"></div>
+    </footer>
   );
 };
 
 export default Footer;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const MainFooterContainer = styled.div`
-  width: 100%;
-  height: 7vh;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-  border-top: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  align-items: center;
-  background-color: #000;
-  animation: ${fadeIn} 0.5s ease-in-out;
-  color: white;
-  margin-top: auto;
-  height: 10vh;
-  .ul li:hover {
-    text-decoration: underline;
-  }
-
-  @media (max-width: 610px) {
-    .ul {
-      gap: 15px;
-    }
-  }
-  @media (max-width: 550px) {
-    height: 10vh;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    .ul {
-      font-size: 14px;
-      gap: 15px;
-    }
-  }
-
-  @media (max-width: 325px) {
-    height: 13vh;
-    .left {
-      font-size: 12px;
-    }
-    .ul {
-      font-size: 12px;
-      gap: 10px;
-    }
-  }
-`;
