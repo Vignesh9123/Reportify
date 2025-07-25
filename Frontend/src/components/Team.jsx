@@ -93,7 +93,6 @@ const Team = () => {
       console.error("Error sending feedback: ", error);
       toast.error("Failed to send feedback. Please try again.");
     } finally {
-      setMsg("");
       setMsgSent(false);
     }
   };
