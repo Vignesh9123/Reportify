@@ -9,7 +9,7 @@ export const config = {
     GEMINI_API_KEY_2: String(process.env.GEMINI_API_KEY_2),
     CLIENT_URL: String(process.env.CLIENT_URL),
     JWT_SECRET: String(process.env.JWT_SECRET),
-    'GEMINI1.5':'gemini-1.5-flash',
+    'GEMINI2.5':'gemini-2.5-flash',
     'GEMINI2.0':'gemini-2.0-flash',
     ADMIN_KEY: String(process.env.ADMIN_KEY),
     UPLOADTHING_TOKEN: String(process.env.UPLOADTHING_TOKEN),
