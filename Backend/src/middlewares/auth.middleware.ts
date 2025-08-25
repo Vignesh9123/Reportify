@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 const authMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
         const token = req.headers.authorization?.split("Bearer ")?.[1] || req.cookies.token; 
+       	console.log('token', token)
         if (!token) {
             throw new ApiError(401, "Unauthorized");
         }
