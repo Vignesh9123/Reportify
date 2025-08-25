@@ -54,7 +54,7 @@ const HomePage = () => {
         "https://reportify-backend.vercel.app/api/auth/current-user",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
           },
           withCredentials: true,
         }
@@ -101,8 +101,7 @@ const HomePage = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',            },
           })
           .then(() => {
             localStorage.removeItem("token");
@@ -355,7 +354,7 @@ const HomePage = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+               Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
             },
             withCredentials: true,
           }
@@ -393,7 +392,7 @@ const HomePage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
           },
           withCredentials: true,
           responseType: "arraybuffer",

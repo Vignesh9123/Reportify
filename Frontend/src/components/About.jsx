@@ -19,7 +19,7 @@ const About = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
             },
           })
           .then(() => {
