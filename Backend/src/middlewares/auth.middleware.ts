@@ -26,6 +26,7 @@ const authMiddleware = (req: express.Request, res: express.Response, next: expre
              res.status(401).json({ error: "Token expired" });
         }
         else{
+	     console.log("Hey error", error)
              res.status(500).json({ error: "Internal server error" });
         }
     }
