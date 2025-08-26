@@ -513,7 +513,7 @@ const HomePage = () => {
         maxCredits={maxCredits}
         renewalDateFormatted={renewalDateFormatted}
       />
-      <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white">
+      <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-black via-zinc-900 to-black text-white">
         {/* Welcome Section */}
         <div className="pb-2 px-4">
           <div className="max-w-4xl mx-auto text-center">
