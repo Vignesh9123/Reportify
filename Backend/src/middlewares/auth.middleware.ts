@@ -6,7 +6,17 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-        const token = req.headers.authorization?.split("Bearer ")[1] || req.cookies.token; 
+	console.log(req.cookies);
+        let token;
+        const headerToken = req.headers.authorization?.split("Bearer ")?.[1]
+	if(headerToken && headerToken.length > 0){
+	   token = headerToken.trim();
+	}
+	else{
+	   token = req.cookies?.token || null;
+	}
+  
+       	console.log('token', token)
         if (!token) {
             throw new ApiError(401, "Unauthorized");
         }
@@ -26,6 +36,7 @@ const authMiddleware = (req: express.Request, res: express.Response, next: expre
              res.status(401).json({ error: "Token expired" });
         }
         else{
+	     console.log("Hey error", error)
              res.status(500).json({ error: "Internal server error" });
         }
     }
