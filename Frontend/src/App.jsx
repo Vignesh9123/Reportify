@@ -180,11 +180,6 @@ export default function App() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="relative py-8 text-center text-gray-400 border-t bg-black border-transparent">
-        <p>&copy; {new Date().getFullYear()} Reportify. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
