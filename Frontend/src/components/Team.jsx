@@ -123,7 +123,7 @@ const Team = () => {
         <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
           <div
             className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('vig.png')" }}
+            style={{ backgroundImage: "url('vig2.png')" }}
           >
             <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
 
@@ -176,7 +176,7 @@ const Team = () => {
         <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
           <div
             className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('suraj.png')" }}
+            style={{ backgroundImage: "url('suraj2.png')" }}
           >
             <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
 
