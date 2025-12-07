@@ -19,7 +19,7 @@ const getReportModel = (title: string) => {
   const apiKey = getKeyIndex() ? config.GEMINI_API_KEY_1 : config.GEMINI_API_KEY_2;
 const genAI = new GoogleGenerativeAI(apiKey);
   return genAI.getGenerativeModel({
-    model: getContentIndex(title) ? config["GEMINI2.0"]: config["GEMINI1.5"],
+    model: getContentIndex(title) ? config["GEMINI2.5"]: config["GEMINI2.5"],
     systemInstruction: `
   Generate a well-structured MDX document about the given topic with the following sections:
   1. Title (H1)
