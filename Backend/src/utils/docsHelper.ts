@@ -430,7 +430,8 @@ async function createDocument(topic: string, content: string, res : Response, su
                    return new Paragraph({
                      children: parseTextWithBold(line.replace(/^\s*-\s*/, "")),
                      bullet: { level: getIndentationLevel(line) },
-                     spacing: { line: 360 }
+                     spacing: { line: 360 },
+                     alignment: AlignmentType.JUSTIFIED
                    });
                  } else if (line.trim().startsWith("---")) {
                    // Page break
@@ -441,7 +442,8 @@ async function createDocument(topic: string, content: string, res : Response, su
                    // Regular paragraph
                    return new Paragraph({
                      children: parseTextWithBold(line),
-                     spacing: { line: 360 }
+                     spacing: { line: 360 },
+                     alignment: AlignmentType.JUSTIFIED
                    });
                  }
                }),
