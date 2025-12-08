@@ -370,7 +370,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("# ", ""), 
                          bold: true, 
-                         size: 48, 
+                         size: 32, 
                          font: "Times New Roman", 
                          color: "000000" ,
                          
@@ -387,7 +387,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("## ", ""), 
                          bold: true, 
-                         size: 32, 
+                         size: 28, 
                          font: "Times New Roman", 
                          color: "000000" 
                        })
@@ -418,7 +418,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("#### ", ""), 
                          bold: true, 
-                         size: 18, 
+                         size: 24, 
                          font: "Times New Roman", 
                          color: "000000" 
                        })
