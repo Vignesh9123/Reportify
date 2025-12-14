@@ -4,7 +4,7 @@ const DOCX_MIME_TYPE = 'application/vnd.openxmlformats-officedocument.wordproces
 
 export const uploadBuffer = async (buffer: Buffer, filename : string) => {
   try {
-    const blob = new Blob([buffer], { type: DOCX_MIME_TYPE });
+    const blob = new Blob([buffer as BlobPart], { type: DOCX_MIME_TYPE });
     const response = await utapi.uploadFiles([
       new File([blob], filename, { type: DOCX_MIME_TYPE })
     ]);
