@@ -1,17 +1,9 @@
-import fs from "fs";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber, TableOfContents } from "docx";
-// import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { Response } from "express";
 async function createDocument(topic: string, content: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
-    // const mdText = await generateCompleteMDXContent(topic);
-    // if (!mdText) {
-    //   console.error("Failed to generate MDX content.");
-    //   return;
-    // }
-  
    try {
      const lines = content.split("\n").filter((line) => line.trim() !== "");
      const initialContent = [
