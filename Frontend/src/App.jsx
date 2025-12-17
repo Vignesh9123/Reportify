@@ -98,23 +98,23 @@ export default function App() {
             Welcome to REPORTIFY
           </h1>
 
-          {/* <h3 className="text-2xl md:text-3xl font-medium mb-8 text-cyan-200 animate-fade-in-up delay-100">
+          <h3 className="text-2xl md:text-3xl font-medium mb-8 text-cyan-200 animate-fade-in-up delay-100">
             An AI-driven Report Generator
-          </h3> */}
-          <h3 className="text-2xl md:text-3xl font-medium mb-8 text-red-500 animate-fade-in-up delay-100">
-            ⚠️Reportify is currently experiencing technical difficulties and has been temporarily closed. <br/> We are working to resolve the issue as quickly as possible.
           </h3>
+          {/* <h3 className="text-2xl md:text-3xl font-medium mb-8 text-red-500 animate-fade-in-up delay-100">
+            ⚠️Reportify is currently experiencing technical difficulties and has been temporarily closed. <br/> We are working to resolve the issue as quickly as possible.
+          </h3> */}
 
-          {/* <div className="max-w-3xl mx-auto mb-12 text-lg md:text-xl text-gray-300 leading-relaxed animate-fade-in-up delay-200">
+          <div className="max-w-3xl mx-auto mb-12 text-lg md:text-xl text-gray-300 leading-relaxed animate-fade-in-up delay-200">
             <span className="font-medium text-gray-100">{text}</span>
             <Cursor cursorColor="#06B6D4" />
-          </div> */}
+          </div>
 
           <div
             className="flex items-center justify-center"
             onClick={handleGoogleSignIn}
           >
-            {/* <div className="relative group">
+            <div className="relative group">
               <button className="relative inline-block p-px font-semibold leading-6 text-white bg-gray-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95">
                 <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-10 transition-opacity duration-500 group-hover:opacity-100"></span>
 
@@ -140,7 +140,7 @@ export default function App() {
                   </div>
                 </span>
               </button>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
