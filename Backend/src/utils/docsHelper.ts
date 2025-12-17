@@ -1,17 +1,9 @@
-import fs from "fs";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, AlignmentType, Footer, PageBorderZOrder, PageBorderDisplay, BorderStyle, PageNumber, TableOfContents } from "docx";
-// import { generateCompleteMDXContent } from "./reportMdxGenerator";
 import { JSSSTULogoBase64 } from "../data/sampleData";
 import { getIndentationLevel, parseTextWithBold } from "./docxUtils";
 import { professorDetailsType, submissionDetailsType } from "../config/types";
 import { Response } from "express";
 async function createDocument(topic: string, content: string, res : Response, submissionDetails: submissionDetailsType[], professorDetails: professorDetailsType) {
-    // const mdText = await generateCompleteMDXContent(topic);
-    // if (!mdText) {
-    //   console.error("Failed to generate MDX content.");
-    //   return;
-    // }
-  
    try {
      const lines = content.split("\n").filter((line) => line.trim() !== "");
      const initialContent = [
@@ -370,7 +362,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("# ", ""), 
                          bold: true, 
-                         size: 48, 
+                         size: 32, 
                          font: "Times New Roman", 
                          color: "000000" ,
                          
@@ -387,7 +379,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("## ", ""), 
                          bold: true, 
-                         size: 32, 
+                         size: 28, 
                          font: "Times New Roman", 
                          color: "000000" 
                        })
@@ -418,7 +410,7 @@ async function createDocument(topic: string, content: string, res : Response, su
                        new TextRun({ 
                          text: line.replace("#### ", ""), 
                          bold: true, 
-                         size: 18, 
+                         size: 24, 
                          font: "Times New Roman", 
                          color: "000000" 
                        })
@@ -430,7 +422,8 @@ async function createDocument(topic: string, content: string, res : Response, su
                    return new Paragraph({
                      children: parseTextWithBold(line.replace(/^\s*-\s*/, "")),
                      bullet: { level: getIndentationLevel(line) },
-                     spacing: { line: 360 }
+                     spacing: { line: 360 },
+                     alignment: AlignmentType.JUSTIFIED
                    });
                  } else if (line.trim().startsWith("---")) {
                    // Page break
@@ -441,7 +434,8 @@ async function createDocument(topic: string, content: string, res : Response, su
                    // Regular paragraph
                    return new Paragraph({
                      children: parseTextWithBold(line),
-                     spacing: { line: 360 }
+                     spacing: { line: 360 },
+                     alignment: AlignmentType.JUSTIFIED
                    });
                  }
                }),
