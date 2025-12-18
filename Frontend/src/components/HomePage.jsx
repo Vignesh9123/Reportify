@@ -36,7 +36,7 @@ const HomePage = () => {
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-  connt[warningVisible, setWarningVisible] = useState(true)
+  const [warningVisible, setWarningVisible] = useState(true)
   useEffect(() => {
     const handleResize = () => {
       setInnerWidth(window.innerWidth);
