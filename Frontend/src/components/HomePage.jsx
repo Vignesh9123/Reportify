@@ -36,7 +36,7 @@ const HomePage = () => {
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-
+  connt[warningVisible, setWarningVisible] = useState(true)
   useEffect(() => {
     const handleResize = () => {
       setInnerWidth(window.innerWidth);
@@ -101,7 +101,8 @@ const HomePage = () => {
           .get("https://reportify-backend.vercel.app/api/auth/logout", {
             withCredentials: true,
             headers: {
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',            },
+              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
+            },
           })
           .then(() => {
             localStorage.removeItem("token");
@@ -354,7 +355,7 @@ const HomePage = () => {
           {
             headers: {
               "Content-Type": "application/json",
-               Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
+              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
             },
             withCredentials: true,
           }
@@ -425,6 +426,40 @@ const HomePage = () => {
       window.location.reload();
     }, 800);
   };
+  if (warningVisible) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+        <div className="relative w-[90%] max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center shadow-2xl">
+
+          <button
+            onClick={() => setWarningVisible(false)}
+            aria-label="Close warning"
+            className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200"
+          >
+            ✕
+          </button>
+
+          <h2 className="mb-4 text-xl font-semibold text-yellow-400">
+            ⚠️ Gemini API Overload
+          </h2>
+
+          <p className="mb-3 text-sm leading-relaxed text-zinc-300">
+            The Gemini API is currently experiencing high load and intermittent issues.
+          </p>
+
+          <p className="mb-3 text-sm leading-relaxed text-zinc-300">
+            You may proceed to generate the report, but results could be delayed,
+            incomplete, or fail unexpectedly.
+          </p>
+
+          <p className="mt-4 text-sm font-medium text-red-400">
+            Please proceed with caution.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <>
@@ -538,21 +573,19 @@ const HomePage = () => {
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${
-                    currentStep >= step
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                      : "bg-gray-700 text-gray-400"
-                  }`}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${currentStep >= step
+                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                    : "bg-gray-700 text-gray-400"
+                    }`}
                 >
                   {step}
                 </div>
                 {step < 3 && (
                   <div
-                    className={`w-16 h-1 mx-2 rounded transition-all duration-300 ${
-                      currentStep > step
-                        ? "bg-gradient-to-r from-blue-500 to-purple-500"
-                        : "bg-gray-700"
-                    }`}
+                    className={`w-16 h-1 mx-2 rounded transition-all duration-300 ${currentStep > step
+                      ? "bg-gradient-to-r from-blue-500 to-purple-500"
+                      : "bg-gray-700"
+                      }`}
                   />
                 )}
               </div>
@@ -897,11 +930,10 @@ const HomePage = () => {
                           onDragStart={(e) => handleDragStart(e, index)}
                           onDragEnd={handleDragEnd}
                           onDragOver={(e) => handleDragOver(e, index)}
-                          className={`bg-gray-700/30 border border-gray-600/50 rounded-xl p-4 transition-all duration-200 cursor-move hover:bg-gray-700/50 ${
-                            draggedIndex === index
-                              ? "opacity-50 border-blue-400"
-                              : ""
-                          }`}
+                          className={`bg-gray-700/30 border border-gray-600/50 rounded-xl p-4 transition-all duration-200 cursor-move hover:bg-gray-700/50 ${draggedIndex === index
+                            ? "opacity-50 border-blue-400"
+                            : ""
+                            }`}
                         >
                           <div className="flex items-center gap-4">
                             <GripVertical className="w-5 h-5 text-gray-400" />
