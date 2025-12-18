@@ -426,36 +426,47 @@ const HomePage = () => {
       window.location.reload();
     }, 800);
   };
+  // if (warningVisible) {
+  //   return (
+  //     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+
+  //     </div>
+  //   );
+  // }
+
 
   return (
     <>
       {warningVisible && (
         <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-lg z-9">
           <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
-            <button
-              onClick={() => setWarningVisible(false)}
-              aria-label="Close warning"
-              className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200"
-            >
-              ✕
-            </button>
+            <div className="relative w-[90%] max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center shadow-2xl">
 
-            <h2 className="mb-4 text-xl font-semibold text-yellow-400">
-              ⚠️ Gemini API Overload
-            </h2>
+              <button
+                onClick={() => setWarningVisible(false)}
+                aria-label="Close warning"
+                className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200"
+              >
+                ✕
+              </button>
 
-            <p className="mb-3 text-sm leading-relaxed text-zinc-300">
-              The Gemini API is currently experiencing high load and intermittent issues.
-            </p>
+              <h2 className="mb-4 text-xl font-semibold text-yellow-400">
+                ⚠️ Gemini API Overload
+              </h2>
 
-            <p className="mb-3 text-sm leading-relaxed text-zinc-300">
-              You may proceed to generate the report, but results could be delayed,
-              incomplete, or fail unexpectedly.
-            </p>
+              <p className="mb-3 text-sm leading-relaxed text-zinc-300">
+                The Gemini API is currently experiencing high load and intermittent issues.
+              </p>
 
-            <p className="mt-4 text-sm font-medium text-red-400">
-              Please proceed with caution.
-            </p>
+              <p className="mb-3 text-sm leading-relaxed text-zinc-300">
+                You may proceed to generate the report, but results could be delayed,
+                incomplete, or fail unexpectedly.
+              </p>
+
+              <p className="mt-4 text-sm font-medium text-red-400">
+                Please proceed with caution.
+              </p>
+            </div>
           </div>
         </div>
       )}
