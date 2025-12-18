@@ -439,13 +439,13 @@ const HomePage = () => {
     <>
       {warningVisible && (
         <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-lg z-9">
-          <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
-            <div className="relative w-[90%] max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center shadow-2xl">
+          <div className="relative flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
+            <div className="w-[90%] max-w-md rounded-xl border border-gray-800 bg-gray-900 p-8 text-center shadow-2xl">
 
               <button
                 onClick={() => setWarningVisible(false)}
                 aria-label="Close warning"
-                className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200"
+                className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200 cursor-pointer"
               >
                 ✕
               </button>
