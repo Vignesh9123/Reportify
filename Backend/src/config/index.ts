@@ -10,6 +10,7 @@ export const config = {
     CLIENT_URL: String(process.env.CLIENT_URL),
     JWT_SECRET: String(process.env.JWT_SECRET),
     'GEMINI_FLASH_LITE_LATEST': 'gemini-flash-lite-latest',
+    'GEMINI_FLASH_LATEST':'gemini-flash-latest',
     'GEMINI2.5':'gemini-2.5-flash',
     'GEMINI2.0':'gemini-2.0-flash',
     ADMIN_KEY: String(process.env.ADMIN_KEY),
