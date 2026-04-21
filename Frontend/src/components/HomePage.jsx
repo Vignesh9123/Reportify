@@ -426,13 +426,6 @@ const HomePage = () => {
       window.location.reload();
     }, 800);
   };
-  // if (warningVisible) {
-  //   return (
-  //     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-
-  //     </div>
-  //   );
-  // }
 
 
   return (
@@ -459,8 +452,8 @@ const HomePage = () => {
               </p>
 
               <p className="mb-3 text-sm leading-relaxed text-zinc-300">
-                You may proceed to generate the report, but results could be delayed,
-                incomplete, or fail unexpectedly.
+                You can generate the report, but some sections may be incomplete or show “content generation failed.” 
+                Please review it after downloading.
               </p>
 
               <p className="mt-4 text-sm font-medium text-red-400">
